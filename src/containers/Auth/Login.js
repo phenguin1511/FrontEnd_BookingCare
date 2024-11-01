@@ -11,10 +11,38 @@ import { FormattedMessage } from 'react-intl';
 class Login extends Component {
     constructor(props) {
         super(props);
+        this.state = {
+            username: '',
+            password: '',
+            showPassword: false,
+        }
     }
 
 
+    handleOnChangeUserName = (event) => {
+        this.setState({
+            username: event.target.value
+        })
+        console.log(event.target.value);
+    }
 
+    handleOnChangePassword = (event) => {
+        this.setState({
+            password: event.target.value,
+        })
+        console.log(event.target.value);
+    }
+    togglePasswordVisibility = () => {
+        this.setState((prevState) => ({
+            showPassword: !prevState.showPassword,
+        }));
+    };
+
+
+    handleLogin = (event) => {
+        console.log('User Name: ' + this.state.username);
+        console.log('Password: ' + this.state.password)
+    }
     render() {
         return (
             <div className='login-background'>
@@ -23,13 +51,33 @@ class Login extends Component {
                         <div className='col-12 text-center-login'>LOGIN</div>
                         <div className='col-12 form-group'>
                             <label>User Name</label>
-                            <input type='text' className='form-control login-input' placeholder='Enter your username!'></input>
+
+                            <input
+                                value={this.state.username}
+                                onChange={(event) => this.handleOnChangeUserName(event)}
+                                type='text' className='form-control login-input'
+                                placeholder='Enter your username!'>
+                            </input>
                         </div>
                         <div className='col-12 form-group'>
                             <label>Password</label>
-                            <input type='password' className='form-control login-input' placeholder='Enter your password!'></input>
+                            <div className='password-wrapper'>
+                                <input
+                                    value={this.state.password}
+                                    onChange={(event) => this.handleOnChangePassword(event)}
+                                    type={this.state.showPassword ? 'text' : 'password'}
+                                    className='form-control login-input'
+                                    placeholder='Enter your password!'
+                                />
+                                <span
+                                    className='toggle-password-icon'
+                                    onClick={this.togglePasswordVisibility}
+                                >
+                                    {this.state.showPassword ? '🙈' : '👁️'}
+                                </span>
+                            </div>
                         </div>
-                        <div className='col-12 button-login'>
+                        <div onClick={(event) => { this.handleLogin() }} className='col-12 button-login'>
                             LOGIN
                         </div>
                         <div className='col-12 text-forgot-password'>

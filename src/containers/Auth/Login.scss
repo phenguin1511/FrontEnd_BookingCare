@@ -129,6 +129,25 @@
                 }
             }
 
+            .password-wrapper {
+                position: relative;
+                display: flex;
+                align-items: center;
+
+                .toggle-password-icon {
+                    position: absolute;
+                    right: 10px;
+                    cursor: pointer;
+                    font-size: 1.2em;
+                    color: #007bff;
+                    transition: color 0.3s;
+
+                    &:hover {
+                        color: #0056b3;
+                    }
+                }
+            }
+
             .social-login {
                 margin-top: 20px;
                 text-align: center;
@@ -182,6 +201,8 @@
                         }
                     }
                 }
+
+
             }
 
 
