@@ -66,9 +66,6 @@ class Login extends Component {
                 <div className='login-container r'>
                     <div className='login-content row'>
                         <div className='col-12 text-center-login'>LOGIN</div>
-                        {this.state.errMessage && (
-                            <div className="error-message">{this.state.errMessage}</div>
-                        )}
                         <div className='col-12 form-group'>
                             <label>User Name</label>
                             <input
@@ -93,6 +90,9 @@ class Login extends Component {
                                 </span>
                             </div>
                         </div>
+                        {this.state.errMessage && (
+                            <div style={{ color: 'red' }} className="error-message">{this.state.errMessage}</div>
+                        )}
                         <div onClick={this.handleLogin} className='col-12 button-login'>
                             LOGIN
                         </div>
