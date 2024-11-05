@@ -1,20 +1,26 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './UserManage.scss';
-import { getAllUsers } from '../../services/userService';
+import { getAllUsers, handleAddUser } from '../../services/userService';
+import ModalAddUser from './ModalAddUser';
 
 class UserManage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            arrUsers: [] // Khởi tạo mảng rỗng để tránh lỗi undefined
+            arrUsers: [],
+            isOpenModal: false,
+            response: ''
         };
     }
 
     async componentDidMount() {
+        await this.updateFormUsers();
+    }
+
+    updateFormUsers = async () => {
         try {
             let response = await getAllUsers('ALL');
-            console.log("API response:", response);
             if (response.data && response.data.errCode === 0) {
                 this.setState({
                     arrUsers: response.data.users
@@ -27,13 +33,38 @@ class UserManage extends Component {
         }
     }
 
-    render() {
-        console.log('check render', this.state);
-        let { arrUsers } = this.state;
+    handleAddUser = () => {
+        this.setState({ isOpenModal: true });
+    };
 
+    handleCloseModal = () => {
+        this.setState({ isOpenModal: false, response: '' });
+    };
+
+    createNewUser = async (data) => {
+        try {
+            let response = await handleAddUser(data);
+            if (response && response.data.errCode !== 0) {
+                alert(response.data.errMessage);
+                this.handleAddUser(); // Show error message
+            } else {
+                alert(response.data.message);
+                await this.updateFormUsers(); // Update user list
+                this.handleCloseModal(); // Close modal
+            }
+        } catch (error) {
+            console.error("Error adding user:", error);
+        }
+    }
+
+    render() {
+        let { arrUsers, isOpenModal } = this.state;
         return (
             <div className="user-container">
                 <h2 className="title text-center">Quản Lý Người Dùng</h2>
+                <div onClick={this.handleAddUser} className='col-12 button-add-user'>
+                    ADD NEW USER
+                </div>
                 <div className="user-table mt-4 mx-auto">
                     <div className="table-responsive">
                         <table className="table table-striped table-hover">
@@ -62,7 +93,6 @@ class UserManage extends Component {
                                                     <button className="btn btn-delete">Xóa</button>
                                                 </div>
                                             </td>
-
                                         </tr>
                                     ))
                                 ) : (
@@ -74,6 +104,12 @@ class UserManage extends Component {
                         </table>
                     </div>
                 </div>
+
+                <ModalAddUser
+                    show={isOpenModal}
+                    onHide={this.handleCloseModal}
+                    createNewUser={this.createNewUser}
+                />
             </div>
         );
     }

@@ -30,174 +30,172 @@
         font-weight: 600;
         color: #4a4a4a;
         margin-top: 20px;
+        text-align: center;
+    }
+
+    .button-add-user {
+        border-radius: 10px;
+        width: 100%;
+        max-width: 200px;
+        margin: 10px auto;
+        color: white;
+        font-size: 20px;
+        padding: 10px;
+        background: var(--background);
+        text-align: center;
+        transition: transform 0.2s, background-size 0.3s;
+
+        &:hover {
+            transform: scale(1.1);
+            cursor: pointer;
+            background-size: 300% 300%;
+            animation: gradientAnimation 2s ease infinite;
+        }
+
+        &:active {
+            transform: scale(0.95);
+        }
     }
 
     .user-table {
-        margin: 0 auto;
+        margin: 20px auto;
         width: 100%;
         max-width: 1500px;
-        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.5);
         border-radius: 12px;
         overflow: hidden;
         transition: transform 0.2s;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
 
         &:hover {
             transform: translateY(-5px);
+            box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
         }
 
         .table-responsive {
-            overflow-x: auto; // Cho phép cuộn ngang
-            -webkit-overflow-scrolling: touch; // Thêm hỗ trợ cuộn mượt trên iOS
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
 
             .table {
-                width: 100%; // Đảm bảo bảng chiếm toàn bộ chiều rộng
-                min-width: 600px; // Chiều rộng tối thiểu của bảng để tránh bị thu hẹp quá nhiều
+                width: 100%;
+                min-width: 600px;
+                text-align: center;
+                border-collapse: separate;
+                background: #ffffff;
+            }
+        }
+
+        thead {
+            background: var(--background);
+            background-size: 300% 300%;
+            animation: gradientAnimation 4s ease infinite;
+            color: #fff;
+
+            th {
+                padding: 12px;
+                font-weight: 500;
+                text-transform: uppercase;
             }
         }
 
         tbody {
             tr {
                 transition: background 0.3s ease, transform 0.3s ease;
-                /* Thêm hiệu ứng chuyển động */
 
                 &:hover {
                     background: var(--background);
-                    transform: translateY(-2px);
                     background-size: 300% 300%;
                     animation: gradientAnimation 4s ease infinite;
-                }
-            }
-        }
-
-        .table {
-            background: #ffffff;
-            border-collapse: separate;
-            text-align: center;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            transition: box-shadow 0.3s ease;
-
-            &:hover {
-                box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.2);
-            }
-
-            thead {
-                background: var(--background);
-                background-size: 300% 300%;
-                // animation: gradientAnimation 4s ease infinite;
-                color: #fff;
-
-                th {
-                    padding: 12px;
-                    font-weight: 500;
-                    text-transform: uppercase;
+                    transform: translateY(-2px);
                 }
             }
 
-            tbody {
-                tr {
-                    transition: background 0.3s ease;
+            td {
+                padding: 12px;
+                color: #333;
+                width: 150px;
+                height: 60px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+            }
 
-                    &:hover {
-                        background-color: #f1f5fc;
-                        transform: scale(1.02);
-                    }
-                }
+            .action-buttons {
+                display: flex;
+                justify-content: center;
+                gap: 8px;
 
-                td {
-                    padding: 12px;
-                    color: #333;
-                    width: 150px; // Kích thước cố định cho các ô
-                    height: 60px; // Chiều cao cố định cho các ô
-                    overflow: hidden; // Đảm bảo nội dung không tràn ra ngoài
-                    text-overflow: ellipsis; // Thêm hiệu ứng ba chấm khi nội dung quá dài
-                    white-space: nowrap; // Ngăn ngừa ngắt dòng
-                }
+                .btn {
+                    padding: 10px 16px;
+                    font-size: 14px;
+                    border-radius: 5px;
+                    display: inline-flex;
+                    align-items: center;
+                    gap: 4px;
+                    cursor: pointer;
+                    transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
 
-                .action-buttons {
-                    display: flex;
-                    justify-content: center;
-                    gap: 8px;
+                    &.btn-edit {
+                        background-color: #4CAF50;
+                        color: #fff;
 
-                    .btn {
-                        padding: 10px 16px;
-                        font-size: 14px;
-                        border-radius: 5px;
-                        display: inline-flex;
-                        align-items: center;
-                        gap: 4px;
-                        cursor: pointer;
-                        transition: background-color 0.3s, transform 0.2s, box-shadow 0.2s;
-                        /* Thêm box-shadow vào transition */
-
-                        &.btn-edit {
-                            background-color: #4CAF50;
-                            color: #fff;
-
-                            &:hover {
-                                background-color: #45a049;
-                                transform: scale(1.05);
-                                box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-                            }
-                        }
-
-                        &.btn-delete {
-                            background-color: #f44336;
-                            color: #fff;
-
-                            &:hover {
-                                background-color: #e53935;
-                                transform: scale(1.05);
-                                /* Hiệu ứng khi di chuột */
-                                box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
-                                /* Bóng đổ khi hover */
-                            }
+                        &:hover {
+                            background-color: #45a049;
+                            transform: scale(1.05);
+                            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
                         }
                     }
 
-                }
+                    &.btn-delete {
+                        background-color: #f44336;
+                        color: #fff;
 
+                        &:hover {
+                            background-color: #e53935;
+                            transform: scale(1.05);
+                            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+                        }
+                    }
+                }
             }
         }
     }
 
-    // Media Queries cho Responsive
+    /* Responsive Styles */
     @media (max-width: 768px) {
         .title {
             font-size: 24px;
         }
 
         .user-table {
-            max-width: 90%; // Giảm chiều rộng bảng trên màn hình nhỏ
+            max-width: 90%;
         }
 
         .table {
             td {
-                width: auto; // Đặt chiều rộng ô tự động
-                white-space: normal; // Cho phép ngắt dòng nếu cần
+                width: auto;
+                white-space: normal;
             }
         }
 
         .action-buttons {
-            flex-direction: column; // Đặt các nút hành động theo chiều dọc
-            gap: 4px; // Giảm khoảng cách giữa các nút
+            flex-direction: column;
+            gap: 4px;
         }
     }
 
     @media (max-width: 480px) {
         .title {
-            font-size: 20px; // Giảm kích thước tiêu đề trên màn hình nhỏ
+            font-size: 20px;
         }
 
         .user-table {
-            margin: 0 10px; // Giảm khoảng cách lề
+            margin: 0 10px;
         }
 
         .table {
             td {
-                height: auto; // Chiều cao ô tự động
-                padding: 8px; // Giảm padding cho các ô
+                height: auto;
+                padding: 8px;
             }
         }
     }

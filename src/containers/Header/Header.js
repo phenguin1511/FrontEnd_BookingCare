@@ -9,7 +9,7 @@ import './Header.scss';
 class Header extends Component {
 
     render() {
-        const { processLogout } = this.props;
+        const { processLogout, userInfo } = this.props;
 
         return (
             <div className="header-container">
@@ -17,7 +17,8 @@ class Header extends Component {
                 <div className="header-tabs-container">
                     <Navigator menus={adminMenu} />
                 </div>
-
+                {/* Hiển thị thông tin người dùng */}
+                <div><p>Hello: {userInfo.firstName} {userInfo.lastName}</p></div>
                 {/* nút logout */}
                 <div className="btn btn-logout" onClick={processLogout}>
                     <i className="fas fa-sign-out-alt"></i>
@@ -28,9 +29,11 @@ class Header extends Component {
 
 }
 
+// Lấy thông tin người dùng từ state
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+        userInfo: state.user.userInfo, // Thêm dòng này để lấy thông tin người dùng
     };
 };
 
