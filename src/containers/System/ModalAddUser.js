@@ -18,7 +18,7 @@ class ModalAddUser extends Component {
         };
     }
 
-    checkValideInput = () => {
+    checkValidateInput = () => {
         let isValid = true;
         const arrInput = ['email', 'password', 'firstName', 'lastName', 'address'];
 
@@ -38,17 +38,37 @@ class ModalAddUser extends Component {
         this.setState({ [name]: value, errorMessage: '' }); // Reset error message on input change
     };
 
-    handleAddUser = () => {
-        if (this.checkValideInput()) {
-            this.props.createNewUser(this.state); // Reset form after successful submission
+    handleAddNewUser = () => {
+        if (this.checkValidateInput()) {
+            let check = this.props.response;
+            if (check == false) {
+                this.props.createNewUser(this.state);
+            } else {
+                this.props.createNewUser(this.state);
+                this.resetForm();
+            }
         }
     };
 
 
+    resetForm = () => {
+        this.setState({
+            firstName: '',
+            lastName: '',
+            password: '',
+            email: '',
+            phonenumber: '',
+            address: '',
+            errorMessage: ''
+        });
+        this.props.onHide();
+    };
+
     render() {
         const { show, onHide } = this.props;
+        console.log(show)
         const { errorMessage } = this.state;
-
+        console.log(this.props)
         return (
             <Modal
                 show={show}
@@ -142,7 +162,7 @@ class ModalAddUser extends Component {
                     <Button variant="secondary" onClick={onHide} className="btn-cancel">
                         Cancel
                     </Button>
-                    <Button variant="primary" onClick={this.handleAddUser} className="btn-save">
+                    <Button variant="primary" onClick={this.handleAddNewUser} className="btn-save">
                         <i className="fas fa-check"></i> Enter
                     </Button>
                 </Modal.Footer>

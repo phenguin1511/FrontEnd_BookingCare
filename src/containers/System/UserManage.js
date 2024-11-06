@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './UserManage.scss';
-import { getAllUsers, handleAddUser } from '../../services/userService';
+import { getAllUsers, handleAddUser, deleteUserService } from '../../services/userService';
 import ModalAddUser from './ModalAddUser';
 
 class UserManage extends Component {
@@ -41,21 +41,47 @@ class UserManage extends Component {
         this.setState({ isOpenModal: false, response: '' });
     };
 
+    handleDeleteUser = async (user) => {
+        console.log(user)
+        const confirmDelete = window.confirm(`Are you sure you want to delete user ${user.firstName} ${user.lastName}?`);
+
+        if (confirmDelete) {
+            try {
+                let response = await deleteUserService(user.id);
+                if (response && response.data.errCode === 0) {
+                    await this.updateFormUsers();
+                    alert('Delete User Success!!!');
+                } else {
+                    alert(response.data.message);
+                }
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    }
+
     createNewUser = async (data) => {
         try {
             let response = await handleAddUser(data);
             if (response && response.data.errCode !== 0) {
                 alert(response.data.errMessage);
-                this.handleAddUser(); // Show error message
+                this.setState({
+                    response: false
+                });
+                this.handleAddUser();
             } else {
                 alert(response.data.message);
-                await this.updateFormUsers(); // Update user list
-                this.handleCloseModal(); // Close modal
+                this.setState({
+                    response: true
+                });
+                await this.updateFormUsers();
+                this.handleCloseModal();
             }
         } catch (error) {
             console.error("Error adding user:", error);
         }
-    }
+    };
+
 
     render() {
         let { arrUsers, isOpenModal } = this.state;
@@ -90,7 +116,7 @@ class UserManage extends Component {
                                             <td className="text-center">
                                                 <div className="action-buttons">
                                                     <button className="btn btn-edit">Sửa</button>
-                                                    <button className="btn btn-delete">Xóa</button>
+                                                    <button onClick={() => this.handleDeleteUser(item)} className="btn btn-delete">Xóa</button>
                                                 </div>
                                             </td>
                                         </tr>
@@ -109,6 +135,7 @@ class UserManage extends Component {
                     show={isOpenModal}
                     onHide={this.handleCloseModal}
                     createNewUser={this.createNewUser}
+                    response={this.state.response}
                 />
             </div>
         );
