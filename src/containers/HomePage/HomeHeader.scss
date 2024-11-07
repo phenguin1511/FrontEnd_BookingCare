@@ -1,0 +1,104 @@
+.homeHeader-container {
+    width: 100%;
+    height: 70px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+
+    .home-header-content {
+        width: 90%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin: 0 auto;
+        padding: 0 20px;
+
+        .header-content-left {
+            width: 25%;
+            display: flex;
+            align-items: center;
+
+            .bars-header {
+                font-size: 24px;
+                color: #333;
+                margin-right: 15px;
+                cursor: pointer;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: #007bff;
+                }
+            }
+
+            .logo-image {
+                background: url("/assets/images/logo1.png") center center no-repeat;
+                background-size: contain;
+                width: 80px;
+                height: 50px;
+                cursor: pointer;
+            }
+        }
+
+        .header-content-center {
+            width: 50%;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+
+            .child-content {
+                text-align: center;
+                cursor: pointer;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: #007bff;
+                }
+
+                div {
+                    font-size: 14px;
+                    color: #333;
+
+                    &:first-child {
+                        font-weight: bold;
+                        font-size: 16px;
+                    }
+
+                    &.sub-title {
+                        font-size: 13px;
+                        color: #666;
+                        margin-top: 2px;
+                    }
+                }
+            }
+        }
+
+        .header-content-right {
+            width: 25%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 15px;
+
+            .language-selection,
+            .help-section {
+                font-size: 14px;
+                color: darkblue;
+                display: flex;
+                align-items: center;
+                cursor: pointer;
+                transition: color 0.3s;
+
+                i {
+                    margin-right: 5px;
+                    font-size: 16px;
+                }
+
+                &:hover {
+                    color: #007bff;
+                }
+            }
+        }
+    }
+}
