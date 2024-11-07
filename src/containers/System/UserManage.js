@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './UserManage.scss';
-import { getAllUsers, handleAddUser, deleteUserService } from '../../services/userService';
+import { getAllUsers, handleAddUser, deleteUserService, editUserService } from '../../services/userService';
 import ModalAddUser from './ModalAddUser';
+import ModalEditUser from './ModalEditUser';
+
 
 class UserManage extends Component {
     constructor(props) {
@@ -10,7 +12,9 @@ class UserManage extends Component {
         this.state = {
             arrUsers: [],
             isOpenModal: false,
-            response: ''
+            isOpenModalEdit: false,
+            response: '',
+            userEdit: {}
         };
     }
 
@@ -42,7 +46,6 @@ class UserManage extends Component {
     };
 
     handleDeleteUser = async (user) => {
-        console.log(user)
         const confirmDelete = window.confirm(`Are you sure you want to delete user ${user.firstName} ${user.lastName}?`);
 
         if (confirmDelete) {
@@ -82,9 +85,44 @@ class UserManage extends Component {
         }
     };
 
+    handleEditUser = (data) => {
+        this.setState({
+            isOpenModalEdit: true,
+            userEdit: data
+        });
+    }
+
+    handleCloseModalEdit = () => {
+        this.setState({ isOpenModalEdit: false, response: '' });
+    };
+
+    editUser = async (data) => {
+        const confirmEdit = window.confirm(`Are you sure you want to edit user ${data.firstName} ${data.lastName}?`);
+        if (confirmEdit) {
+            try {
+                let response = await editUserService(data);
+                if (response && response.data.errCode !== 0) {
+                    alert(response.data.message);
+                    this.setState({
+                        response: false
+                    });
+                } else {
+                    alert(response.data.message);
+                    this.setState({
+                        response: true
+                    });
+                    await this.updateFormUsers();
+                    this.handleCloseModalEdit(); // Close edit modal after successful update
+                }
+            } catch (error) {
+                console.error("Error editing user:", error);
+            }
+        }
+
+    };
 
     render() {
-        let { arrUsers, isOpenModal } = this.state;
+        let { arrUsers, isOpenModal, isOpenModalEdit } = this.state;
         return (
             <div className="user-container">
                 <h2 className="title text-center">Quản Lý Người Dùng</h2>
@@ -109,13 +147,13 @@ class UserManage extends Component {
                                     arrUsers.map((item, index) => (
                                         <tr key={item.id}>
                                             <td>{index + 1}</td>
-                                            <td>{item.firstName} {item.lastName}</td>
+                                            <td>{item.firstName}{' '}{item.lastName}</td>
                                             <td>{item.email}</td>
                                             <td>{item.phonenumber}</td>
                                             <td>{item.address}</td>
                                             <td className="text-center">
                                                 <div className="action-buttons">
-                                                    <button className="btn btn-edit">Sửa</button>
+                                                    <button onClick={() => this.handleEditUser(item)} className="btn btn-edit">Sửa</button>
                                                     <button onClick={() => this.handleDeleteUser(item)} className="btn btn-delete">Xóa</button>
                                                 </div>
                                             </td>
@@ -137,6 +175,17 @@ class UserManage extends Component {
                     createNewUser={this.createNewUser}
                     response={this.state.response}
                 />
+                {
+                    this.state.isOpenModalEdit &&
+                    <ModalEditUser
+                        show={isOpenModalEdit}
+                        onHide={this.handleCloseModalEdit}
+                        currentUser={this.state.userEdit}
+                        editUser={this.editUser} // Pass editUser function
+                        response={this.state.response}
+                    />
+                }
+
             </div>
         );
     }
