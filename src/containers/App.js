@@ -5,8 +5,7 @@ import { ConnectedRouter as Router } from 'connected-react-router';
 import { history } from '../redux'
 import { ToastContainer } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-
+import CustomScrollbars from '../components/CustomScrollbars.js';
 import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
 
 import { path } from '../utils'
@@ -47,14 +46,18 @@ class App extends Component {
                         <ConfirmModal />
                         {this.props.isLoggedIn && <Header />}
 
-                        <span className="content-container">
-                            <Switch>
-                                <Route path={path.HOME} exact component={(Home)} />
-                                <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
-                                <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
-                                <Route path={path.HOMEPAGE} component={userIsNotAuthenticated(HomePage)} />
-                            </Switch>
-                        </span>
+                        <div className="content-container">
+                            <CustomScrollbars style={{ height: '100vh', witdth: '100%' }}>
+                                <Switch>
+                                    <Route path={path.HOME} exact component={(Home)} />
+                                    <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
+                                    <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
+                                    <Route path={path.HOMEPAGE} component={userIsNotAuthenticated(HomePage)} />
+                                </Switch>
+                            </CustomScrollbars>
+                        </div>
+
+
 
                         <ToastContainer
                             className="toast-container" toastClassName="toast-item" bodyClassName="toast-item-body"

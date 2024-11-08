@@ -1,8 +1,3 @@
-body {
-    min-height: 200vh;
-    /* Trang sẽ dài gấp 2 lần chiều cao của màn hình */
-}
-
 .homeHeader-container {
     width: 100%;
     height: 80px;
@@ -60,11 +55,13 @@ body {
     .child-content {
         text-align: center;
         cursor: pointer;
-        transition: transform 0.3s ease;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+        padding: 18px 0;
 
         &:hover {
             transform: scale(1.05);
-            color: #007bff;
+            background-color: #9be5aa;
+            background-size: 100%;
         }
 
         div {
@@ -199,7 +196,7 @@ body {
         linear-gradient(to top, rgba(255, 255, 255, 1), transparent),
         url("/assets/images/banner.jpg") center center no-repeat;
     background-size: cover;
-    height: 550px;
+    height: 650px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -207,7 +204,8 @@ body {
     text-align: center;
 
     .banner-content {
-        max-width: 850px;
+        width: 100%;
+        max-width: 1050px;
         padding: 40px 20px;
         color: #fff;
     }
@@ -258,7 +256,7 @@ body {
     .search-button {
         padding: 14px 30px;
         font-size: 16px;
-        background-color: #007bff;
+        background-color: #9be5aa;
         color: white;
         border-radius: 30px;
         cursor: pointer;
@@ -266,7 +264,7 @@ body {
         transition: background-color 0.3s ease, transform 0.3s ease;
 
         &:hover {
-            background-color: #0056b3;
+            background-color: #499c8a;
             transform: scale(1.05);
         }
     }
@@ -296,7 +294,7 @@ body {
         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
         &:hover {
-            background-color: #007bff;
+            background-color: #9be5aa;
             color: white;
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
@@ -306,5 +304,11 @@ body {
 
 
 
+    }
+}
+
+@media screen and (max-width: 1300px) {
+    .sub-title {
+        display: none;
     }
 }
