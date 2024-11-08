@@ -1,4 +1,27 @@
 {
+    "home-header": {
+        "specialty": "Medical Specialty",
+        "searchdoctor": "Search Doctor",
+        "medicalfacility": "Medical Facility",
+        "choosemedicalfacility": "Choose Medical Facility",
+        "doctor": "Doctor",
+        "choosegreatdoctor": "Choose Great Doctor",
+        "medicalpackage": "Medical Package",
+        "generalhealthcheck": "General Health Check",
+        "languages": "Languages",
+        "vietnamese": "Vietnamese",
+        "english": "English",
+        "help": "Help",
+        "takecareofyourhealth": "Take Care Of Your Health",
+        "findthebestdoctorsandmedicalservices": "Find The Best Doctors And Medical Services",
+        "search": "Search",
+        "specialistexamination": "Specialist Examination",
+        "remoteexamination": "Remote Examination",
+        "medicaltest": "Medical Test",
+        "mentalhealth": "Mental Health",
+        "dentalexamination": "Dental Examination",
+        "searchmedicalservices": "Search Medical Services..."
+    },
     "common": {
         "add": "Add",
         "edit": "Edit",

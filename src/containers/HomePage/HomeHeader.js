@@ -1,48 +1,128 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
 import * as actions from "../../store/actions";
 import "./HomeHeader.scss";
-
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { FormattedMessage } from 'react-intl';
+import { LANGUAGES } from "../../utils"
+import { changeLanguageApp } from '../../store/actions';
 class HomeHeader extends Component {
+    constructor(props) {
+        super(props);
+        // Initializing the state for dropdown
+        this.state = {
+            isDropdownOpen: false
+        };
+    }
+
+    // Method to toggle dropdown visibility
+    toggleDropdown = () => {
+        this.setState(prevState => ({
+            isDropdownOpen: !prevState.isDropdownOpen
+        }));
+    };
+    changeLanguage = (language) => {
+        this.props.changeLanguageAppRedux(language);
+    }
+
     render() {
         return (
-            <div className="homeHeader-container">
-                <div className='home-header-content'>
-                    <div className='header-content-left'>
-                        <i className="fas fa-bars bars-header"></i>
-                        <div className='logo-image'></div>
-                    </div>
-                    <div className='header-content-center'>
-                        <div className='child-content'>
-                            <div><b>Chuyên Khoa</b></div>
-                            <div className='sub-title'>Tìm Bác Sĩ Theo Chuyên Khoa</div>
+
+            <React.Fragment>
+                <div className="homeHeader-container">
+                    <div className='home-header-content'>
+                        <div className='header-content-left'>
+                            <i className="fas fa-bars bars-header"></i>
+                            <div className='logo-image'></div>
                         </div>
-                        <div className='child-content'>
-                            <div><b>Cơ Sở Y Tế</b></div>
-                            <div className='sub-title'>Chọn Bệnh Viện Phòng Khám</div>
+                        <div className='header-content-center'>
+                            <div className='child-content'>
+                                <div><b><FormattedMessage id="home-header.specialty" /></b></div>
+                                <div className='sub-title'><FormattedMessage id="home-header.searchdoctor" /></div>
+                            </div>
+                            <div className='child-content'>
+                                <div><b><FormattedMessage id="home-header.medicalfacility" /></b></div>
+                                <div className='sub-title'><FormattedMessage id="home-header.choosemedicalfacility" /></div>
+                            </div>
+                            <div className='child-content'>
+                                <div><b><FormattedMessage id="home-header.doctor" /></b></div>
+                                <div className='sub-title'><FormattedMessage id="home-header.choosegreatdoctor" /></div>
+                            </div>
+                            <div className='child-content'>
+                                <div><b><FormattedMessage id="home-header.medicalpackage" /></b></div>
+                                <div className='sub-title'><FormattedMessage id="home-header.generalhealthcheck" /></div>
+                            </div>
                         </div>
-                        <div className='child-content'>
-                            <div><b>Bác Sĩ</b></div>
-                            <div className='sub-title'>Chọn Bác Sĩ Giỏi</div>
-                        </div>
-                        <div className='child-content'>
-                            <div><b>Gói Khám</b></div>
-                            <div className='sub-title'>Khám Sức Khỏe Tổng Quát</div>
-                        </div>
-                    </div>
-                    <div className='header-content-right'>
-                        <div className='language-selection'>
-                            <i className="fas fa-flag"></i>
-                            <span>Languages</span>
-                        </div>
-                        <div className='help-section'>
-                            <i className="fas fa-question-circle"></i>
-                            <span>Hỗ Trợ</span>
+                        <div className='header-content-right'>
+                            <div className='language-selection' onClick={this.toggleDropdown}>
+                                <i className="fas fa-flag"></i>
+                                <span><FormattedMessage id="home-header.languages" /></span>
+                                <div className={`dropdown-menu ${this.state.isDropdownOpen ? 'show' : ''}`}>
+                                    <div className='dropdown-option'>
+                                        <div className="flag-icon-usa">
+
+                                        </div>
+                                        <span onClick={() => this.changeLanguage(LANGUAGES.EN)}><FormattedMessage id="home-header.english" /></span>
+                                    </div>
+                                    <div className='dropdown-option'>
+                                        <div className="flag-icon-vn">
+
+                                        </div>
+                                        <span onClick={() => this.changeLanguage(LANGUAGES.VI)}><FormattedMessage id="home-header.vietnamese" /></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div className='help-section'>
+                                <i className="fas fa-question-circle"></i>
+                                <span><FormattedMessage id="home-header.help" /></span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+
+                <div className='homeHeader-banner'>
+                    <div className='banner-overlay'>
+                        <div className='banner-content'>
+                            <h1 className='title-banner'><FormattedMessage id="home-header.takecareofyourhealth" /></h1>
+                            <p className='title2-banner'><FormattedMessage id="home-header.findthebestdoctorsandmedicalservices" /></p>
+                            <div className='search-banner'>
+                                <FormattedMessage id="home-header.searchmedicalservices">
+                                    {(placeholder) => (
+                                        <input
+                                            type="text"
+                                            placeholder={placeholder}
+                                            className="search-input"
+                                        />
+                                    )}
+                                </FormattedMessage>
+                                <button className='search-button'><FormattedMessage id="home-header.search" /></button>
+                            </div>
+                            <div className="options-banner">
+                                <button className="option-button">
+                                    <i className="fas fa-stethoscope"></i> <FormattedMessage id="home-header.specialistexamination" />
+                                </button>
+                                <button className="option-button">
+                                    <i className="fas fa-video"></i> <FormattedMessage id="home-header.remoteexamination" />
+                                </button>
+                                <button className="option-button">
+                                    <i className="fas fa-heart"></i> <FormattedMessage id="home-header.generalhealthcheck" />
+                                </button>
+                                <button className="option-button">
+                                    <i className="fas fa-flask"></i> <FormattedMessage id="home-header.medicaltest" />
+                                </button>
+                                <button className="option-button">
+                                    <i className="fa-solid fa-brain"></i> <FormattedMessage id="home-header.mentalhealth" />
+                                </button>
+                                <button className="option-button">
+                                    <i className="fa-solid fa-tooth"></i> <FormattedMessage id="home-header.dentalexamination" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </React.Fragment>
         );
     }
 }
@@ -50,12 +130,14 @@ class HomeHeader extends Component {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
+        lang: state.app.language,
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
         processLogout: () => dispatch(actions.processLogout()),
+        changeLanguageAppRedux: (language) => dispatch(changeLanguageApp(language))
     };
 };
 

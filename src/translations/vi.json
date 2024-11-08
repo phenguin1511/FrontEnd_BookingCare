@@ -1,4 +1,27 @@
 {
+    "home-header": {
+        "specialty": "Chuyên Khoa",
+        "searchdoctor": "Tìm Bác Sĩ Theo Chuyên Khoa",
+        "medicalfacility": "Cơ Sở Y Tế",
+        "choosemedicalfacility": "Chọn Bệnh Viện Phòng Khám",
+        "doctor": "Bác Sĩ",
+        "choosegreatdoctor": "Chọn Bác Sĩ Giỏi",
+        "medicalpackage": "Gói Khám",
+        "generalhealthcheck": "Khám Sức Khỏe Tổng Quát",
+        "languages": "Ngôn Ngữ",
+        "vietnamese": "Việt Nam",
+        "english": "Tiếng Anh",
+        "help": "Hỗ Trợ",
+        "takecareofyourhealth": "Chăm Sóc Sức Khỏe Của Bạn",
+        "findthebestdoctorsandmedicalservices": "Tìm Kiếm Bác Sĩ Và Các Dịch Vụ Y Tế Tốt Nhất",
+        "search": "Tìm Kiếm",
+        "specialistexamination": "Khám Chuyên Khoa",
+        "remoteexamination": "Khám Từ Xa",
+        "medicaltest": "Xét Nghiệm Y Học",
+        "mentalhealth": "Sức Khỏe Tinh Thần",
+        "dentalexamination": "Khám Nha Khoa",
+        "searchmedicalservices": "Tìm kiếm dịch vụ y tế..."
+    },
     "common": {
         "add": "Thêm",
         "edit": "Sửa",
