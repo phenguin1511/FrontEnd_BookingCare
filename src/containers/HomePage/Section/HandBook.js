@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Slider from 'react-slick';
-import "./Specialty.scss";
+import "./HandBook.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -30,7 +30,7 @@ class HandBook extends Component {
             dots: true,
             infinite: true,
             speed: 500,
-            slidesToShow: 4,
+            slidesToShow: 3,
             slidesToScroll: 2,
             nextArrow: <NextArrow />,
             prevArrow: <PrevArrow />
@@ -38,30 +38,42 @@ class HandBook extends Component {
 
         return (
             <React.Fragment>
-                <div className='section-specialty'>
-                    <div className='specialty-title'>
+                <div className='section-handbook'>
+                    <div className='handbook-title'>
                         <h2>Cẩm Nang</h2>
                         <div className='btn-viewmore'>Xem Thêm</div>
                     </div>
 
                     <Slider className='slider' {...settings}>
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='specialty 1' className='specialty-image' />
-                            <p>specialty 1</p>
+                        <div className='handbook-item'>
+                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='handbook 1' className='handbook-image' />
+                            <div className='content_handbook'>
+                                <h4>handbook 1</h4>
+                                <p>Assign arrow function to a variable before exporting as module default</p>
+                            </div>
                         </div>
 
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='specialty 1' className='specialty-image' />
-                            <p>specialty 1</p>
+                        <div className='handbook-item'>
+                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='handbook 1' className='handbook-image' />
+                            <div className='content_handbook'>
+                                <h4>handbook 1</h4>
+                                <p>Assign arrow function to a variable before exporting as module default</p>
+                            </div>
                         </div>
 
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='specialty 1' className='specialty-image' />
-                            <p>specialty 1</p>
+                        <div className='handbook-item'>
+                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='handbook 1' className='handbook-image' />
+                            <div className='content_handbook'>
+                                <h4 >handbook 1</h4>
+                                <p>Assign arrow function to a variable before exporting as module default</p>
+                            </div>
                         </div>
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='specialty 1' className='specialty-image' />
-                            <p>specialty 1</p>
+                        <div className='handbook-item'>
+                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='handbook 1' className='handbook-image' />
+                            <div className='content_handbook'>
+                                <h4>handbook 1 </h4>
+                                <p>Assign arrow function to a variable before exporting as module default</p>
+                            </div>
                         </div>
                     </Slider>
                 </div>

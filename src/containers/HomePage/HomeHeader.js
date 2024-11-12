@@ -37,19 +37,19 @@ class HomeHeader extends Component {
                         </div>
                         <div className='header-content-center'>
                             <div className='child-content'>
-                                <div><b><FormattedMessage id="home-header.specialty" /></b></div>
+                                <div className='main-title'><b><FormattedMessage id="home-header.specialty" /></b></div>
                                 <div className='sub-title'><FormattedMessage id="home-header.searchdoctor" /></div>
                             </div>
                             <div className='child-content'>
-                                <div><b><FormattedMessage id="home-header.medicalfacility" /></b></div>
+                                <div className='main-title'><b><FormattedMessage id="home-header.medicalfacility" /></b></div>
                                 <div className='sub-title'><FormattedMessage id="home-header.choosemedicalfacility" /></div>
                             </div>
                             <div className='child-content'>
-                                <div><b><FormattedMessage id="home-header.doctor" /></b></div>
+                                <div className='main-title'><b><FormattedMessage id="home-header.doctor" /></b></div>
                                 <div className='sub-title'><FormattedMessage id="home-header.choosegreatdoctor" /></div>
                             </div>
                             <div className='child-content'>
-                                <div><b><FormattedMessage id="home-header.medicalpackage" /></b></div>
+                                <div className='main-title'><b><FormattedMessage id="home-header.medicalpackage" /></b></div>
                                 <div className='sub-title'><FormattedMessage id="home-header.generalhealthcheck" /></div>
                             </div>
                         </div>
@@ -112,10 +112,10 @@ class HomeHeader extends Component {
                                     <i className="fas fa-flask"></i> <FormattedMessage id="home-header.medicaltest" />
                                 </button>
                                 <button className="option-button">
-                                    <i className="fa-solid fa-brain"></i> <FormattedMessage id="home-header.mentalhealth" />
+                                    <i className=" fas fa-solid fa-brain"></i> <FormattedMessage id="home-header.mentalhealth" />
                                 </button>
                                 <button className="option-button">
-                                    <i className="fa-solid fa-tooth"></i> <FormattedMessage id="home-header.dentalexamination" />
+                                    <i className="fas fa-solid fa-tooth"></i> <FormattedMessage id="home-header.dentalexamination" />
                                 </button>
                             </div>
                         </div>

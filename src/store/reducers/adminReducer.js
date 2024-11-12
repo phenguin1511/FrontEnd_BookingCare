@@ -1,33 +1,95 @@
 import actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    isLoggedIn: false,
-    adminInfo: null
-}
+    genders: [],
+    roles: [],
+    position: [],
+    isLoadingGender: false,
+    users: []
+};
 
-const appReducer = (state = initialState, action) => {
+const adminReducer = (state = initialState, action) => {
+    // Declare state outside the switch
+
     switch (action.type) {
-        case actionTypes.ADMIN_LOGIN_SUCCESS:
+        case actionTypes.FETCH_GENDER_START:
+            let copyState = { ...state };
+            copyState.isLoadingGender = true;
             return {
-                ...state,
-                isLoggedIn: true,
-                adminInfo: action.adminInfo
-            }
-        case actionTypes.ADMIN_LOGIN_FAIL:
+                ...copyState
+            };
+
+        case actionTypes.FETCH_GENDER_SUCCESS:
+            state.genders = action.data;
+            state.isLoadingGender = false;
             return {
-                ...state,
-                isLoggedIn: false,
-                adminInfo: null
-            }
-        case actionTypes.PROCESS_LOGOUT:
+                ...state
+            };
+
+        case actionTypes.FETCH_GENDER_FAILED:
+            state.genders = [];
+            state.isLoadingGender = false;
             return {
-                ...state,
-                isLoggedIn: false,
-                adminInfo: null
-            }
+                ...state
+            };
+        case actionTypes.FETCH_POSITION_START:
+            state.isLoadingGender = true;
+            return {
+                ...state
+            };
+        case actionTypes.FETCH_POSITION_SUCCESS:
+            state.position = action.data
+            return {
+                ...state
+            };
+
+        case actionTypes.FETCH_POSITION_FAILED:
+            state.position = [];
+
+            return {
+                ...state
+            };
+        case actionTypes.FETCH_ROLE_START:
+            state.isLoadingGender = true;
+            return {
+                ...state
+            };
+        case actionTypes.FETCH_ROLE_SUCCESS:
+            state.roles = action.data
+            return {
+                ...state
+            };
+
+        case actionTypes.FETCH_ROLE_FAILED:
+            state.roles = [];
+            return {
+                ...state
+            };
+        case actionTypes.FETCH_ALL_USERS_SUCCESS:
+            state.users = action.users
+            return {
+                ...state
+            };
+
+        case actionTypes.FETCH_ALL_USERS_FAILED:
+            state.users = [];
+            return {
+                ...state
+            };
+        // case actionTypes.FETCH_DELETE_USERS_SUCCESS:
+        //     state.users = action.users
+        //     return {
+        //         ...state
+        //     };
+
+        // case actionTypes.FETCH_DELETE_USERS_FAILD:
+        //     state.users = [];
+        //     return {
+        //         ...state
+        //     };
         default:
             return state;
     }
-}
+};
 
-export default appReducer;
+export default adminReducer;

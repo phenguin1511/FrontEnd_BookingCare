@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Slider from 'react-slick';
-import "./Specialty.scss";
+import "./OutstanDoctor.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -38,30 +38,30 @@ class OutstanDoctor extends Component {
 
         return (
             <React.Fragment>
-                <div className='section-specialty'>
-                    <div className='specialty-title'>
+                <div className='section-outstanDoctor'>
+                    <div className='outstanDoctor-title'>
                         <h2>Bác Sĩ Nổi Bật Trong Tuần</h2>
                         <div className='btn-viewmore'>Xem Thêm</div>
                     </div>
 
                     <Slider className='slider' {...settings}>
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='specialty 1' className='specialty-image' />
-                            <p>specialty 1</p>
+                        <div className='outstanDoctor-item'>
+                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='outstanDoctor 1' className='outstanDoctor-image' />
+                            <p>outstanDoctor 1</p>
                         </div>
 
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='specialty 1' className='specialty-image' />
-                            <p>specialty 1</p>
+                        <div className='outstanDoctor-item'>
+                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='outstanDoctor 1' className='outstanDoctor-image' />
+                            <p>outstanDoctor 1</p>
                         </div>
 
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='specialty 1' className='specialty-image' />
-                            <p>specialty 1</p>
+                        <div className='outstanDoctor-item'>
+                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='outstanDoctor 1' className='outstanDoctor-image' />
+                            <p>outstanDoctor 1</p>
                         </div>
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='specialty 1' className='specialty-image' />
-                            <p>specialty 1</p>
+                        <div className='outstanDoctor-item'>
+                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='outstanDoctor 1' className='outstanDoctor-image' />
+                            <p>outstanDoctor 1</p>
                         </div>
                     </Slider>
                 </div>

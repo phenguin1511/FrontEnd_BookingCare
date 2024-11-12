@@ -5,6 +5,8 @@ import Specialty from './Section/Specialty';
 import MedicalFacility from './Section/MedicalFacility';
 import OutstanDoctor from './Section/OutstanDoctor';
 import HandBook from './Section/HandBook';
+import About from './Section/About';
+import HomeFooter from './HomeFooter';
 class HomePage extends Component {
 
     render() {
@@ -16,6 +18,8 @@ class HomePage extends Component {
                 <MedicalFacility />
                 <OutstanDoctor />
                 <HandBook />
+                <About />
+                <HomeFooter />
             </div>
         );
     }

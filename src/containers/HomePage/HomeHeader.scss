@@ -61,6 +61,12 @@
         &:hover {
             transform: scale(1.05);
             background-color: #9be5aa;
+
+            .main-title {
+                font-size: 13px;
+                color: white;
+            }
+
             background-size: 100%;
         }
 
@@ -72,6 +78,11 @@
         &.sub-title {
             font-size: 13px;
             color: #777;
+        }
+
+        .main-title {
+            font-size: 13px;
+            color: #6ec580;
         }
     }
 }
@@ -296,14 +307,18 @@
         &:hover {
             background-color: #9be5aa;
             color: white;
+
+            .fas {
+                color: white;
+            }
+
             transform: translateY(-3px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
 
-
-
-
-
+        .fas {
+            color: #9be5aa;
+        }
     }
 }
 
