@@ -2,88 +2,99 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import "./TableManageUser.scss";
 import * as action from "../../../store/actions";
-import { Pagination } from 'flowbite-react';
 
 class TableManageUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: [],
-            currentPage: 1,
-            usersPerPage: 10 // For example, 10 users per page
+            users: []
         };
     }
 
     async componentDidMount() {
-        await this.props.fetchAllUserRedux();
+        try {
+            await this.props.fetchAllUserRedux();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     componentDidUpdate(prevProps) {
         if (prevProps.users !== this.props.users) {
             this.setState({
                 users: this.props.users
-            });
+            })
+        }
+    }
+    handleDeleteUser = (user) => {
+        const confirmEdit = window.confirm(`Are you sure you want to edit user ${user.firstName} ${user.lastName}?`);
+        if (confirmEdit) {
+            this.props.deleteUser(user.id);
+        } else {
+            alert("Delete Failed!!");
         }
     }
 
-    handlePageChange = (page) => {
-        this.setState({ currentPage: page });
-    };
+    editUser = (user) => {
+        this.props.hanldeEditUserRedux(user);
+    }
 
     render() {
-        const { users, currentPage, usersPerPage } = this.state;
-
-        // Calculate users to display on the current page
-        const indexOfLastUser = currentPage * usersPerPage;
-        const indexOfFirstUser = indexOfLastUser - usersPerPage;
-        const currentUsers = users.slice(indexOfFirstUser, indexOfLastUser);
+        let users = this.props.users; // Access users from props
 
         return (
-            <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Email</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Address</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {currentUsers.map((user, index) => (
+            <table>
+                <thead>
+                    <tr>
+                        <th>Email</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Address</th>
+                        <th>Gender</th>
+                        <th>Position</th>
+                        <th>Role</th>
+                        <th>PhoneNumber</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {users && users.length > 0 ? (
+                        users.map((user, index) => (
                             <tr key={index}>
                                 <td>{user.email}</td>
                                 <td>{user.firstName}</td>
                                 <td>{user.lastName}</td>
                                 <td>{user.address}</td>
+                                <td>{user.gender}</td>
+                                <td>{user.positionId}</td>
+                                <td>{user.roleId}</td>
+                                <td>{user.phonenumber}</td>
                                 <td>
-                                    <button className='btn btn-primary'>Edit</button>
+                                    <button onClick={() => this.editUser(user)} className='btn btn-primary'>Edit</button>
                                     <button onClick={() => this.handleDeleteUser(user)} className='btn btn-danger'>Delete</button>
                                 </td>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
-
-                {/* Pagination Component */}
-                <Pagination
-                    currentPage={currentPage}
-                    totalPages={Math.ceil(users.length / usersPerPage)}
-                    onPageChange={this.handlePageChange}
-                />
-            </div>
+                        ))
+                    ) : (
+                        <tr>
+                            <td colSpan="5">No users found</td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    users: state.admin.users,
+    lang: state.app.language,
+    users: state.admin.users // Map users from Redux state
 });
 
 const mapDispatchToProps = dispatch => ({
     fetchAllUserRedux: () => dispatch(action.fetchAllUsersStart()),
     deleteUser: (id) => dispatch(action.deleteUser(id))
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableManageUser);

@@ -61,6 +61,7 @@
         "position": "Position",
         "image": "Image",
         "other": "Orther",
-        "select-gender": "Select Gender"
+        "select-gender": "Select Gender",
+        "edit-user": "Edit User"
     }
 }

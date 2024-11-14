@@ -61,6 +61,7 @@
         "position": "Vị Trí",
         "image": "Ảnh",
         "other": "Khác",
-        "select-gender": "Chọn Giới Tính"
+        "select-gender": "Chọn Giới Tính",
+        "edit-user": "Sửa Người Dùng"
     }
 }

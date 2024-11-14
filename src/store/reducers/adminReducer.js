@@ -76,17 +76,17 @@ const adminReducer = (state = initialState, action) => {
             return {
                 ...state
             };
-        // case actionTypes.FETCH_DELETE_USERS_SUCCESS:
-        //     state.users = action.users
-        //     return {
-        //         ...state
-        //     };
+        case actionTypes.FETCH_EDIT_USERS_SUCCESS:
+            state.users = action.users
+            return {
+                ...state
+            };
 
-        // case actionTypes.FETCH_DELETE_USERS_FAILD:
-        //     state.users = [];
-        //     return {
-        //         ...state
-        //     };
+        case actionTypes.FETCH_EDIT_USERS_FAILD:
+            state.users = [];
+            return {
+                ...state
+            };
         default:
             return state;
     }
