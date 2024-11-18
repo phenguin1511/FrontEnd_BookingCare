@@ -4,13 +4,14 @@ import Slider from 'react-slick';
 import "./OutstanDoctor.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import * as action from '../../../store/actions';
+import { LANGUAGES } from '../../../utils';
 
 const NextArrow = (props) => {
     const { onClick } = props;
     return (
         <div className="arrow next" onClick={onClick}>
-            <i class="fa-regular fa-circle-right"></i>
+            <i className="fa-regular fa-circle-right"></i>
         </div>
     );
 };
@@ -19,12 +20,34 @@ const PrevArrow = (props) => {
     const { onClick } = props;
     return (
         <div className="arrow prev" onClick={onClick}>
-            <i class="fa-regular fa-circle-left"></i>
+            <i className="fa-regular fa-circle-left"></i>
         </div>
     );
 };
 
 class OutstanDoctor extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            doctors: [],
+            language: ''
+        };
+    }
+
+    componentDidMount() {
+        this.props.loadTopDoctors(10); // Load top 10 doctors từ Redux
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.doctors !== this.props.doctors || prevProps.language !== this.props.language) {
+            this.setState({
+                doctors: this.props.doctors,
+                language: this.props.language,
+            });
+        }
+    }
+
+
     render() {
         let settings = {
             dots: true,
@@ -36,6 +59,9 @@ class OutstanDoctor extends Component {
             prevArrow: <PrevArrow />
         };
 
+        const { doctors } = this.state;
+        const { language } = this.state;
+
         return (
             <React.Fragment>
                 <div className='section-outstanDoctor'>
@@ -45,40 +71,55 @@ class OutstanDoctor extends Component {
                     </div>
 
                     <Slider className='slider' {...settings}>
-                        <div className='outstanDoctor-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='outstanDoctor 1' className='outstanDoctor-image' />
-                            <p>outstanDoctor 1</p>
-                        </div>
+                        {doctors && doctors.length > 0 ? (
+                            doctors.map((doctor, index) => {
+                                let imageBase64 = '';
+                                if (doctor.image.data) {
+                                    imageBase64 = new Buffer(doctor.image.data, 'base64').toString('binary')
+                                }
 
-                        <div className='outstanDoctor-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='outstanDoctor 1' className='outstanDoctor-image' />
-                            <p>outstanDoctor 1</p>
-                        </div>
-
-                        <div className='outstanDoctor-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='outstanDoctor 1' className='outstanDoctor-image' />
-                            <p>outstanDoctor 1</p>
-                        </div>
-                        <div className='outstanDoctor-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='outstanDoctor 1' className='outstanDoctor-image' />
-                            <p>outstanDoctor 1</p>
-                        </div>
+                                return (
+                                    <div className='outstanDoctor-item' key={index}>
+                                        <div
+                                            className='outstanDoctor-image'
+                                            style={{
+                                                backgroundImage: `url(${imageBase64})`,
+                                            }}
+                                        ></div>
+                                        {language === LANGUAGES.EN ? (
+                                            <p>{`${doctor.positionData.valueEn}: ${doctor.firstName} ${doctor.lastName}`}</p>
+                                        ) : (
+                                            <p>{`${doctor.positionData.valueVn}: ${doctor.firstName} ${doctor.lastName}`}</p>
+                                        )}
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <div className="no-data">
+                                <p>Không có dữ liệu bác sĩ nổi bật</p>
+                            </div>
+                        )}
                     </Slider>
+
                 </div>
             </React.Fragment>
         );
     }
+
 }
 
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
-        language: state.app.language
+        language: state.app.language,
+        doctors: state.admin.doctors // Lấy danh sách doctors từ Redux
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {};
+    return {
+        loadTopDoctors: (limit) => dispatch(action.fetchTopDoctor(limit)) // Gọi action fetchTopDoctor
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(OutstanDoctor);

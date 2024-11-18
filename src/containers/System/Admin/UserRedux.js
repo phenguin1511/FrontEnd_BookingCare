@@ -2,9 +2,10 @@ import React, { Component, Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import "./UserRedux.scss";
-import { LANGUAGES, CRUD_ACTION } from "../../../utils"
+import { LANGUAGES, CRUD_ACTION, CommonUtils } from "../../../utils"
 import * as action from "../../../store/actions"
 import TableManageUser from './TableManageUser';
+
 
 class UserRedux extends Component {
     constructor(props) {
@@ -36,52 +37,64 @@ class UserRedux extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (
-            prevProps.genderRedux !== this.props.genderRedux ||
-            prevProps.positionRedux !== this.props.positionRedux ||
-            prevProps.roleRedux !== this.props.roleRedux
-        ) {
+        if (prevProps.genderRedux !== this.props.genderRedux) {
             this.setState({
                 genderArr: this.props.genderRedux,
-                positionArr: this.props.positionRedux,
-                roleArr: this.props.roleRedux,
-                gender: this.props.genderRedux.length > 0 ? this.props.genderRedux[0].key : '',
-                position: this.props.positionRedux.length > 0 ? this.props.positionRedux[0].key : '',
-                role: this.props.roleRedux.length > 0 ? this.props.roleRedux[0].key : '',
+                gender: this.props.genderRedux.length > 0 ? this.props.genderRedux[0].keyMap : '',
             });
         }
-        if (prevProps.users !== this.props.users) {
+
+        if (prevProps.positionRedux !== this.props.positionRedux) {
             this.setState({
-                email: '',
-                password: '',
-                firstName: '',
-                lastName: '',
-                address: '',
-                gender: '',
-                position: '',
-                phonenumber: '',
-                role: '',
-                genderArr: [0],
-                roleArr: [0],
-                positionArr: [0],
-                avatar: '',
-                imagePreviewUrl: '',
-                action: CRUD_ACTION.CREATE
-            })
+                positionArr: this.props.positionRedux,
+                position: this.props.positionRedux.length > 0 ? this.props.positionRedux[0].keyMap : '',
+            });
+        }
+
+        if (prevProps.roleRedux !== this.props.roleRedux) {
+            this.setState({
+                roleArr: this.props.roleRedux,
+                role: this.props.roleRedux.length > 0 ? this.props.roleRedux[0].keyMap : '',
+            });
+        }
+
+        if (prevProps.users !== this.props.users) {
+            this.resetUserForm();
         }
     }
 
-    handleOnchangeImage = (event) => {
-        let data = event.target.files;
-        let file = data[0];
-        if (file) {
-            let objectUrl = URL.createObjectURL(file)
+    resetUserForm = () => {
+        this.setState({
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: '',
+            address: '',
+            gender: '',
+            position: '',
+            phonenumber: '',
+            role: '',
+            avatar: '',
+            imagePreviewUrl: '',
+            action: CRUD_ACTION.CREATE,
+        });
+    };
+
+    handleOnchangeImage = async (event) => {
+        const data = event.target.files;
+        if (data && data[0]) {
+            const file = data[0];
+            const base64 = await CommonUtils.getBase64(file);
+            const objectUrl = URL.createObjectURL(file);
             this.setState({
+                avatar: base64,
                 imagePreviewUrl: objectUrl,
-                avatar: file
-            })
+            });
+        } else {
+            alert("No file selected!");
         }
     };
+
 
     checkValidateInput = () => {
         let isValid = true;
@@ -122,14 +135,17 @@ class UserRedux extends Component {
                     gender: this.state.gender,
                     position: this.state.position,
                     phonenumber: this.state.phonenumber,
-                    role: this.state.role
+                    role: this.state.role,
+                    avatar: this.state.avatar,
                 });
             } else {
                 console.log("Form validation failed");
             }
         }
+
         if (action === CRUD_ACTION.EDIT) {
             if (this.checkValidateInput()) {
+                // Make sure role and position are passed correctly
                 this.props.editUserAction({
                     id: this.state.userId,
                     email: this.state.email,
@@ -138,20 +154,22 @@ class UserRedux extends Component {
                     lastName: this.state.lastName,
                     address: this.state.address,
                     gender: this.state.gender,
-                    position: this.state.positionId,
+                    position: this.state.position,  // Ensure position is passed here
                     phonenumber: this.state.phonenumber,
-                    role: this.state.roleId,
-                    image: this.state.avatar,
+                    role: this.state.role,  // Ensure role is passed here
+                    avatar: this.state.avatar,
                 });
             } else {
                 console.log("Form validation failed");
             }
         }
-
     };
 
     hanldeEditUserRedux = (user) => {
-        console.log(user)
+        let imageBase64 = '';
+        if (user.image) {
+            imageBase64 = new Buffer(user.image, 'base64').toString('binary')
+        }
         this.setState({
             userId: user.id,
             email: user.email,
@@ -163,7 +181,8 @@ class UserRedux extends Component {
             position: user.positionId,
             phonenumber: user.phonenumber,
             role: user.roleId,
-            avatar: user.image,
+            avatar: user.avatar,
+            imagePreviewUrl: imageBase64,
             action: CRUD_ACTION.EDIT
         })
     }
@@ -172,7 +191,7 @@ class UserRedux extends Component {
         const { genderArr, positionArr, roleArr } = this.state;
         let language = this.props.lang;
         let isLoadingGender = this.props.isLoadingGender;
-
+        console.log(this.state)
         return (
             <Fragment>
                 <div className="user-redux-container">
@@ -260,7 +279,7 @@ class UserRedux extends Component {
                                     >
                                         {genderArr && genderArr.length > 0 &&
                                             genderArr.map((item, index) => (
-                                                <option key={index} value={item.key}>
+                                                <option key={index} value={item.keyMap}>
                                                     {language === LANGUAGES.VI ? item.valueVn : item.valueEn}
                                                 </option>
                                             ))}
@@ -276,7 +295,7 @@ class UserRedux extends Component {
                                     >
                                         {roleArr && roleArr.length > 0 &&
                                             roleArr.map((item, index) => (
-                                                <option key={index} value={item.key}>
+                                                <option key={index} value={item.keyMap}>
                                                     {language === LANGUAGES.VI ? item.valueVn : item.valueEn}
                                                 </option>
                                             ))}
@@ -313,7 +332,7 @@ class UserRedux extends Component {
                                     >
                                         {positionArr && positionArr.length > 0 &&
                                             positionArr.map((item, index) => (
-                                                <option key={index} value={item.key}>
+                                                <option key={index} value={item.keyMap}>
                                                     {language === LANGUAGES.VI ? item.valueVn : item.valueEn}
                                                 </option>
                                             ))}

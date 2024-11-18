@@ -1,5 +1,5 @@
 import actionTypes from './actionTypes';
-import { getAllCodeService, getAllUsers, handleAddUser, deleteUserService, editUserService } from '../../services/userService';
+import { getAllCodeService, getAllUsers, handleAddUser, deleteUserService, editUserService, getTopDoctorHomeService } from '../../services/userService';
 import { toast } from 'react-toastify';
 // export const fetchGenderStart = () => ({
 //     type: actionTypes.FETCH_GENDER_START
@@ -117,7 +117,7 @@ export const fetchAllUsersStart = () => {
     return async (dispatch, getState) => {
         try {
             let res = await getAllUsers("ALL");
-            console.log(res);
+
             if (res && res.data.errCode === 0) {
                 toast.success("Get All User Success!!");
                 dispatch(fetchAllUserSuccess(res.data.users.reverse()));
@@ -197,4 +197,33 @@ export const editUserSuccess = (users) => ({
 
 export const editUserFailed = () => ({
     type: actionTypes.FETCH_EDIT_USERS_FAILED
+})
+
+
+export const fetchTopDoctor = (limit) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getTopDoctorHomeService(limit);
+            if (res && res.data.errCode === 0) {
+                toast.success("Get Top Doctor Success!!");
+                dispatch(fetchTopDoctorSuccess(res.data.data));
+            } else {
+                toast.error("Get Top Doctor Error!!");
+                dispatch(fetchTopDoctorFailed());
+            }
+        } catch (error) {
+            dispatch(fetchTopDoctorFailed());
+            console.log(error)
+        }
+    }
+}
+
+export const fetchTopDoctorSuccess = (doctors) => ({
+    type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
+    doctors: doctors,
+
+})
+
+export const fetchTopDoctorFailed = () => ({
+    type: actionTypes.FETCH_TOP_DOCTORS_FAILED,
 })

@@ -24,7 +24,11 @@ class TableManageUser extends Component {
             this.setState({
                 users: this.props.users
             })
+            this.props.getGenderStart();
+            this.props.getPositionStart();
+            this.props.getRoleStart();
         }
+
     }
     handleDeleteUser = (user) => {
         const confirmEdit = window.confirm(`Are you sure you want to edit user ${user.firstName} ${user.lastName}?`);
@@ -37,6 +41,7 @@ class TableManageUser extends Component {
 
     editUser = (user) => {
         this.props.hanldeEditUserRedux(user);
+        console.log(user)
     }
 
     render() {
@@ -93,8 +98,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
     fetchAllUserRedux: () => dispatch(action.fetchAllUsersStart()),
-    deleteUser: (id) => dispatch(action.deleteUser(id))
-
+    deleteUser: (id) => dispatch(action.deleteUser(id)),
+    getGenderStart: () => dispatch(action.fetchGenderStart()),
+    getPositionStart: () => dispatch(action.fetchPositionStart()),
+    getRoleStart: () => dispatch(action.fetchRoleStart()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableManageUser);
