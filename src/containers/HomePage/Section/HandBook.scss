@@ -1,46 +1,46 @@
 .section-handbook {
-    height: 430px;
+    height          : 430px;
     background-color: #fdfafa;
-    padding: 20px;
-    position: relative;
-    border-radius: 12px; // Adds rounded corners to the section
-    margin-top: 100px;
+    padding         : 20px;
+    position        : relative;
+    border-radius   : 12px; // Adds rounded corners to the section
+    margin-top      : 100px;
 
     .slider {
         margin: 0 80px;
     }
 
     .handbook-title {
-        display: flex;
+        display        : flex;
         justify-content: space-between;
-        align-items: center;
-        margin-bottom: 20px;
-        padding: 0 25px;
+        align-items    : center;
+        margin-bottom  : 20px;
+        padding        : 0 25px;
 
         h2 {
-            color: #4e4e4b;
-            font-weight: 700;
-            font-size: 24px;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+            color         : #4e4e4b;
+            font-weight   : 700;
+            font-size     : 24px;
+            text-shadow   : 2px 2px 5px rgba(0, 0, 0, 0.1);
             letter-spacing: 1px; // Adds a subtle spacing for a polished look
         }
 
         .btn-viewmore {
             background-color: #6ed4a4;
-            color: #fff;
-            padding: 10px 18px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
-            transition: background-color 0.3s ease, transform 0.3s;
+            color           : #fff;
+            padding         : 10px 18px;
+            border-radius   : 50px;
+            font-size       : 16px;
+            font-weight     : 600;
+            text-align      : center;
+            cursor          : pointer;
+            box-shadow      : 0px 6px 15px rgba(0, 0, 0, 0.1);
+            transition      : background-color 0.3s ease, transform 0.3s;
 
             &:hover {
                 background-color: #4ba586;
-                box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.2);
-                transform: scale(1.08);
+                box-shadow      : 0px 8px 20px rgba(0, 0, 0, 0.2);
+                transform       : scale(1.08);
             }
 
             &:active {
@@ -51,19 +51,19 @@
 
     .handbook-item {
         background-color: #fff;
-        padding: 15px;
-        border-radius: 10px;
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-        margin: 0 10px; // Adds space between items
-        transition: transform 0.3s, box-shadow 0.3s;
-        display: flex !important;
-        align-items: center;
-        cursor: pointer;
+        padding         : 15px;
+        border-radius   : 10px;
+        box-shadow      : 0 6px 12px rgba(0, 0, 0, 0.1);
+        margin          : 0 10px; // Adds space between items
+        transition      : transform 0.3s, box-shadow 0.3s;
+        display         : flex !important;
+        align-items     : center;
+        cursor          : pointer;
 
 
 
         &:hover {
-            transform: translateY(-5px) scale(1.05);
+            transform : translateY(-5px) scale(1.05);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
 
@@ -73,29 +73,29 @@
 
         .content_handbook {
             margin-left: 15px;
-            width: 60%;
+            width      : 60%;
 
             h4 {
-                color: #333;
-                font-weight: 600;
-                margin-bottom: 8px;
-                font-size: 18px;
+                color         : #333;
+                font-weight   : 600;
+                margin-bottom : 8px;
+                font-size     : 18px;
                 letter-spacing: 0.5px;
             }
 
             p {
-                color: #666;
-                font-size: 14px;
+                color        : #666;
+                font-size    : 14px;
                 margin-bottom: 0;
             }
         }
 
         .handbook-image {
-            width: 40%;
-            height: 220px;
-            object-fit: cover;
+            width        : 40%;
+            height       : 220px;
+            object-fit   : cover;
             border-radius: 8px;
-            transition: transform 0.3s;
+            transition   : transform 0.3s;
 
             &:hover {
                 transform: scale(1.1);
@@ -104,13 +104,13 @@
     }
 
     .arrow {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 40px;
-        color: #6ed4a4;
-        cursor: pointer;
-        z-index: 1;
+        position  : absolute;
+        top       : 50%;
+        transform : translateY(-50%);
+        font-size : 40px;
+        color     : #6ed4a4;
+        cursor    : pointer;
+        z-index   : 1;
         transition: color 0.3s;
 
         &.next {

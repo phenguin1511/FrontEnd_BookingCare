@@ -6,6 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import { FormattedMessage } from 'react-intl';
 import { LANGUAGES } from "../../utils"
 import { changeLanguageApp } from '../../store/actions';
+import { withRouter } from 'react-router-dom/cjs/react-router-dom.min';
 class HomeHeader extends Component {
     constructor(props) {
         super(props);
@@ -24,16 +25,20 @@ class HomeHeader extends Component {
     changeLanguage = (language) => {
         this.props.changeLanguageAppRedux(language);
     }
-
+    returnToHome = () => {
+        if (this.props.history) {
+            this.props.history.push(`/home`)
+        }
+    }
     render() {
         return (
 
-            <React.Fragment>
+            < React.Fragment >
                 <div className="homeHeader-container">
                     <div className='home-header-content'>
                         <div className='header-content-left'>
                             <i className="fas fa-bars bars-header"></i>
-                            <div className='logo-image'></div>
+                            <div className='logo-image' onClick={() => this.returnToHome()}></div>
                         </div>
                         <div className='header-content-center'>
                             <div className='child-content'>
@@ -80,49 +85,51 @@ class HomeHeader extends Component {
                         </div>
                     </div>
                 </div>
-
-                <div className='homeHeader-banner'>
-                    <div className='banner-overlay'>
-                        <div className='banner-content'>
-                            <h1 className='title-banner'><FormattedMessage id="home-header.takecareofyourhealth" /></h1>
-                            <p className='title2-banner'><FormattedMessage id="home-header.findthebestdoctorsandmedicalservices" /></p>
-                            <div className='search-banner'>
-                                <FormattedMessage id="home-header.searchmedicalservices">
-                                    {(placeholder) => (
-                                        <input
-                                            type="text"
-                                            placeholder={placeholder}
-                                            className="search-input"
-                                        />
-                                    )}
-                                </FormattedMessage>
-                                <button className='search-button'><FormattedMessage id="home-header.search" /></button>
-                            </div>
-                            <div className="options-banner">
-                                <button className="option-button">
-                                    <i className="fas fa-stethoscope"></i> <FormattedMessage id="home-header.specialistexamination" />
-                                </button>
-                                <button className="option-button">
-                                    <i className="fas fa-video"></i> <FormattedMessage id="home-header.remoteexamination" />
-                                </button>
-                                <button className="option-button">
-                                    <i className="fas fa-heart"></i> <FormattedMessage id="home-header.generalhealthcheck" />
-                                </button>
-                                <button className="option-button">
-                                    <i className="fas fa-flask"></i> <FormattedMessage id="home-header.medicaltest" />
-                                </button>
-                                <button className="option-button">
-                                    <i className=" fas fa-solid fa-brain"></i> <FormattedMessage id="home-header.mentalhealth" />
-                                </button>
-                                <button className="option-button">
-                                    <i className="fas fa-solid fa-tooth"></i> <FormattedMessage id="home-header.dentalexamination" />
-                                </button>
+                {
+                    this.props.isShowBanner === true && <div className='homeHeader-banner' >
+                        <div className='banner-overlay'>
+                            <div className='banner-content'>
+                                <h1 className='title-banner'><FormattedMessage id="home-header.takecareofyourhealth" /></h1>
+                                <p className='title2-banner'><FormattedMessage id="home-header.findthebestdoctorsandmedicalservices" /></p>
+                                <div className='search-banner'>
+                                    <FormattedMessage id="home-header.searchmedicalservices">
+                                        {(placeholder) => (
+                                            <input
+                                                type="text"
+                                                placeholder={placeholder}
+                                                className="search-input"
+                                            />
+                                        )}
+                                    </FormattedMessage>
+                                    <button className='search-button'><FormattedMessage id="home-header.search" /></button>
+                                </div>
+                                <div className="options-banner">
+                                    <button className="option-button">
+                                        <i className="fas fa-stethoscope"></i> <FormattedMessage id="home-header.specialistexamination" />
+                                    </button>
+                                    <button className="option-button">
+                                        <i className="fas fa-video"></i> <FormattedMessage id="home-header.remoteexamination" />
+                                    </button>
+                                    <button className="option-button">
+                                        <i className="fas fa-heart"></i> <FormattedMessage id="home-header.generalhealthcheck" />
+                                    </button>
+                                    <button className="option-button">
+                                        <i className="fas fa-flask"></i> <FormattedMessage id="home-header.medicaltest" />
+                                    </button>
+                                    <button className="option-button">
+                                        <i className=" fas fa-solid fa-brain"></i> <FormattedMessage id="home-header.mentalhealth" />
+                                    </button>
+                                    <button className="option-button">
+                                        <i className="fas fa-solid fa-tooth"></i> <FormattedMessage id="home-header.dentalexamination" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                }
 
-            </React.Fragment>
+
+            </React.Fragment >
         );
     }
 }
@@ -141,4 +148,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HomeHeader);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HomeHeader));

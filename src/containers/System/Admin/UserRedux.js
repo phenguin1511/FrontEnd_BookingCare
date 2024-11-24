@@ -86,10 +86,14 @@ class UserRedux extends Component {
             const file = data[0];
             const base64 = await CommonUtils.getBase64(file);
             const objectUrl = URL.createObjectURL(file);
+
             this.setState({
                 avatar: base64,
                 imagePreviewUrl: objectUrl,
             });
+
+            // Reset giá trị của input file
+            event.target.value = null;
         } else {
             alert("No file selected!");
         }

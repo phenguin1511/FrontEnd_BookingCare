@@ -6,6 +6,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import * as action from '../../../store/actions';
 import { LANGUAGES } from '../../../utils';
+import { withRouter } from 'react-router';
 
 const NextArrow = (props) => {
     const { onClick } = props;
@@ -47,6 +48,10 @@ class OutstanDoctor extends Component {
         }
     }
 
+    handleViewDetailDoctor = (doctor) => {
+        console.log(doctor)
+        this.props.history.push(`/detail-doctor/${doctor.id}`)
+    }
 
     render() {
         let settings = {
@@ -79,7 +84,7 @@ class OutstanDoctor extends Component {
                                 }
 
                                 return (
-                                    <div className='outstanDoctor-item' key={index}>
+                                    <div className='outstanDoctor-item' key={index} onClick={() => this.handleViewDetailDoctor(doctor)}>
                                         <div
                                             className='outstanDoctor-image'
                                             style={{
@@ -122,4 +127,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(OutstanDoctor);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(OutstanDoctor));
