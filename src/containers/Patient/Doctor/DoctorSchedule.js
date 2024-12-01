@@ -23,8 +23,7 @@ class DoctorSchedule extends Component {
     }
     async componentDidMount() {
         let doctorId = this.props.info_doctor
-        let { language } = this.props;
-        let allDays = this.getArrDays(language);
+        let allDays = this.getArrDays(this.props.language);
         if (allDays && allDays.length > 0) {
             let res = await getScheduleDoctorByDate(doctorId, allDays[0].value);
             this.setState({
@@ -120,7 +119,6 @@ class DoctorSchedule extends Component {
     render() {
         const { allDays, timeSchedule, selectedDate } = this.state;
         const { language } = this.props;
-        console.log("Info Doctor", this.props.doctor)
         return (
 
             <Fragment>

@@ -6,7 +6,9 @@ import { LANGUAGES } from '../../../../utils';
 import ProfileDoctor from '../ProfileDoctor';
 import * as actions from "../../../../store/actions";
 import Select from 'react-select'
-
+import { toast } from 'react-toastify';
+import _ from 'lodash'
+import { postPatientBookingAppointment } from '../../../../services/userService';
 class BookingModal extends Component {
     constructor(props) {
         super(props);
@@ -19,12 +21,17 @@ class BookingModal extends Component {
             patientDistrict: '',
             patientReason: '',
             patientGender: '',
-            genderData: []
+            genderData: [],
         };
     }
+
     async componentDidMount() {
         this.props.fetchGenderStart()
-
+        let doctorId = this.props.dataScheduleModal.doctorId
+        this.setState({
+            doctorId: doctorId,
+            date: this.props.dataScheduleModal.date
+        })
     }
     builDataGender = (data) => {
         let result = [];
@@ -40,18 +47,21 @@ class BookingModal extends Component {
         }
     }
     async componentDidUpdate(prevProps) {
-        if (prevProps.language !== this.props.language) {
-            if (this.props.genders.length > 0) {
+        if (prevProps.language !== this.props.language || prevProps.genders !== this.props.genders) {
+            if (this.props.genders && this.props.genders.length > 0) {
                 this.setState({
                     genders: this.builDataGender(this.props.genders)
-                })
+                });
             }
         }
-        if (prevProps.genders !== this.props.genders) {
-            if (this.props.genders.length > 0) {
+        if (prevProps.dataScheduleModal !== this.props.dataScheduleModal) {
+            if (this.props.dataScheduleModal && !_.isEmpty(this.props.dataScheduleModal)) {
+                const { doctorId, timeType, date } = this.props.dataScheduleModal;
                 this.setState({
-                    genders: this.builDataGender(this.props.genders)
-                })
+                    doctorId,
+                    timeType,
+                    date
+                });
             }
         }
     }
@@ -67,6 +77,7 @@ class BookingModal extends Component {
     handleToggle = () => {
         this.props.handleCloseModal(); // Gọi hàm từ props để thay đổi trạng thái isOpen
     };
+
     formatDate = (timestamp, time) => {
         const date = new Date(parseInt(timestamp));
         const day = date.getDate().toString().padStart(2, '0');
@@ -84,58 +95,101 @@ class BookingModal extends Component {
         }
     };
 
-    handleConfirmBooking = () => {
-        const errors = this.validateForm();
-        if (Object.keys(errors).length > 0) {
-            this.setState({ errors }); // Cập nhật trạng thái lỗi
-            return;
+    builDoctorName = () => {
+        const { dataScheduleModal, language } = this.props;
+        if (dataScheduleModal && !_.isEmpty(dataScheduleModal)) {
+            let name = language === LANGUAGES.VI ? `${dataScheduleModal.doctorData.lastName} ${dataScheduleModal.doctorData.firstName}` : `${dataScheduleModal.doctorData.lastName} ${dataScheduleModal.doctorData.firstName}`
+            return name;
         }
-        alert("Dữ liệu hợp lệ. Tiến hành đặt lịch.");
+    }
+
+    builDateString = (dateInput) => {
+        const date = new Date(parseInt(dateInput));
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0');
+        const year = date.getFullYear();
+        const dayOfWeek = date.toLocaleDateString(
+            this.props.language === LANGUAGES.VI ? 'vi-VN' : 'en-US',
+            { weekday: 'long' }
+        );
+
+        if (this.props.language === LANGUAGES.VI) {
+            return `${day}/${month}/${year} ${dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1)}`;
+        } else {
+            return `${month}/${day}/${year} ${dayOfWeek.charAt(0).toUpperCase() + dayOfWeek.slice(1)}`;
+        }
+    }
+    // Bổ sung xử lý trong hàm handleConfirmBooking
+    handleConfirmBooking = async () => {
+        try {
+            const {
+                patientYearOfBirth, patientName, patientPhone,
+                patientEmail, patientCity, patientDistrict,
+                patientReason, patientGender, doctorId, date
+            } = this.state;
+            let doctorName = this.builDoctorName();
+            let dateString = this.builDateString(date);
+            const { dataScheduleModal, language } = this.props;
+            const { timeTypeData } = dataScheduleModal || {};
+            let timeString = '';
+
+            if (timeTypeData) {
+                const time = language === LANGUAGES.VI ? timeTypeData.valueVn : timeTypeData.valueEn;
+                timeString = this.formatDate(date, time);
+            } else {
+                console.warn('timeTypeData is undefined');
+                toast.error('Error: Unable to retrieve appointment time.');
+                return;
+            }
+
+            if (!patientYearOfBirth || !patientName || !patientPhone || !patientEmail || !patientGender) {
+                toast.error('Please fill in all required fields!');
+                return;
+            }
+
+            const res = await postPatientBookingAppointment({
+                fullName: patientName,
+                phoneNumber: patientPhone,
+                email: patientEmail,
+                date: date,
+                address: patientCity,
+                addressDistrict: patientDistrict,
+                reason: patientReason,
+                gender: patientGender.value,
+                doctorId: doctorId,
+                language: this.props.language,
+                timeString: timeString,
+                doctorName: doctorName,
+                dateString: dateString
+            });
+
+            if (res && res.data.errCode === 0) {
+                toast.error(`Booking failed: ${res.data.errMessage}`);
+            } else if (res && res.data.errCode === 1) {
+                toast.success(`Booking: ${res.data.errMessage}`);
+                this.setState({
+                    patientYearOfBirth: '',
+                    patientName: '',
+                    patientPhone: '',
+                    patientEmail: '',
+                    patientCity: '',
+                    patientDistrict: '',
+                    patientReason: '',
+                    patientGender: null,
+                    timeType: null,
+                });
+                this.props.handleCloseModal();
+            } else {
+                toast.error('Booking failed: Unknown error occurred.');
+            }
+        } catch (error) {
+            console.error('Error during booking:', error);
+            toast.error('Booking failed: Unable to connect to the server.');
+        }
     };
 
 
-    validateForm = () => {
-        const errors = {};
-        const {
-            patientName,
-            patientPhone,
-            patientEmail,
-            patientYearOfBirth,
-            patientCity,
-            patientDistrict,
-            patientReason,
-            patientGender,
-        } = this.state;
-        if (!patientName.trim()) {
-            errors.patientName = "Họ và tên không được để trống.";
-        }
-        if (!patientPhone.trim()) {
-            errors.patientPhone = "Số điện thoại không được để trống.";
-        } else if (!/^\d{10}$/.test(patientPhone)) {
-            errors.patientPhone = "Số điện thoại không hợp lệ. Phải là 10 chữ số.";
-        }
-        if (!patientEmail.trim()) {
-            errors.patientEmail = "Email không được để trống.";
-        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(patientEmail)) {
-            errors.patientEmail = "Email không hợp lệ.";
-        }
-        if (!patientYearOfBirth) {
-            errors.patientYearOfBirth = "Năm sinh không được để trống.";
-        }
-        if (!patientCity.trim()) {
-            errors.patientCity = "Thành phố không được để trống.";
-        }
-        if (!patientDistrict.trim()) {
-            errors.patientDistrict = "Quận/Huyện không được để trống.";
-        }
-        if (!patientReason.trim()) {
-            errors.patientReason = "Lý do khám không được để trống.";
-        }
-        if (!patientGender) {
-            errors.patientGender = "Vui lòng chọn giới tính.";
-        }
-        return errors;
-    };
+
 
     render() {
         const {
@@ -148,13 +202,12 @@ class BookingModal extends Component {
             patientReason,
             patientGender,
             genders,
-            errors
+            errors,
+            doctorId, timeType, date
         } = this.state;
-
-        console.log(this.state)
         const { dataScheduleModal, language } = this.props;
-        const { doctorId } = this.props.dataScheduleModal
-        const { date, timeTypeData } = dataScheduleModal || {};
+        const { timeTypeData } = dataScheduleModal || {};
+        console.log(dataScheduleModal)
         let time = '';
         if (timeTypeData) {
             time = language === LANGUAGES.VI ? timeTypeData.valueVn : timeTypeData.valueEn;
@@ -194,7 +247,7 @@ class BookingModal extends Component {
                                         value={patientName}
                                         onChange={this.handleInputChange}
                                     />
-                                    {errors?.patientName && <span className="error-text">{errors.patientName}</span>}
+
                                 </div>
                                 <div className="form-group">
                                     <label>Giới tính</label>
@@ -213,7 +266,7 @@ class BookingModal extends Component {
                                         value={patientPhone}
                                         onChange={this.handleInputChange}
                                     />
-                                    {errors?.patientPhone && <span className="error-text">{errors.patientPhone}</span>}
+
                                 </div>
                                 <div className="form-group">
                                     <label>Email</label>
@@ -224,7 +277,6 @@ class BookingModal extends Component {
                                         value={patientEmail}
                                         onChange={this.handleInputChange}
                                     />
-                                    {errors?.patientEmail && <span className="error-text">{errors.patientEmail}</span>}
                                 </div>
                                 <div className="form-group">
                                     <label>Năm sinh</label>
@@ -235,7 +287,7 @@ class BookingModal extends Component {
                                         value={patientYearOfBirth}
                                         onChange={this.handleInputChange}
                                     />
-                                    {errors?.patientYearOfBirth && <span className="error-text">{errors.patientYearOfBirth}</span>}
+
                                 </div>
                                 <div className="form-group">
                                     <label>Thành phố</label>
@@ -246,7 +298,7 @@ class BookingModal extends Component {
                                         value={patientCity}
                                         onChange={this.handleInputChange}
                                     />
-                                    {errors?.patientCity && <span className="error-text">{errors.patientCity}</span>}
+
                                 </div>
                                 <div className="form-group">
                                     <label>Quận / Huyện</label>
@@ -257,9 +309,7 @@ class BookingModal extends Component {
                                         value={patientDistrict}
                                         onChange={this.handleInputChange}
                                     />
-                                    {errors?.patientDistrict && <span className="error-text">{errors.patientDistrict}</span>}
-                                </div>
-                                <div className="form-group">
+
                                     <label>Lý do khám</label>
                                     <textarea
                                         className="form-control"
@@ -267,7 +317,7 @@ class BookingModal extends Component {
                                         value={patientReason}
                                         onChange={this.handleInputChange}
                                     ></textarea>
-                                    {errors?.patientReason && <span className="error-text">{errors.patientReason}</span>}
+
                                 </div>
                                 <div className="form-group">
                                     <label>Hình thức thanh toán</label>
