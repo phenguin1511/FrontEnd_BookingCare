@@ -5,24 +5,27 @@ import "./DetailDoctor.scss"
 import HomeFooter from '../../HomePage/HomeFooter';
 import * as actions from "../../../store/actions";
 import { LANGUAGES } from '../../../utils';
+import DoctorSchedule from './DoctorSchedule';
+import DoctorExtraInfo from './DoctorExtraInfo';
 
 class DetailDoctor extends Component {
     constructor(props) {
         super(props);
         this.state = {
             showPriceDetail: false,
-            info_doctor: []
+            info_doctor: [],
+            currentDoctorId: -1
         }
     }
 
 
-    togglePriceDetail = () => {
-        this.setState({ showPriceDetail: !this.state.showPriceDetail });
-    };
 
     async componentDidMount() {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             let id = this.props.match.params.id;
+            this.setState({
+                currentDoctorId: id
+            })
             await this.props.fetchDetailInfoDoctor(id);
         }
         if (this.props.doctor) {
@@ -75,58 +78,30 @@ class DetailDoctor extends Component {
                             </p>
                         </div>
                     </div>
-
                     <div className="schedule-doctor">
                         <h2>Lịch Khám</h2>
                         <div className="schedule-content">
-                            <div className="schedule-left">
-                                <div className="calendar">
-                                    <h3>Chọn ngày khám</h3>
-                                    <input type="date" className="date-picker" />
-                                </div>
-                                <div className="daily-schedule">
-                                    <h3>Lịch khám trong ngày</h3>
-                                    <ul>
-                                        <li>08:00 AM - 08:30 AM</li>
-                                        <li>09:00 AM - 09:30 AM</li>
-                                        <li>10:00 AM - 10:30 AM</li>
-                                        <li>11:00 AM - 11:30 AM</li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div className="schedule-right">
-                                <div className="clinic-info">
-                                    <h3>Địa chỉ khám</h3>
-                                    <p>Bệnh viện Đại học Y Dược TP.HCM</p>
-                                    <p>215 Hồng Bàng, Phường 11, Quận 5, TP.HCM</p>
-                                </div>
-                                <div className="price-info">
-                                    <h3>Giá khám</h3>
-                                    <p className="price" onClick={this.togglePriceDetail}>
-                                        500.000đ <span className="price-detail">(Chi tiết)</span>
-                                    </p>
-                                    {this.state.showPriceDetail && (
-                                        <div className="price-modal">
-                                            <p>Chi tiết giá khám:</p>
-                                            <p>Giá cơ bản: 500.000đ</p>
-                                            <p>Giá thêm: 200.000đ</p>
-                                            <button onClick={this.togglePriceDetail}>Đóng</button>
-                                        </div>
-                                    )}
-                                </div>
-                            </div>
+                            <DoctorSchedule
+                                info_doctor={this.state.currentDoctorId}
+                            />
+                            <DoctorExtraInfo
+                                info_doctor={this.state.currentDoctorId}
+                            />
+                        </div>
+                    </div>
+                    <div className="detail-infor-doctor">
+                        <h2>About the Doctor</h2>
+                        <div>
+                            {info_doctor.Markdown && info_doctor.Markdown.contentHTML ? (
+                                <div
+                                    dangerouslySetInnerHTML={{ __html: info_doctor.Markdown.contentHTML }}
+                                />
+                            ) : (
+                                'Chưa có mô tả'
+                            )}
                         </div>
                     </div>
 
-                    <div className="detail-infor-doctor">
-                        <h2>About the Doctor</h2>
-                        <p>
-                            {info_doctor.Markdown && info_doctor.Markdown.contentMarkdown ?
-                                <span>{info_doctor.Markdown.contentMarkdown}</span>
-                                : 'Chưa có mô tả'
-                            }
-                        </p>
-                    </div>
 
                     <div className="comment-doctor">
                         <h2>Patient Reviews</h2>

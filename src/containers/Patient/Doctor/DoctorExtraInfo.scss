@@ -1,0 +1,140 @@
+.schedule-right {
+    flex         : 1;
+    background   : #ffffff;
+    padding      : 20px;
+    border-radius: 12px;
+    box-shadow   : 0 3px 8px rgba(0, 0, 0, 0.1);
+
+    h3 {
+        font-size    : 24px;
+        color        : #7f8c8d;
+        margin-bottom: 20px;
+        text-align   : center;
+        font-weight  : bold;
+    }
+
+    .clinic-info,
+    .price-info {
+        margin-bottom: 30px;
+
+        p {
+            font-size: 18px;
+            color    : #2c3e50;
+            margin   : 8px 0;
+        }
+    }
+
+    .price-info {
+        .price {
+            font-size      : 28px;
+            color          : #e74c3c;
+            font-weight    : bold;
+            cursor         : pointer;
+            text-align     : center;
+            margin-top     : 20px;
+            display        : flex;
+            justify-content: center;
+            align-items    : center;
+
+            .price-detail {
+                font-size      : 16px;
+                color          : #34495e;
+                text-decoration: underline;
+                margin-left    : 8px;
+                transition     : color 0.3s ease;
+
+                &:hover {
+                    color: #2c3e50;
+                }
+            }
+
+            &:hover {
+                color: #c0392b;
+            }
+        }
+    }
+
+    .price-modal {
+        position        : fixed;
+        top             : 50%;
+        left            : 50%;
+        transform       : translate(-50%, -50%);
+        width           : 500px;
+        background-color: #ffffff;
+        padding         : 30px;
+        border-radius   : 16px;
+        box-shadow      : 0 8px 20px rgba(0, 0, 0, 0.2);
+        z-index         : 100;
+        animation       : fadeIn 0.3s ease;
+
+        h4 {
+            font-size    : 20px;
+            color        : #34495e;
+            margin-bottom: 20px;
+            font-weight  : bold;
+            text-align   : center;
+        }
+
+        p {
+            font-size: 18px;
+            color    : #7f8c8d;
+            margin   : 10px 0;
+
+            span {
+                font-weight: bold;
+                color      : #34495e;
+            }
+        }
+
+        button {
+            display         : block;
+            margin          : 20px auto 0;
+            padding         : 12px 24px;
+            background-color: #e74c3c;
+            color           : #ffffff;
+            border          : none;
+            border-radius   : 8px;
+            font-size       : 16px;
+            font-weight     : bold;
+            cursor          : pointer;
+            transition      : background-color 0.3s ease;
+
+            &:hover {
+                background-color: #c0392b;
+            }
+        }
+    }
+
+    .price-modal-overlay {
+        position  : fixed;
+        top       : 0;
+        left      : 0;
+        width     : 100%;
+        height    : 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index   : 99;
+        animation : fadeOverlay 0.3s ease;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity  : 0;
+        transform: translate(-50%, -40%);
+    }
+
+    to {
+        opacity  : 1;
+        transform: translate(-50%, -50%);
+    }
+}
+
+@keyframes fadeOverlay {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

@@ -1,0 +1,138 @@
+.schedule-doctor {
+    background   : #f9f9f9;
+    padding      : 30px;
+    border-radius: 15px;
+    box-shadow   : 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 40px;
+    transition   : all 0.3s ease;
+
+    h2 {
+        font-size    : 28px; // Tăng kích thước tiêu đề
+        font-weight  : bold;
+        color        : #2c3e50;
+        margin-bottom: 20px;
+        text-align   : center;
+        text-shadow  : 1px 1px 2px rgba(0, 0, 0, 0.1); // Thêm bóng cho tiêu đề
+    }
+
+    .schedule-content {
+        display  : flex;
+        flex-wrap: wrap;
+        gap      : 30px;
+
+        .schedule-left {
+            flex         : 1;
+            background   : #ffffff;
+            padding      : 20px;
+            border-radius: 12px;
+            box-shadow   : 0 3px 8px rgba(0, 0, 0, 0.1);
+            transition   : transform 0.2s ease, box-shadow 0.3s ease;
+
+            &:hover {
+                transform : scale(1.05); // Tăng kích thước khi hover
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); // Tăng bóng khi hover
+            }
+
+            h3 {
+                font-size    : 22px; // Tăng kích thước tiêu đề
+                color        : #34495e;
+                margin-bottom: 15px;
+                text-align   : center;
+                font-weight  : bold;
+                transition   : color 0.3s ease; // Thêm hiệu ứng chuyển màu
+            }
+
+            .calendar {
+                margin-bottom: 30px;
+
+                .date-picker {
+                    width           : 100%;
+                    padding         : 12px;
+                    font-size       : 16px;
+                    border          : 1px solid #ddd;
+                    border-radius   : 8px;
+                    margin-top      : 10px;
+                    background-color: #f7f7f7;
+                    transition      : border-color 0.3s ease;
+
+                    &:focus {
+                        border-color: #16a085; // Thay đổi màu viền khi focus
+                        box-shadow  : 0 0 5px rgba(22, 160, 133, 0.5); // Thêm bóng khi focus
+                    }
+                }
+            }
+
+            .daily-schedule {
+                margin-top: 20px;
+
+                h3 {
+                    font-size    : 18px;
+                    margin-bottom: 10px;
+                }
+
+                ul {
+                    list-style: none;
+                    padding   : 0;
+
+                    li {
+                        padding      : 10px;
+                        background   : #f4f4f4;
+                        border-radius: 8px;
+                        margin-bottom: 8px;
+                        font-size    : 16px;
+                        color        : #333;
+                        cursor       : pointer;
+                        transition   : background 0.3s ease, transform 0.2s ease; // Thêm hiệu ứng chuyển động
+
+                        &:hover {
+                            background: #16a085;
+                            color     : #fff;
+                            transform : translateY(-2px); // Di chuyển lên một chút khi hover
+                        }
+                    }
+                }
+
+                .book-free {
+                    margin-top     : 15px;
+                    display        : flex;
+                    align-items    : center;
+                    justify-content: center;
+                    background     : white;
+                    color          : black;
+                    font-style     : italic;
+                    font-size      : 12px;
+                    padding        : 12px 20px;
+                    border-radius  : 8px;
+                    cursor         : pointer;
+                    transition     : background 0.3s ease;
+
+                    &:hover {
+                        background: #e0e0e0; // Thay đổi màu nền khi hover
+                    }
+
+                    .icon {
+                        margin-right: 10px;
+                        font-size   : 20px;
+                        display     : flex;
+                        align-items : center;
+                        animation   : bounce 0.1s ease-in-out infinite;
+                    }
+
+                    @keyframes bounce {
+                        0% {
+                            transform: translateY(0);
+                        }
+
+                        100% {
+                            transform: translateY(-8px);
+                        }
+                    }
+                }
+            }
+
+
+        }
+    }
+
+
+}

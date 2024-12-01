@@ -14,6 +14,9 @@ export const adminMenu = [
             {
                 name: 'menu.admin.crud-redux', link: '/system/user-redux'
             },
+            { //quản lý người dùng
+                name: 'menu.doctor.manage-schedule', link: '/doctor/schedule-manage'
+            },
         ]
     },
     { //quản lý phòng khám
@@ -42,5 +45,17 @@ export const adminMenu = [
             },
 
         ]
+    },
+];
+
+export const doctorMenu = [
+    { //quản lý người dùng
+        name: 'menu.admin.manage-user',
+        menus: [
+            {
+                name: 'menu.doctor.manage-schedule', link: '/doctor/schedule-manage'
+            },
+        ]
+
     },
 ];

@@ -1,0 +1,67 @@
+.manage-schedule-container {
+    padding         : 20px;
+    background-color: #f9f9f9;
+
+    .manage-schedule-title {
+        font-size    : 24px;
+        font-weight  : bold;
+        color        : #333;
+        margin-bottom: 20px;
+    }
+
+    .container {
+        background   : #fff;
+        border-radius: 8px;
+        box-shadow   : 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .form-label {
+        font-weight: 500;
+        color      : #555;
+    }
+
+    .form-select,
+    .form-control {
+        border       : 1px solid #ddd;
+        border-radius: 4px;
+        padding      : 10px;
+    }
+
+    .time-picker-container {
+        display  : flex;
+        flex-wrap: wrap;
+        gap      : 10px;
+
+        .time-slot {
+            padding      : 10px 15px;
+            font-size    : 14px;
+            font-weight  : 500;
+            border-radius: 5px;
+            transition   : all 0.3s ease;
+
+            &.active {
+                background-color: #007bff;
+                color           : #fff;
+                border-color    : #007bff;
+            }
+
+            &:hover {
+                background-color: #0056b3;
+                color           : #fff;
+            }
+        }
+    }
+
+    .btn-schedule-save {
+        font-size       : 16px;
+        font-weight     : 500;
+        padding         : 10px 20px;
+        background-color: #007bff;
+        border-color    : #007bff;
+
+        &:hover {
+            background-color: #0056b3;
+            border-color    : #0056b3;
+        }
+    }
+}

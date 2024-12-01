@@ -44,6 +44,9 @@
             "manage-clinic": "Quản Lý Phòng Khám",
             "manage-specialty": "Quản Lý Chuyên Khoa",
             "manage-handbook": "Quản Lý Cẩm Nang"
+        },
+        "doctor": {
+            "manage-schedule": "Quản Lý Lịch Khám Bệnh"
         }
     },
     "manage-user": {

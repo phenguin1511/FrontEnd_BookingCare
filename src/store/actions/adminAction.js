@@ -8,7 +8,8 @@ import {
     getTopDoctorHomeService,
     getAllDoctors,
     saveInfoDoctorService,
-    getInfoDetailDoctor
+    getInfoDetailDoctor,
+    getExtraInfoDoctorById
 } from '../../services/userService';
 import { toast } from 'react-toastify';
 // export const fetchGenderStart = () => ({
@@ -316,4 +317,106 @@ export const fetchDetailInfoDoctorSuccess = (doctorData) => ({
 
 export const fetchDetailInfoDoctorFailed = () => ({
     type: actionTypes.FETCH_DETAIL_INFO_DOCTORS_FAILED,
+})
+
+export const fetchTimeScheduleDocter = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService('TIME');
+            if (res && res.data.errCode === 0) {
+                toast.success("Load Time Doctor Success!!");
+                dispatch(fetchTimeScheduleDocterSuccess(res.data.data));
+            } else {
+                toast.error("Load Time Doctor Error!!");
+                dispatch(fetchTimeScheduleDocterSuccess());
+            }
+        } catch (error) {
+            dispatch(fetchTimeScheduleDocterFailed());
+            console.log(error)
+        }
+    }
+}
+
+export const fetchTimeScheduleDocterSuccess = (doctorTime) => ({
+    type: actionTypes.FETCH_SCHEDULE_TIME_DOCTORS_SUCCESS,
+    doctorTime: doctorTime
+})
+
+export const fetchTimeScheduleDocterFailed = () => ({
+    type: actionTypes.FETCH_SCHEDULE_TIME_DOCTORS_FAILED,
+})
+
+export const getRequireDoctorInfo = () => {
+    return async (dispatch, getState) => {
+        dispatch({ type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_START });
+
+        try {
+            const [resPrice, resPayment, resProvince] = await Promise.all([
+                getAllCodeService('PRICE'),
+                getAllCodeService('PAYMENT'),
+                getAllCodeService('PROVINCE'),
+            ]);
+
+            if (
+                resPrice && resPrice.data.errCode === 0 &&
+                resPayment && resPayment.data.errCode === 0 &&
+                resProvince && resProvince.data.errCode === 0
+            ) {
+                const data = {
+                    priceData: resPrice.data.data,
+                    paymentData: resPayment.data.data,
+                    provinceData: resProvince.data.data,
+                };
+                dispatch(getRequireDoctorInfoSuccess(data));
+            } else {
+                console.error('Error fetching data:', {
+                    resPriceError: resPrice?.data?.errCode,
+                    resPaymentError: resPayment?.data?.errCode,
+                    resProvinceError: resProvince?.data?.errCode,
+                });
+                dispatch(getRequireDoctorInfoFailed());
+            }
+        } catch (error) {
+            console.error('Error occurred while fetching required doctor info:', error);
+            dispatch(getRequireDoctorInfoFailed());
+        }
+    };
+};
+
+
+export const getRequireDoctorInfoSuccess = (doctorInfo) => ({
+    type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_SUCCESS,
+    doctorInfo: doctorInfo
+})
+
+export const getRequireDoctorInfoFailed = () => ({
+    type: actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_FAILED
+})
+
+
+export const fetchExtraInfoDoctor = (inputId) => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getExtraInfoDoctorById(inputId);
+            if (res && res.data.errCode === 0) {
+                toast.success("Load Detail Infomation Doctor Success!!");
+                dispatch(fetchExtraInfoDoctorSuccess(res.data.data));
+            } else {
+                toast.error("Load Detail Infomation Doctor Error!!");
+                dispatch(fetchExtraInfoDoctorFailed());
+            }
+        } catch (error) {
+            dispatch(fetchExtraInfoDoctorFailed());
+            console.log(error)
+        }
+    }
+}
+
+export const fetchExtraInfoDoctorSuccess = (doctorData) => ({
+    type: actionTypes.FETCH_EXTRA_INFO_DOCTOR_SUCCESS,
+    extraDoctor: doctorData
+})
+
+export const fetchExtraInfoDoctorFailed = () => ({
+    type: actionTypes.FETCH_EXTRA_INFO_DOCTOR_FAILED,
 })

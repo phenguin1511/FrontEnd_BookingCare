@@ -1,0 +1,195 @@
+.booking-modal-container {
+    font-family: 'Arial', sans-serif;
+    color      : #333;
+
+    .booking-modal-content {
+        padding      : 20px;
+        background   : #fff;
+        border-radius: 15px;
+        box-shadow   : 0 8px 16px rgba(0, 0, 0, 0.1);
+        animation    : slideIn 0.3s ease-out;
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity  : 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity  : 1;
+            }
+        }
+
+        .booking-modal-header {
+            text-align   : center;
+            margin-bottom: 20px;
+
+            h2 {
+                color        : #007bff;
+                font-size    : 28px;
+                font-weight  : bold;
+                margin-bottom: 10px;
+            }
+        }
+
+        .doctor-info {
+            border-bottom : 1px solid #ddd;
+            padding-bottom: 15px;
+            margin-bottom : 20px;
+
+            h3 {
+                font-size    : 22px;
+                margin-bottom: 5px;
+            }
+
+            p {
+                margin   : 5px 0;
+                font-size: 14px;
+            }
+        }
+
+        .patient-info {
+            .form-group {
+                margin-bottom: 15px;
+
+                label {
+                    font-size    : 14px;
+                    font-weight  : bold;
+                    margin-bottom: 5px;
+                    display      : block;
+                    color        : #555;
+                }
+
+                .form-control {
+                    width        : 100%;
+                    padding      : 10px;
+                    border       : 1px solid #ddd;
+                    border-radius: 10px;
+                    font-size    : 15px;
+                    transition   : border-color 0.3s;
+
+                    &:focus {
+                        border-color: #007bff;
+                        box-shadow  : 0 0 5px rgba(0, 123, 255, 0.5);
+                        outline     : none;
+                    }
+                }
+
+                .textarea {
+                    height: 100px;
+                    resize: vertical;
+                }
+            }
+
+            .radio-group {
+                display: flex;
+                gap    : 15px;
+
+                label {
+                    font-size: 14px;
+                }
+            }
+        }
+
+        .booking-modal-footer {
+            text-align: center;
+            margin-top: 20px;
+
+            .btn-primary {
+                background-color: #007bff;
+                color           : #fff;
+                border          : none;
+                padding         : 12px 25px;
+                font-size       : 16px;
+                border-radius   : 8px;
+                cursor          : pointer;
+                transition      : background-color 0.3s;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+
+            .btn-danger {
+                background-color: #ff0000;
+                color           : #fff;
+                border          : none;
+                padding         : 12px 25px;
+                font-size       : 16px;
+                border-radius   : 8px;
+                cursor          : pointer;
+                transition      : background-color 0.3s;
+
+                &:hover {
+                    background-color: #b70202;
+                }
+            }
+
+            .note {
+                margin-top: 15px;
+                font-size : 12px;
+                color     : #888;
+            }
+        }
+
+        .booking-modal-body {
+            .note {
+                background   : #f9f9f9;
+                padding      : 15px;
+                border-radius: 10px;
+                font-size    : 14px;
+                color        : #555;
+                margin-top   : 20px;
+                border-left  : 5px solid #007bff;
+
+                h4 {
+                    font-weight  : bold;
+                    color        : #007bff;
+                    margin-bottom: 10px;
+                }
+
+                ul {
+                    padding-left: 20px;
+                    list-style  : disc;
+
+                    li {
+                        margin-bottom: 8px;
+                        font-size    : 14px;
+                    }
+                }
+            }
+        }
+
+        .note-section {
+            background   : #f8f9fa;
+            padding      : 20px;
+            border       : 1px solid #ddd;
+            border-radius: 10px;
+            margin-top   : 20px;
+
+            h4 {
+                color        : #d9534f;
+                font-size    : 18px;
+                margin-bottom: 15px;
+            }
+
+            ul {
+                list-style-type: disc;
+                padding-left   : 20px;
+
+                li {
+                    font-size  : 14px;
+                    line-height: 1.5;
+                }
+            }
+        }
+
+        .error-text {
+            color     : red;
+            font-size : 12px;
+            margin-top: 5px;
+        }
+
+    }
+}

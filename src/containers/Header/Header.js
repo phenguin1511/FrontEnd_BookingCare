@@ -3,17 +3,19 @@ import { connect } from 'react-redux';
 
 import * as actions from "../../store/actions";
 import Navigator from '../../components/Navigator';
-import { adminMenu } from './menuApp';
+import { adminMenu, doctorMenu } from './menuApp';
 import './Header.scss';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { LANGUAGES } from "../../utils"
+import { LANGUAGES, USER_ROLE } from "../../utils"
 import { FormattedMessage } from 'react-intl';
+import _ from 'lodash';
 class Header extends Component {
     constructor(props) {
         super(props);
         // Initializing the state for dropdown
         this.state = {
-            isDropdownOpen: false
+            isDropdownOpen: false,
+            menuApp: []
         };
     }
     toggleDropdown = () => {
@@ -25,6 +27,22 @@ class Header extends Component {
         this.props.changeLanguageAppRedux(language);
     }
 
+    componentDidMount() {
+        let { userInfo } = this.props
+        let menu = []
+        if (userInfo && !_.isEmpty(userInfo)) {
+            let role = userInfo.roleId;
+            if (role === USER_ROLE.ADMIN) {
+                menu = adminMenu;
+            }
+            if (role === USER_ROLE.DOCTOR) {
+                menu = doctorMenu
+            }
+        }
+        this.setState({
+            menuApp: menu
+        })
+    }
     render() {
         const { processLogout, userInfo } = this.props;
 
@@ -32,7 +50,7 @@ class Header extends Component {
             <div className="header-container">
                 <div className="header-left">
                     {/* Thanh navigator */}
-                    <Navigator menus={adminMenu} />
+                    <Navigator menus={this.state.menuApp} />
                 </div>
 
                 <div className="header-right">

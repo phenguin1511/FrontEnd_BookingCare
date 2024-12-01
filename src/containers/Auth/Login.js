@@ -59,6 +59,11 @@ class Login extends Component {
         }
 
     }
+    handleKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            this.handleLogin(); // Gọi hàm đăng nhập
+        }
+    };
 
     render() {
         return (
@@ -73,6 +78,7 @@ class Login extends Component {
                                 onChange={this.handleOnChangeUserName}
                                 type='text' className='form-control login-input'
                                 placeholder='Enter your username!'
+                                onKeyDown={this.handleKeyDown}
                             />
                         </div>
                         <div className='col-12 form-group'>
@@ -84,12 +90,14 @@ class Login extends Component {
                                     type={this.state.showPassword ? 'text' : 'password'}
                                     className='form-control login-input'
                                     placeholder='Enter your password!'
+                                    onKeyDown={this.handleKeyDown}
                                 />
                                 <span className='toggle-password-icon' onClick={this.togglePasswordVisibility}>
                                     {this.state.showPassword ? '🙈' : '👁️'}
                                 </span>
                             </div>
                         </div>
+
                         {this.state.errMessage && (
                             <div style={{ color: 'red' }} className="error-message">{this.state.errMessage}</div>
                         )}
