@@ -9,7 +9,8 @@ import {
     getAllDoctors,
     saveInfoDoctorService,
     getInfoDetailDoctor,
-    getExtraInfoDoctorById
+    getExtraInfoDoctorById,
+    getAllSpecialty
 } from '../../services/userService';
 import { toast } from 'react-toastify';
 // export const fetchGenderStart = () => ({
@@ -419,4 +420,32 @@ export const fetchExtraInfoDoctorSuccess = (doctorData) => ({
 
 export const fetchExtraInfoDoctorFailed = () => ({
     type: actionTypes.FETCH_EXTRA_INFO_DOCTOR_FAILED,
+})
+
+
+export const fetchAllSpecialty = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllSpecialty();
+            if (res && res.data.errCode === 0) {
+                toast.success("Get Top Doctor Success!!");
+                dispatch(fetchAllSpecialtySuccess(res.data.data));
+            } else {
+                toast.error("Get Top Doctor Error!!");
+                dispatch(fetchAllSpecialtyFailed());
+            }
+        } catch (error) {
+            dispatch(fetchAllSpecialtyFailed());
+            console.log(error)
+        }
+    }
+}
+
+export const fetchAllSpecialtySuccess = (allSpeciaties) => ({
+    type: actionTypes.FETCH_ALL_SPECIALTY_SUCCESS,
+    dataSpecialties: allSpeciaties,
+})
+
+export const fetchAllSpecialtyFailed = () => ({
+    type: actionTypes.FETCH_ALL_SPECIALTY_FAILED,
 })

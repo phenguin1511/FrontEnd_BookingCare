@@ -30,7 +30,8 @@ class BookingModal extends Component {
         let doctorId = this.props.dataScheduleModal.doctorId
         this.setState({
             doctorId: doctorId,
-            date: this.props.dataScheduleModal.date
+            date: this.props.dataScheduleModal.date,
+            timeType: this.props.dataScheduleModal.timeType
         })
     }
     builDataGender = (data) => {
@@ -125,7 +126,7 @@ class BookingModal extends Component {
             const {
                 patientYearOfBirth, patientName, patientPhone,
                 patientEmail, patientCity, patientDistrict,
-                patientReason, patientGender, doctorId, date
+                patientReason, patientGender, doctorId, date, timeType
             } = this.state;
             let doctorName = this.builDoctorName();
             let dateString = this.builDateString(date);
@@ -160,7 +161,8 @@ class BookingModal extends Component {
                 language: this.props.language,
                 timeString: timeString,
                 doctorName: doctorName,
-                dateString: dateString
+                dateString: dateString,
+                timeType: timeType
             });
 
             if (res && res.data.errCode === 0) {
@@ -176,7 +178,6 @@ class BookingModal extends Component {
                     patientDistrict: '',
                     patientReason: '',
                     patientGender: null,
-                    timeType: null,
                 });
                 this.props.handleCloseModal();
             } else {
@@ -207,6 +208,7 @@ class BookingModal extends Component {
         } = this.state;
         const { dataScheduleModal, language } = this.props;
         const { timeTypeData } = dataScheduleModal || {};
+        console.log(this.state)
         console.log(dataScheduleModal)
         let time = '';
         if (timeTypeData) {

@@ -11,7 +11,8 @@ const initialState = {
     info_doctor: [],
     allScheduleTime: [],
     allRequiredDoctorInfo: [],
-    extraInfoDoctor: []
+    extraInfoDoctor: [],
+    dataSpecialties: []
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -161,6 +162,17 @@ const adminReducer = (state = initialState, action) => {
 
         case actionTypes.FETCH_EXTRA_INFO_DOCTOR_FAILED:
             state.extraInfoDoctor = [];
+            return {
+                ...state
+            };
+        case actionTypes.FETCH_ALL_SPECIALTY_SUCCESS:
+            state.dataSpecialties = action.dataSpecialties
+            return {
+                ...state
+            };
+
+        case actionTypes.FETCH_ALL_SPECIALTY_FAILED:
+            state.dataSpecialties = [];
             return {
                 ...state
             };

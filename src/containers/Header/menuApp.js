@@ -32,7 +32,7 @@ export const adminMenu = [
         name: 'menu.admin.manage-specialty',
         menus: [
             {
-                name: 'menu.admin.manage-specialty', link: '/system/specialty-manage'
+                name: 'menu.admin.manage-specialty', link: '/system/manage-specialty'
             },
 
         ]

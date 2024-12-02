@@ -2,7 +2,7 @@
 
 .navigator-menu {
     display: flex;
-    margin: 0;
+    margin : 0;
     padding: 0;
 
     &.list-unstyled,
@@ -12,13 +12,13 @@
 
     .menu-group {
         &:hover {
-            cursor: pointer;
+            cursor          : pointer;
             background-color: darken($colormain, 5);
         }
 
         .menu-group-name {
-            line-height: 40px;
-            padding: 0 15px;
+            line-height : 40px;
+            padding     : 0 15px;
             border-right: 1px solid $border;
 
             &:first-child {
@@ -27,40 +27,40 @@
         }
 
         .menu-list {
-            display: none;
-            background-color: $bg-menu-color;
-            box-shadow: 2px 2px 4px 0 $box-shadow-color;
+            display           : none;
+            background-color  : $bg-menu-color;
+            box-shadow        : 2px 2px 4px 0 $box-shadow-color;
             -webkit-box-shadow: 2px 2px 4px 0 $box-shadow-color;
-            color: $text-in-light;
-            position: absolute;
-            padding: 0;
-            border-radius: 15px;
+            color             : $text-in-light;
+            position          : absolute;
+            padding           : 0;
+            border-radius     : 15px;
 
             .menu {
-                width: 205px;
-                padding: 0 15px;
-                height: 35px;
-                line-height: 35px;
+                width         : 205px;
+                padding       : 0 15px;
+                height        : 35px;
+                line-height   : 35px;
                 text-transform: none;
 
                 .menu-link {
                     text-decoration: none;
-                    color: $text-in-light;
+                    color          : $text-in-light;
                 }
 
                 .sub-menu-list {
-                    display: none;
-                    background-color: $bg-menu-color;
-                    box-shadow: 2px 2px 4px 0 $box-shadow-color;
+                    display           : none;
+                    background-color  : $bg-menu-color;
+                    box-shadow        : 2px 2px 4px 0 $box-shadow-color;
                     -webkit-box-shadow: 2px 2px 4px 0 $box-shadow-color;
-                    position: absolute;
-                    top: 0;
-                    left: 205px;
-                    padding: 0;
+                    position          : absolute;
+                    top               : 0;
+                    left              : 205px;
+                    padding           : 0;
 
                     .sub-menu {
-                        padding: 0 15px;
-                        height: 35px;
+                        padding    : 0 15px;
+                        height     : 35px;
                         line-height: 35px;
                         white-space: nowrap;
 
@@ -70,7 +70,7 @@
 
                         .sub-menu-link {
                             text-decoration: none;
-                            color: $text-in-light;
+                            color          : $text-in-light;
                         }
 
                         a {
@@ -79,30 +79,30 @@
 
                         &.active a {
                             font-weight: 500;
-                            color: $colormain;
+                            color      : $colormain;
 
                         }
                     }
                 }
 
                 &.active {
-                    font-weight: 500;
-                    color: $colormain;
+                    font-weight     : 500;
+                    color           : $colormain;
                     background-color: beige;
-                    transition: all 0.3s ease;
+                    transition      : all 0.3s ease;
                     /* Add a smooth transition */
                 }
 
                 &:hover {
                     background-color: beige;
-                    transform: scale(1.2);
-                    border-radius: 15px;
-                    transition: all 0.3s ease;
+                    transform       : scale(1.2);
+                    border-radius   : 15px;
+                    transition      : all 0.3s ease;
                     /* Smooth transition for hover effect */
 
                     .sub-menu-list {
-                        display: block;
-                        opacity: 1;
+                        display   : block;
+                        opacity   : 1;
                         /* Fade in effect for sub-menu */
                         transition: opacity 0.3s ease;
                     }
@@ -110,24 +110,24 @@
 
                 &:active {
                     background-color: beige;
-                    transform: scale(1.3);
-                    border-radius: 15px;
-                    transition: all 0.2s ease;
+                    transform       : scale(1.3);
+                    border-radius   : 15px;
+                    transition      : all 0.2s ease;
                     /* Smooth transition for active effect */
 
                     .sub-menu-list {
-                        display: block;
-                        opacity: 1;
+                        display   : block;
+                        opacity   : 1;
                         /* Fade in effect for sub-menu */
                         transition: opacity 0.2s ease;
                     }
                 }
 
                 .icon-right {
-                    display: block;
+                    display : block;
                     position: absolute;
-                    top: 0;
-                    right: 10px;
+                    top     : 0;
+                    right   : 10px;
                 }
             }
         }

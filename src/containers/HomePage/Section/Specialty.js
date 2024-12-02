@@ -4,13 +4,14 @@ import Slider from 'react-slick';
 import "./Specialty.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import * as action from "../../../store/actions";
 
 // Custom Arrow components
 const NextArrow = (props) => {
     const { onClick } = props;
     return (
         <div className="arrow next" onClick={onClick}>
-            <i class="fa-regular fa-circle-right"></i>
+            <i className="fa-regular fa-circle-right"></i>
         </div>
     );
 };
@@ -19,12 +20,31 @@ const PrevArrow = (props) => {
     const { onClick } = props;
     return (
         <div className="arrow prev" onClick={onClick}>
-            <i class="fa-regular fa-circle-left"></i>
+            <i className="fa-regular fa-circle-left"></i>
         </div>
     );
 };
 
 class Specialty extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataSpecialties: []
+        };
+    }
+
+    async componentDidMount() {
+        await this.props.fetchAllSpecialty();
+    }
+
+    async componentDidUpdate(prevProps) {
+        if (this.props.dataSpecialties !== prevProps.dataSpecialties) {
+            this.setState({
+                dataSpecialties: this.props.dataSpecialties
+            });
+        }
+    }
+
     render() {
         let settings = {
             dots: true,
@@ -36,6 +56,8 @@ class Specialty extends Component {
             prevArrow: <PrevArrow />
         };
 
+        const { dataSpecialties } = this.state;
+        console.log(dataSpecialties)
         return (
             <React.Fragment>
                 <div className='section-specialty'>
@@ -44,24 +66,24 @@ class Specialty extends Component {
                         <div className='btn-viewmore'>Xem Thêm</div>
                     </div>
                     <Slider className='slider' {...settings}>
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='Specialty 1' className='specialty-image' />
-                            <p>Specialty 1</p>
-                        </div>
+                        {dataSpecialties && dataSpecialties.length > 0 ? (
+                            dataSpecialties.map((specialty, index) => {
 
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='Specialty 1' className='specialty-image' />
-                            <p>Specialty 1</p>
-                        </div>
-
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='Specialty 1' className='specialty-image' />
-                            <p>Specialty 1</p>
-                        </div>
-                        <div className='specialty-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='specialty 1' className='specialty-image' />
-                            <p>specialty 1</p>
-                        </div>
+                                return (
+                                    <div className='specialty-item' key={index}>
+                                        <div
+                                            className='specialty-image'
+                                            style={{
+                                                backgroundImage: `url(${specialty.image})`
+                                            }}
+                                        ></div>
+                                        <p>{specialty.name || 'Specialty Name'}</p>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <p>No specialties available.</p>
+                        )}
                     </Slider>
                 </div>
             </React.Fragment>
@@ -72,12 +94,15 @@ class Specialty extends Component {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
-        language: state.app.language
+        language: state.app.language,
+        dataSpecialties: state.admin.dataSpecialties
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {};
+    return {
+        fetchAllSpecialty: () => dispatch(action.fetchAllSpecialty()),
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Specialty);

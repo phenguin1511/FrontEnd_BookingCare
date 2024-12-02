@@ -1,0 +1,143 @@
+/* VerifyEmail.scss */
+
+
+$error-color       : #FF5722;
+$background-color  : #F9F9F9;
+$text-color        : #333;
+$link-color        : #007BFF;
+$success-background: #E8F5E9;
+$error-background  : #FBE9E7;
+
+
+.success-verify,
+.failed-verify {
+    max-width    : 1200px;
+    margin       : 50px auto;
+    padding      : 20px;
+    border-radius: 10px;
+    text-align   : center;
+    box-shadow   : 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.success-verify {
+    background-color: $success-background;
+    border          : 1px solid green;
+}
+
+.failed-verify {
+    background-color: $error-background;
+    border          : 1px solid $error-color;
+}
+
+.success-title-verify,
+.failed-title-verify {
+    margin-bottom: 20px;
+}
+
+.img-verify {
+    width                 : 200px;
+    height                : 200px;
+    margin                : 0 auto 20px;
+    background-size       : contain;
+    background-position   : center;
+    background-repeat     : no-repeat;
+    // border-radius      : 50%;
+    // border             : 2px solid lighten(green, 20%);
+}
+
+h3 {
+    color        : red;
+    font-size    : 1.8em;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size  : 1.1em;
+    line-height: 1.6;
+}
+
+.notifications {
+    list-style: none;
+    padding   : 0;
+    margin    : 20px 0;
+
+    li {
+        margin   : 10px 0;
+        font-size: 1em;
+
+        &:before {
+            content    : '\2022';
+            color      : red;
+            font-weight: bold;
+            display    : inline-block;
+            width      : 1em;
+            margin-left: -1em;
+        }
+    }
+}
+
+a {
+    color          : $link-color;
+    text-decoration: none;
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.loading {
+    text-align: center;
+    font-size : 1.5em;
+    color     : $text-color;
+    margin-top: 50px;
+}
+
+.verify-container {
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    min-height     : 50vh;
+}
+
+.verify-content {
+    text-align: center;
+    font-size : 1.2em;
+    color     : $text-color;
+}
+
+.btn-home-verify {
+    padding         : 10px 20px;
+    background-color: green;
+    color           : #ffffff;
+    border          : none;
+    border-radius   : 5px;
+    cursor          : pointer;
+    font-size       : 16px;
+    font-weight     : bold;
+    text-transform  : uppercase;
+    box-shadow      : 0px 4px 6px rgba(0, 0, 0, 0.1);
+    transition      : all 0.3s ease;
+}
+
+.btn-home-verify:hover {
+    transform : translateY(-2px);
+    box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.15);
+}
+
+.btn-home-verify:active {
+    transform       : translateY(0);
+    box-shadow      : 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: #004494;
+}
+
+.title-verify-failed {
+    color: red;
+}
+
+.title-verify-success {
+    color: green;
+}
+
+.title-verify-failed {
+    color: #FF5722;
+}

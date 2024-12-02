@@ -17,6 +17,7 @@ import HomePage from './HomePage/HomePage.js'
 import ConfirmModal from '../components/ConfirmModal';
 import DetailDoctor from './Patient/Doctor/DetailDoctor.js';
 import Doctor from '../routes/Doctor.js';
+import VerifyEmail from './Patient/VerifyEmail/VerifyEmail.js';
 class App extends Component {
 
     handlePersistorState = () => {
@@ -43,8 +44,6 @@ class App extends Component {
                 <Router history={history}>
                     <div className="main-container">
                         <ConfirmModal />
-
-
                         <div className="content-container">
                             <CustomScrollbars style={{ height: '100vh', witdth: '100%' }}>
                                 <Switch>
@@ -54,6 +53,7 @@ class App extends Component {
                                     <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
                                     <Route path={path.HOMEPAGE} component={(HomePage)} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+                                    <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
                                 </Switch>
                             </CustomScrollbars>
                         </div>
@@ -70,7 +70,6 @@ class App extends Component {
                             theme="light"
                             transition={Bounce}
                         />
-                        {/* Same as */}
                         <ToastContainer />
                     </div>
                 </Router>

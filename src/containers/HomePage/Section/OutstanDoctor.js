@@ -66,7 +66,6 @@ class OutstanDoctor extends Component {
 
         const { doctors } = this.state;
         const { language } = this.state;
-
         return (
             <React.Fragment>
                 <div className='section-outstanDoctor'>
@@ -117,7 +116,7 @@ const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
-        doctors: state.admin.doctors // Lấy danh sách doctors từ Redux
+        doctors: state.admin.doctors,
     };
 };
 
