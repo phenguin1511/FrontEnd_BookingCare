@@ -48,7 +48,7 @@
 
 
 
-    .medicalfacility-item {
+    .clinic-item {
         background-color: #fff;
         padding         : 20px;
         border-radius   : 8px;
@@ -74,11 +74,17 @@
             margin-top : 10px;
         }
 
-        .medicalfacility-image {
-            width        : 100%;
-            height       : 150px;
-            object-fit   : cover;
-            border-radius: 6px;
+        .clinic-image {
+            width              : 100%;
+            height             : 150px;
+            border-radius      : 6px;
+            overflow           : hidden;
+            display            : flex;
+            justify-content    : center;
+            align-items        : center;
+            background-size    : cover;
+            background-repeat  : no-repeat;
+            background-position: center;
         }
 
 

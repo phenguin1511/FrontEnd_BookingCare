@@ -61,7 +61,6 @@ class Specialty extends Component {
         };
 
         const { dataSpecialties } = this.state;
-        console.log(dataSpecialties)
         return (
             <React.Fragment>
                 <div className='section-specialty'>

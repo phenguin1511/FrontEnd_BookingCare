@@ -1,0 +1,129 @@
+.clinic-manage-container {
+    padding         : 30px;
+    background-color: #f9f9f9;
+    border-radius   : 8px;
+    box-shadow      : 0 4px 10px rgba(0, 0, 0, 0.1);
+    max-width       : 900px;
+    margin          : 30px auto;
+    font-family     : 'Roboto', sans-serif;
+
+    .clinic-manage-title {
+        text-align   : center;
+        font-size    : 24px;
+        font-weight  : 700;
+        color        : #333;
+        margin-bottom: 20px;
+    }
+
+    .btn-add-new-clinic {
+        text-align   : right;
+        margin-bottom: 20px;
+
+        .btn-add {
+            background-color: #4CAF50;
+            color           : #fff;
+            padding         : 10px 20px;
+            border          : none;
+            border-radius   : 5px;
+            cursor          : pointer;
+            font-size       : 14px;
+            transition      : all 0.3s ease;
+
+            &:hover {
+                background-color: #45a049;
+            }
+        }
+    }
+
+    .clinic-manage-content {
+        display       : flex;
+        flex-direction: column;
+        gap           : 20px;
+
+        .clinic-input {
+            display  : flex;
+            flex-wrap: wrap;
+            gap      : 20px;
+
+            .clinic-input-name,
+            .clinic-input-image,
+            .clinic-input-address {
+                flex          : 1;
+                display       : flex;
+                flex-direction: column;
+
+                label {
+                    font-weight  : 500;
+                    margin-bottom: 8px;
+                    color        : #555;
+                }
+
+                input[type="text"],
+                input[type="file"] {
+                    padding      : 10px;
+                    border       : 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size    : 14px;
+                    color        : #555;
+                    transition   : border-color 0.3s ease;
+
+                    &:focus {
+                        border-color: #4CAF50;
+                        outline     : none;
+                    }
+                }
+
+                .previewImg-container {
+                    margin-top     : 10px;
+                    display        : flex;
+                    justify-content: center;
+
+                    .previewImg {
+                        max-width    : 100%;
+                        height       : auto;
+                        border       : 1px solid #ddd;
+                        border-radius: 5px;
+                    }
+                }
+            }
+        }
+
+        .clinic-markdown {
+            border       : 1px solid #ddd;
+            border-radius: 5px;
+            overflow     : hidden;
+
+            .rc-md-editor {
+                font-family: 'Roboto', sans-serif;
+
+                .editor-container {
+                    border: none;
+                }
+
+                .editor-preview {
+                    background-color: #f9f9f9;
+                }
+            }
+        }
+
+        .btn-save-clinic {
+            display        : flex;
+            justify-content: center;
+
+            .btn-save {
+                background-color: #007BFF;
+                color           : #fff;
+                padding         : 10px 20px;
+                border          : none;
+                border-radius   : 5px;
+                cursor          : pointer;
+                font-size       : 16px;
+                transition      : all 0.3s ease;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+        }
+    }
+}

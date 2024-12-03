@@ -93,11 +93,12 @@ class DoctorExtraInfo extends Component {
                             <span>Địa Chỉ Phòng Khám: {doctorInfo.adressClinic}</span>
                         ) : 'Chưa có mô tả'}
                     </p>
-                    {isShowLinkDetail === true &&
+                    {isShowLinkDetail && doctorId && (
                         <div className="view-more">
                             <Link to={`/detail-doctor/${doctorId}`}>Xem Thêm</Link>
                         </div>
-                    }
+                    )}
+
                     {isShowPrice === true &&
                         <div className="price-info">
                             <p>

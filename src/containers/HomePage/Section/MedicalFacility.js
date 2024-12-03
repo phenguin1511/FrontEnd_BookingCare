@@ -4,7 +4,8 @@ import Slider from 'react-slick';
 import "./MedicalFacility.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import * as action from "../../../store/actions";
+import { withRouter } from 'react-router';
 
 const NextArrow = (props) => {
     const { onClick } = props;
@@ -25,6 +26,30 @@ const PrevArrow = (props) => {
 };
 
 class MedicalFacility extends Component {
+
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataClinic: []
+        };
+    }
+    async componentDidMount() {
+        await this.props.fetchAllClinic();
+    }
+
+    async componentDidUpdate(prevProps) {
+        if (this.props.dataClinic !== prevProps.dataClinic) {
+            this.setState({
+                dataClinic: this.props.dataClinic
+            });
+        }
+    }
+
+    handleViewDetailClinic = (clinic) => {
+        console.log(clinic)
+        this.props.history.push(`/detail-clinic/${clinic.id}`)
+    }
     render() {
         let settings = {
             dots: true,
@@ -35,7 +60,7 @@ class MedicalFacility extends Component {
             nextArrow: <NextArrow />,
             prevArrow: <PrevArrow />
         };
-
+        const { dataClinic } = this.state;
         return (
             <React.Fragment>
                 <div className='section-medicalfacility'>
@@ -45,24 +70,24 @@ class MedicalFacility extends Component {
                     </div>
 
                     <Slider className='slider' {...settings}>
-                        <div className='medicalfacility-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='medicalfacility 1' className='medicalfacility-image' />
-                            <p>medicalfacility 1</p>
-                        </div>
+                        {dataClinic && dataClinic.length > 0 ? (
+                            dataClinic.map((clinic, index) => {
 
-                        <div className='medicalfacility-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='medicalfacility 1' className='medicalfacility-image' />
-                            <p>medicalfacility 1</p>
-                        </div>
-
-                        <div className='medicalfacility-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='medicalfacility 1' className='medicalfacility-image' />
-                            <p>medicalfacility 1</p>
-                        </div>
-                        <div className='medicalfacility-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='medicalfacility 1' className='medicalfacility-image' />
-                            <p>medicalfacility 1</p>
-                        </div>
+                                return (
+                                    <div className='clinic-item' key={index} onClick={() => this.handleViewDetailClinic(clinic)}>
+                                        <div
+                                            className='clinic-image'
+                                            style={{
+                                                backgroundImage: `url(${clinic.image})`
+                                            }}
+                                        ></div>
+                                        <p>{clinic.name || 'clinic Name'}</p>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <p>No specialties available.</p>
+                        )}
                     </Slider>
                 </div>
             </React.Fragment>
@@ -72,13 +97,15 @@ class MedicalFacility extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.user.isLoggedIn,
-        language: state.app.language
+        language: state.app.language,
+        dataClinic: state.admin.dataClinic
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {};
+    return {
+        fetchAllClinic: () => dispatch(action.fetchAllClinic()),
+    };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MedicalFacility);
