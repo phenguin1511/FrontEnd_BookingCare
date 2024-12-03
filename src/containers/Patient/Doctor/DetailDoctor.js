@@ -79,7 +79,6 @@ class DetailDoctor extends Component {
                         </div>
                     </div>
                     <div className="schedule-doctor">
-                        <h2>Lịch Khám</h2>
                         <div className="schedule-content">
                             <DoctorSchedule
                                 info_doctor={this.state.currentDoctorId}

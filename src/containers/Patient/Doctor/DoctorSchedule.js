@@ -37,7 +37,7 @@ class DoctorSchedule extends Component {
             })
         }
 
-    }
+    } //
 
     componentDidUpdate(prevProps, prevState) {
         if (this.props.language !== prevProps.language) {
@@ -124,7 +124,6 @@ class DoctorSchedule extends Component {
             <Fragment>
                 <div className="schedule-left">
                     <div className="calendar">
-                        <h3>Chọn ngày khám</h3>
                         <Select
                             options={allDays}
                             placeholder="Chọn Ngày..."
@@ -137,7 +136,7 @@ class DoctorSchedule extends Component {
                         <ul>
                             {timeSchedule && timeSchedule.length > 0 ? (
                                 timeSchedule.map((item, index) => (
-                                    <li key={index} onClick={() => this.handleClickBookingModal(item)}>
+                                    <li className='time-schedule' key={index} onClick={() => this.handleClickBookingModal(item)}>
                                         {language === LANGUAGES.EN ? item.timeTypeData.valueEn || item.timeTypeData.valueVn || 'N/A' : item.timeTypeData.valueVn || item.timeTypeData.valueEn || 'N/A'}
                                     </li>
                                 ))

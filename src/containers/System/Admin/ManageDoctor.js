@@ -22,6 +22,8 @@ class ManageDoctor extends Component {
             selectedDoctor: '',
             description: '',
             list_doctors: [],
+            list_specialty: [],
+            list_clinic: [],
             hasOldData: false,
 
             listPrice: [],
@@ -30,9 +32,13 @@ class ManageDoctor extends Component {
             selectedPayment: '',
             selectedProvince: '',
             selectedPrice: '',
+            selectedClinic: '',
+            selectedSpecialty: '',
             nameClinic: '',
             addressClinic: '',
             note: '',
+            clinicId: '',
+            specialtyId: '',
 
         }
     }
@@ -42,6 +48,7 @@ class ManageDoctor extends Component {
 
         await this.props.fetchAllDoctor()
         await this.props.getRequireDoctorInfo()
+        await this.props.fetchAllSpecialty()
 
     }
 
@@ -80,6 +87,12 @@ class ManageDoctor extends Component {
                 listProvince: dataProvince
             });
         }
+        if (prevProps.dataSpecialties !== this.props.dataSpecialties) {
+            let dataSpecialty = this.builDataSelect(this.props.dataSpecialties, "SPECIALTY");
+            this.setState({
+                list_specialty: dataSpecialty
+            })
+        }
     }
 
     builDataSelect = (inputData, type) => {
@@ -109,6 +122,10 @@ class ManageDoctor extends Component {
                     case 'PROVINCE':
                         object.label = language === LANGUAGES.VI ? item.valueVn : item.valueEn;
                         object.value = item.keyMap;
+                        break;
+                    case 'SPECIALTY':
+                        object.label = item.name ? item.name : "Không Có Dữ Liệu";
+                        object.value = item.id;
                         break;
                     default:
                         break;
@@ -146,6 +163,7 @@ class ManageDoctor extends Component {
         if (res && res.data.errCode === 0 && res.data.data) {
             let { Markdown, Doctor_Infor } = res.data.data;
 
+            // Set Markdown content
             if (Markdown) {
                 this.setState({
                     contentHTML: Markdown.contentHTML,
@@ -162,16 +180,17 @@ class ManageDoctor extends Component {
                 });
             }
 
-            // Nếu có dữ liệu Doctor_Infor
+            // Set Doctor Info
             if (Doctor_Infor) {
                 this.setState({
                     selectedPayment: this.state.listPayment.find(option => option.value === Doctor_Infor.paymentId),
                     selectedProvince: this.state.listProvince.find(option => option.value === Doctor_Infor.provinceId),
-                    selectedPrice: this.state.listPrice.find(option => option.value === Doctor_Infor.priceId),
-                    addressClinic: Doctor_Infor.adressClinic,
-                    nameClinic: Doctor_Infor.nameClinic,
-                    note: Doctor_Infor.note,
-                    hasOldData: true
+                    selectedPrice: this.state.listPrice.find(option => option.value === Doctor_Infor.priceId) || null,
+                    addressClinic: Doctor_Infor.adressClinic || '',
+                    nameClinic: Doctor_Infor.nameClinic || '',
+                    note: Doctor_Infor.note || '',
+                    hasOldData: true,
+                    selectedSpecialty: this.state.list_specialty.find(option => option.value === Doctor_Infor.specialtyId) || null // Add this
                 });
             } else {
                 this.setState({
@@ -181,7 +200,8 @@ class ManageDoctor extends Component {
                     addressClinic: '',
                     nameClinic: '',
                     note: '',
-                    hasOldData: false
+                    hasOldData: false,
+                    selectedSpecialty: null // Reset if no data
                 });
             }
         } else {
@@ -195,11 +215,11 @@ class ManageDoctor extends Component {
                 addressClinic: '',
                 nameClinic: '',
                 note: '',
-                hasOldData: false
+                hasOldData: false,
+                selectedSpecialty: null // Reset if no data
             });
         }
     };
-
 
     handleChangeDoctorInfoRequired = async (selectedOption, name) => {
         let stateName = name.name;
@@ -217,12 +237,13 @@ class ManageDoctor extends Component {
             contentMarkdown: this.state.contentMarkdown,
             description: this.state.description,
             doctorId: this.state.selectedDoctor.value,
-            selectedPayment: this.state.selectedPayment.value,
-            selectedProvince: this.state.selectedProvince.value,
-            selectedPrice: this.state.selectedPrice.value,
+            selectedPayment: this.state.selectedPayment ? this.state.selectedPayment.value : null,
+            selectedProvince: this.state.selectedProvince ? this.state.selectedProvince.value : null,
+            selectedPrice: this.state.selectedPrice ? this.state.selectedPrice.value : null,
             nameClinic: this.state.nameClinic,
             addressClinic: this.state.addressClinic,
             note: this.state.note,
+            selectedSpecialty: this.state.selectedSpecialty ? this.state.selectedSpecialty.value : null,
             action: hasOldData === true ? CRUD_ACTION.EDIT : CRUD_ACTION.CREATE
         });
         await this.props.fetchAllDoctor();
@@ -236,7 +257,6 @@ class ManageDoctor extends Component {
 
     render() {
         const { hasOldData } = this.state
-        const { selectedPayment, selectedPrice, selectedProvince } = this.state
         console.log(this.state)
         return (
 
@@ -264,6 +284,22 @@ class ManageDoctor extends Component {
                     </div>
                 </div>
                 <div className='doctor_info_extra'>
+                    <div className='select-price'>
+                        <label>Chọn Chuyên Khoa</label>
+                        <Select
+                            value={this.state.selectedSpecialty}
+                            onChange={this.handleChangeDoctorInfoRequired}
+                            options={this.state.list_specialty}
+                            className="select-doctor"
+                            placeholder="Chọn Chuyên Khoa..."
+                            name="selectedSpecialty"
+                        />
+
+                    </div>
+                    <div className='select-price'>
+                        <label>Chọn Cơ Sở Y Tế</label>
+                        <input></input>
+                    </div>
                     <div className='select-price'>
                         <label>Chọn Giá Khám</label>
                         <Select
@@ -345,14 +381,16 @@ const mapStateToProps = state => ({
     language: state.app.language,
     users: state.admin.users,
     allDoctors: state.admin.allDoctors,
-    requireInforDoctor: state.admin.allRequiredDoctorInfo
+    requireInforDoctor: state.admin.allRequiredDoctorInfo,
+    dataSpecialties: state.admin.dataSpecialties
 });
 
 const mapDispatchToProps = dispatch => {
     return {
         fetchAllDoctor: () => dispatch(action.fetchAllDoctor()),
         getRequireDoctorInfo: () => dispatch(action.getRequireDoctorInfo()),
-        saveInfoDoctor: (data) => dispatch(action.saveInfoDoctor(data))
+        saveInfoDoctor: (data) => dispatch(action.saveInfoDoctor(data)),
+        fetchAllSpecialty: () => dispatch(action.fetchAllSpecialty()),
     };
 };
 

@@ -55,4 +55,15 @@
             color      : red;
         }
     }
+
+    .view-more {
+        font-size : 16px;
+        color     : blue;
+        margin-top: 20px;
+
+        &:hover {
+            cursor: pointer;
+            color : red;
+        }
+    }
 }

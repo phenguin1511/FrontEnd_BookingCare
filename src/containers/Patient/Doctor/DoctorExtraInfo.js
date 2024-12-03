@@ -41,7 +41,6 @@ class DoctorExtraInfo extends Component {
     }
     render() {
         const { extraInfo } = this.state; // Dữ liệu được lấy từ state
-        console.log(extraInfo);
         const { language } = this.props;
 
         // Định dạng giá trị tiền tệ
@@ -71,16 +70,14 @@ class DoctorExtraInfo extends Component {
                 <div className="schedule-right">
                     {/* Thông tin phòng khám */}
                     <div className="clinic-info">
-                        <h3>Địa chỉ khám</h3>
-                        <p>{extraInfo.adressClinic || 'Không có thông tin'}</p>
-                        <h3>Tên phòng khám</h3>
-                        <p>{extraInfo.nameClinic || 'Không có thông tin'}</p>
+                        <p>Địa chỉ khám: {extraInfo.adressClinic || 'Không có thông tin'}</p>
+                        <p>Tên phòng khám: {extraInfo.nameClinic || 'Không có thông tin'}</p>
                         <p>Thành Phố: {extraInfo.provinceTypeData?.valueVn || 'Không có thông tin'}</p>
                     </div>
 
                     {/* Thông tin giá khám */}
                     <div className="price-info">
-                        <h3>Giá khám</h3>
+                        <h5>Giá khám</h5>
                         <p className="price" onClick={this.togglePriceDetail}>
                             {language === LANGUAGES.VI
                                 ? formatCurrency(extraInfo.priceTypeData?.valueVn, LANGUAGES.VI)
@@ -93,7 +90,7 @@ class DoctorExtraInfo extends Component {
                         <Fragment>
                             <div className="price-modal-overlay" onClick={this.togglePriceDetail}></div>
                             <div className="price-modal">
-                                <h4>Chi tiết giá khám</h4>
+                                <h5>Chi tiết giá khám</h5>
                                 <p>
                                     Giá cơ bản: <span>
                                         {language === LANGUAGES.VI

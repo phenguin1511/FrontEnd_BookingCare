@@ -18,6 +18,7 @@ import ConfirmModal from '../components/ConfirmModal';
 import DetailDoctor from './Patient/Doctor/DetailDoctor.js';
 import Doctor from '../routes/Doctor.js';
 import VerifyEmail from './Patient/VerifyEmail/VerifyEmail.js';
+import SpecialtyDetail from './Patient/Specialty/SpecialtyDetail.js';
 class App extends Component {
 
     handlePersistorState = () => {
@@ -53,6 +54,7 @@ class App extends Component {
                                     <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
                                     <Route path={path.HOMEPAGE} component={(HomePage)} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+                                    <Route path={path.DETAIL_SPECIALTY} component={SpecialtyDetail} />
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
                                 </Switch>
                             </CustomScrollbars>
@@ -70,7 +72,6 @@ class App extends Component {
                             theme="light"
                             transition={Bounce}
                         />
-                        <ToastContainer />
                     </div>
                 </Router>
             </Fragment>

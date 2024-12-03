@@ -208,13 +208,9 @@ class BookingModal extends Component {
         } = this.state;
         const { dataScheduleModal, language } = this.props;
         const { timeTypeData } = dataScheduleModal || {};
-        console.log(this.state)
-        console.log(dataScheduleModal)
         let time = '';
         if (timeTypeData) {
             time = language === LANGUAGES.VI ? timeTypeData.valueVn : timeTypeData.valueEn;
-        } else {
-            console.warn('timeTypeData is undefined');
         }
         const formattedDate = this.formatDate(date, time);
         return (
@@ -235,6 +231,7 @@ class BookingModal extends Component {
                             <div className="doctor-info">
                                 <ProfileDoctor
                                     doctorId={doctorId}
+                                    isShowPrice={true}
                                 />
                                 <h5>{formattedDate}</h5>
                             </div>

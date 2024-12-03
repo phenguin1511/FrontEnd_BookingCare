@@ -5,8 +5,8 @@ import "./Specialty.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import * as action from "../../../store/actions";
+import { withRouter } from 'react-router';
 
-// Custom Arrow components
 const NextArrow = (props) => {
     const { onClick } = props;
     return (
@@ -45,6 +45,10 @@ class Specialty extends Component {
         }
     }
 
+    handleViewDetailSpecialty = (specialty) => {
+        console.log(specialty)
+        this.props.history.push(`/detail-specialty/${specialty.id}`)
+    }
     render() {
         let settings = {
             dots: true,
@@ -70,7 +74,7 @@ class Specialty extends Component {
                             dataSpecialties.map((specialty, index) => {
 
                                 return (
-                                    <div className='specialty-item' key={index}>
+                                    <div className='specialty-item' key={index} onClick={() => this.handleViewDetailSpecialty(specialty)}>
                                         <div
                                             className='specialty-image'
                                             style={{
@@ -105,4 +109,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Specialty);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Specialty));

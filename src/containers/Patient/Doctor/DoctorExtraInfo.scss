@@ -1,16 +1,14 @@
 .schedule-right {
-    flex         : 1;
-    background   : #ffffff;
-    padding      : 20px;
-    border-radius: 12px;
-    box-shadow   : 0 3px 8px rgba(0, 0, 0, 0.1);
+    flex      : 1;
+    background: #ffffff;
+    padding   : 20px;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
 
     h3 {
-        font-size    : 24px;
-        color        : #7f8c8d;
+        font-size    : 18px;
+        font-style   : oblique;
         margin-bottom: 20px;
         text-align   : center;
-        font-weight  : bold;
     }
 
     .clinic-info,

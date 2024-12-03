@@ -21,15 +21,14 @@
         gap      : 30px;
 
         .schedule-left {
-            flex         : 1;
-            background   : #ffffff;
-            padding      : 20px;
-            border-radius: 12px;
-            box-shadow   : 0 3px 8px rgba(0, 0, 0, 0.1);
-            transition   : transform 0.2s ease, box-shadow 0.3s ease;
+            flex            : 1;
+            background      : #ffffff;
+            padding         : 20px;
+            // border-radius: 12px;
+            box-shadow      : 0 3px 8px rgba(0, 0, 0, 0.1);
+            transition      : transform 0.2s ease, box-shadow 0.3s ease;
 
             &:hover {
-                transform : scale(1.05); // Tăng kích thước khi hover
                 box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); // Tăng bóng khi hover
             }
 
@@ -63,31 +62,48 @@
             }
 
             .daily-schedule {
-                margin-top: 20px;
+                margin-top     : 20px;
+                display        : flex;
+                flex-direction : column;
+                align-items    : center; // Center all children horizontally
+                justify-content: center; // Center all children vertically if necessary
 
                 h3 {
                     font-size    : 18px;
                     margin-bottom: 10px;
+                    text-align   : center; // Center the heading text
                 }
 
                 ul {
-                    list-style: none;
-                    padding   : 0;
+                    list-style     : none;
+                    padding        : 0;
+                    display        : flex;
+                    flex-wrap      : wrap;
+                    gap            : 10px; // Space between items
+                    justify-content: center; // Center list items horizontally
 
-                    li {
-                        padding      : 10px;
-                        background   : #f4f4f4;
-                        border-radius: 8px;
-                        margin-bottom: 8px;
-                        font-size    : 16px;
-                        color        : #333;
-                        cursor       : pointer;
-                        transition   : background 0.3s ease, transform 0.2s ease; // Thêm hiệu ứng chuyển động
+                    .time-schedule {
+                        padding        : 10px 15px;
+                        background     : #f4f4f4;
+                        border-radius  : 8px;
+                        margin-bottom  : 8px;
+                        font-size      : 12px;
+                        color          : #333;
+                        cursor         : pointer;
+                        transition     : background 0.3s ease, transform 0.2s ease; // Hover effects
+                        max-width      : 150px; // Limit the maximum width
+                        white-space    : nowrap; // Prevent line breaks
+                        overflow       : hidden; // Hide content overflow
+                        text-overflow  : ellipsis; // Add ellipsis for overflowing text
+                        display        : flex; // Use flex to align items evenly
+                        align-items    : center; // Center items vertically
+                        justify-content: center; // Center items horizontally
+                        text-align     : center; // Ensure text is centered
 
                         &:hover {
                             background: #16a085;
                             color     : #fff;
-                            transform : translateY(-2px); // Di chuyển lên một chút khi hover
+                            transform : translateY(-2px); // Lift effect on hover
                         }
                     }
                 }
@@ -107,7 +123,7 @@
                     transition     : background 0.3s ease;
 
                     &:hover {
-                        background: #e0e0e0; // Thay đổi màu nền khi hover
+                        background: #e0e0e0; // Change background color on hover
                     }
 
                     .icon {

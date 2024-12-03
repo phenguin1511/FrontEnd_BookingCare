@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import "./ProfileDoctor.scss";
 import { LANGUAGES } from '../../../utils';
 import { getInfoDetailDoctor } from '../../../services/userService';
-
+import { Link } from 'react-router-dom';
 class DoctorExtraInfo extends Component {
     constructor(props) {
         super(props);
@@ -42,7 +42,7 @@ class DoctorExtraInfo extends Component {
     }
 
     render() {
-        const { language } = this.props;
+        const { language, isShowPrice, isShowLinkDetail } = this.props;
         const { dataProfile } = this.state;
 
         const doctorImage = dataProfile?.image || 'https://via.placeholder.com/150';
@@ -50,7 +50,7 @@ class DoctorExtraInfo extends Component {
         const markdown = dataProfile?.Markdown || {};
         const doctorInfo = dataProfile?.Doctor_Infor || {};
         const priceData = doctorInfo?.priceTypeData || {};
-
+        const doctorId = this.props.doctorId
         const formatCurrency = (value, lang) => {
             if (!value) return 'Không có giá';
             const numericValue = parseFloat(value.replace(/,/g, ''));
@@ -93,15 +93,23 @@ class DoctorExtraInfo extends Component {
                             <span>Địa Chỉ Phòng Khám: {doctorInfo.adressClinic}</span>
                         ) : 'Chưa có mô tả'}
                     </p>
-                    <div className="price-info">
-                        <p>
-                            Giá cơ bản: <span>
-                                {language === LANGUAGES.VI
-                                    ? formatCurrency(priceData.valueVn, LANGUAGES.VI)
-                                    : formatCurrency(priceData.valueEn, LANGUAGES.EN)}
-                            </span>
-                        </p>
-                    </div>
+                    {isShowLinkDetail === true &&
+                        <div className="view-more">
+                            <Link to={`/detail-doctor/${doctorId}`}>Xem Thêm</Link>
+                        </div>
+                    }
+                    {isShowPrice === true &&
+                        <div className="price-info">
+                            <p>
+                                Giá cơ bản: <span>
+                                    {language === LANGUAGES.VI
+                                        ? formatCurrency(priceData.valueVn, LANGUAGES.VI)
+                                        : formatCurrency(priceData.valueEn, LANGUAGES.EN)}
+                                </span>
+                            </p>
+                        </div>
+                    }
+
                 </div>
             </Fragment>
         );
