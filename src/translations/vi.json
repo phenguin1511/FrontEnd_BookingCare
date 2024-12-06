@@ -46,7 +46,9 @@
             "manage-handbook": "Quản Lý Cẩm Nang"
         },
         "doctor": {
-            "manage-schedule": "Quản Lý Lịch Khám Bệnh"
+            "manage-schedule": "Quản Lý Kế Hoạch",
+            "manage-patient": "Quản Lý Lịch Khám Bệnh",
+            "manage-work": "Quản Lý Lịch Công Việc"
         }
     },
     "manage-user": {

@@ -83,7 +83,7 @@
     }
 }
 
-.select-province {
+.select-province-specialty {
     padding      : 10px;
     border-radius: 5px;
     border       : 1px solid #ddd;
@@ -92,7 +92,7 @@
     transition   : border-color 0.3s ease-in-out;
 }
 
-.select-province:hover {
+.select-province-specialty:hover {
     border-color: #007bff;
     /* Thay đổi màu viền khi hover */
 }
@@ -135,6 +135,10 @@
     display  : flex;
     flex-wrap: wrap;
     gap      : 20px;
+
+    .schedule-content-left {
+        width: 50%;
+    }
 }
 
 .schedule-content-detail {

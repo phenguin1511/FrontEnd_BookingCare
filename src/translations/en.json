@@ -46,7 +46,9 @@
             "manage-handbook": "Manage Hand Book"
         },
         "doctor": {
-            "manage-schedule": "Manage Schedule"
+            "manage-schedule": "Manage Schedule",
+            "manage-patient": "Manage Patient",
+            "manage-work": "Work management"
         }
     },
     "manage-user": {

@@ -1,0 +1,168 @@
+.patient-manage-container {
+    font-family     : Arial, sans-serif;
+    padding         : 20px;
+    background-color: #f9f9f9;
+    border-radius   : 10px;
+    box-shadow      : 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+    .patient-manage-title {
+        font-size    : 24px;
+        font-weight  : bold;
+        color        : #333;
+        text-align   : center;
+        margin-bottom: 20px;
+    }
+
+    .patient-manage-content {
+        .date-picker {
+            display      : flex;
+            align-items  : center;
+            margin-bottom: 20px;
+
+            label {
+                font-size   : 16px;
+                color       : #555;
+                margin-right: 10px;
+            }
+
+            .date-patient-manage {
+                padding      : 10px;
+                font-size    : 14px;
+                border       : 1px solid #ddd;
+                border-radius: 5px;
+                margin-right : 10px;
+                transition   : border-color 0.3s ease;
+
+                &:focus {
+                    border-color: #007bff;
+                    outline     : none;
+                }
+            }
+
+            .btn-filter {
+                background-color: #007bff;
+                color           : white;
+                padding         : 10px 20px;
+                border          : none;
+                border-radius   : 5px;
+                cursor          : pointer;
+                transition      : background-color 0.3s ease;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+        }
+
+        .appointment-list {
+            .label-patient-manager {
+                font-size    : 18px;
+                font-weight  : bold;
+                color        : #333;
+                margin-bottom: 10px;
+                display      : block;
+            }
+
+            .table-patient-manage {
+                width           : 100%;
+                border-collapse : collapse;
+                background-color: white;
+                box-shadow      : 0px 2px 6px rgba(0, 0, 0, 0.1);
+                border-radius   : 8px;
+                overflow        : hidden;
+
+                thead {
+                    background-color: #007bff;
+                    color           : white;
+
+                    tr {
+                        th {
+                            padding    : 15px;
+                            text-align : left;
+                            font-size  : 14px;
+                            font-weight: bold;
+                        }
+                    }
+                }
+
+                tbody {
+                    tr {
+                        &:nth-child(odd) {
+                            background-color: #f2f2f2;
+                        }
+
+                        td {
+                            padding       : 12px;
+                            font-size     : 14px;
+                            color         : #555;
+                            vertical-align: middle;
+                        }
+
+                        &:hover {
+                            background-color: #eef7ff;
+                        }
+
+                        .btn-confirm-patient-manager {
+                            margin-right    : 10px;
+                            background-color: #28a745;
+                            color           : white;
+                            padding         : 8px 15px;
+                            border          : none;
+                            border-radius   : 5px;
+                            cursor          : pointer;
+                            transition      : background-color 0.3s ease;
+
+                            &:hover {
+                                background-color: #218838;
+                            }
+                        }
+
+                        .btn-send-from-doctor {
+                            background-color: #ffc107;
+                            color           : #333;
+                            padding         : 8px 15px;
+                            border          : none;
+                            border-radius   : 5px;
+                            cursor          : pointer;
+                            transition      : background-color 0.3s ease;
+
+                            &:hover {
+                                background-color: #e0a800;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .loader {
+        display        : flex;
+        justify-content: center;
+        align-items    : center;
+        margin         : 20px 0;
+        font-size      : 16px;
+        color          : #007bff;
+
+        .spinner {
+            margin-right : 8px;
+            border       : 3px solid rgba(0, 123, 255, 0.3);
+            border-top   : 3px solid #007bff;
+            border-radius: 50%;
+            width        : 16px;
+            height       : 16px;
+            animation    : spin 0.8s linear infinite;
+        }
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+}

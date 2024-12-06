@@ -19,6 +19,9 @@ import DetailDoctor from './Patient/Doctor/DetailDoctor.js';
 import Doctor from '../routes/Doctor.js';
 import VerifyEmail from './Patient/VerifyEmail/VerifyEmail.js';
 import SpecialtyDetail from './Patient/Specialty/SpecialtyDetail.js';
+import ClinicDetail from './Patient/Clinic/ClinicDetail.js';
+import Register from './Auth/Register.js';
+import ForgotPassword from './Auth/ForgotPassword.js';
 class App extends Component {
 
     handlePersistorState = () => {
@@ -50,11 +53,14 @@ class App extends Component {
                                 <Switch>
                                     <Route path={path.HOME} exact component={(Home)} />
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
+                                    <Route path={path.REGISTER} component={userIsNotAuthenticated(Register)} />
+                                    <Route path={path.FORGOTPASSWORD} component={(ForgotPassword)} />
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
                                     <Route path={path.HOMEPAGE} component={(HomePage)} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                                     <Route path={path.DETAIL_SPECIALTY} component={SpecialtyDetail} />
+                                    <Route path={path.DETAIL_CLINIC} component={ClinicDetail} />
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
 
                                 </Switch>

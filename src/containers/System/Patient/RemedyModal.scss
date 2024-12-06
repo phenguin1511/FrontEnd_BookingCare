@@ -1,0 +1,123 @@
+.remedy-modal-container {
+    .remedy-modal-content {
+        background-color: #f8f9fa;
+        border-radius   : 10px;
+        box-shadow      : 0 5px 15px rgba(0, 0, 0, 0.2);
+        overflow        : hidden;
+
+        .modal-header {
+            display                : flex;
+            justify-content        : space-between;
+            align-items            : center;
+            background-color       : #007bff;
+            color                  : #ffffff;
+            padding                : 15px;
+            border-top-left-radius : 10px;
+            border-top-right-radius: 10px;
+
+            .modal-title {
+                font-size  : 20px;
+                font-weight: 600;
+            }
+
+            .btn-close {
+                background: none;
+                border    : none;
+                color     : #ffffff;
+                font-size : 24px;
+                cursor    : pointer;
+
+                &:hover {
+                    color: #ccc;
+                }
+            }
+        }
+
+        .modal-body {
+            padding: 20px;
+
+            .info-container {
+                .info-row {
+                    display         : flex;
+                    justify-content : space-between;
+                    margin-bottom   : 15px;
+                    padding         : 10px;
+                    border-radius   : 8px;
+                    background-color: #ffffff;
+                    box-shadow      : 0 2px 5px rgba(0, 0, 0, 0.1);
+
+                    .label {
+                        font-weight : 500;
+                        color       : #333;
+                        margin-right: 10px;
+                        flex        : 0 0 30%;
+                    }
+
+                    .value {
+                        flex         : 1;
+                        color        : #555;
+                        overflow-wrap: break-word;
+                    }
+                }
+
+                .file-upload {
+                    align-items: center;
+
+                    input.file-input {
+                        padding      : 6px 12px;
+                        border       : 1px solid #ccc;
+                        border-radius: 4px;
+                        outline      : none;
+                        transition   : border-color 0.3s;
+
+                        &:focus {
+                            border-color: #007bff;
+                        }
+                    }
+                }
+
+                .image-preview {
+                    margin-top: 20px;
+                    text-align: center;
+
+                    img {
+                        max-width    : 100%;
+                        max-height   : 300px;
+                        border       : 1px solid #ddd;
+                        border-radius: 5px;
+                        box-shadow   : 0 2px 5px rgba(0, 0, 0, 0.2);
+                    }
+                }
+
+            }
+
+            .no-data-message {
+                color     : #999;
+                font-style: italic;
+                text-align: center;
+                margin-top: 20px;
+            }
+        }
+
+        .modal-footer {
+            padding        : 15px;
+            display        : flex;
+            justify-content: flex-end;
+
+            .btn {
+                padding      : 10px 20px;
+                border-radius: 5px;
+
+                &.btn-secondary {
+                    background-color: #6c757d;
+                    color           : #ffffff;
+                    border          : none;
+
+                    &:hover {
+                        background-color: #5a6268;
+                    }
+                }
+            }
+        }
+    }
+}

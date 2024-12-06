@@ -6,6 +6,10 @@ const handleLoginApi = (userEmail, userPassword) => {
     return axios.post('/api/login', { email: userEmail, password: userPassword });
 }
 
+const handleForgotPasswordApi = (userEmail) => {
+    return axios.post('/api/forgot-password', { email: userEmail });
+};
+
 const getAllUsers = (inputId) => {
     return axios.get(`/api/get-all-users?id=${inputId}`);
 }
@@ -79,6 +83,18 @@ const createNewClinic = (data) => {
 const getAllClinic = () => {
     return axios.get('/api/get-all-clinic')
 }
+
+const getDetailClinicById = (data) => {
+    return axios.get(`/api/get-detail-clinic-by-id?id=${data.id}}`);
+}
+
+const getAllPatientForDoctor = (data) => {
+    return axios.get(`/api/get-list-patient-for-doctor?doctorId=${data.doctorId}}&date=${data.date}`);
+}
+
+const postSendRemedy = (data) => {
+    return axios.post('/api/send-remedy', data)
+}
 export {
     handleLoginApi,
     getAllUsers,
@@ -99,5 +115,9 @@ export {
     getAllSpecialty,
     getDetailSpecialtyById,
     createNewClinic,
-    getAllClinic
+    getAllClinic,
+    getDetailClinicById,
+    handleForgotPasswordApi,
+    getAllPatientForDoctor,
+    postSendRemedy
 }

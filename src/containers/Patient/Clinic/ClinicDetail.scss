@@ -1,0 +1,22 @@
+.detail-clinic-container {
+    padding         : 20px;
+    background-color: #f9f9f9;
+    transition      : background-color 0.3s ease-in-out;
+
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+
+    .description-detail-clinic {
+        margin-bottom   : 20px;
+        background-color: #fff;
+        border-radius   : 10px;
+        box-shadow      : 0 4px 8px rgba(0, 0, 0, 0.1);
+        padding         : 20px;
+        transition      : box-shadow 0.3s ease-in-out, transform 0.3s ease-in-out;
+    }
+
+    img {
+        width: 100%;
+    }
+}

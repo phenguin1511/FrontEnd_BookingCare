@@ -1,23 +1,21 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
-import './SpecialtyDetail.scss';
+import './ClinicDetail.scss';
 import HomeHeader from '../../HomePage/HomeHeader';
 import DoctorSchedule from '../Doctor/DoctorSchedule';
 import DoctorExtraInfo from '../Doctor/DoctorExtraInfo';
 import ProfileDoctor from '../Doctor/ProfileDoctor';
 import HomeFooter from '../../HomePage/HomeFooter';
-import { getDetailSpecialtyById, getAllCodeService } from '../../../services/userService';
+import { getDetailClinicById } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils';
 
-class SpecialtyDetail extends Component {
+class ClinicDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
             arrDoctorId: [],
             detailDoctor: [],
             isExpanded: false,
-            listProvince: [],
-            selectedProvince: ''
         };
     }
 
@@ -28,39 +26,20 @@ class SpecialtyDetail extends Component {
     async componentDidMount() {
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             let id = this.props.match.params.id;
-            let res = await getDetailSpecialtyById({ id, location: 'ALL' });
-            let resProvince = await getAllCodeService('PROVINCE');
-
-            if (res && res.data.errCode === 0 && resProvince && resProvince.data.errCode === 0) {
-                let arr = res.data.data.specialtyTypeData;
+            let res = await getDetailClinicById({ id });
+            console.log("Check res", res)
+            if (res && res.data.errCode === 0) {
+                let arr = res.data.data.clinicTypeData;
                 let arrDoctorId = arr ? arr.map(item => item.doctorId) : [];
-                let listProvince = resProvince.data.data.map(item => ({
-                    ...item,
-                    value: this.props.language === LANGUAGES.VI ? item.valueVn : item.valueEn
-                }));
-
-                // Thêm một mục mặc định "ALL"
-                listProvince.push({
-                    createdAt: null,
-                    keyMap: 'ALL',
-                    type: 'PROVINCE',
-                    value: this.props.language === LANGUAGES.VI ? "Toàn Quốc" : "ALL",
-                    valueEn: "ALL",
-                    valueVn: "Toàn Quốc"
-                });
 
                 this.setState({
                     detailDoctor: res.data.data,
                     arrDoctorId: arrDoctorId,
-                    listProvince: listProvince,
-                    selectedProvince: 'ALL'
                 });
             } else {
                 this.setState({
                     detailDoctor: [],
                     arrDoctorId: [],
-                    listProvince: [],
-                    selectedProvince: ''
                 });
             }
         }
@@ -68,31 +47,20 @@ class SpecialtyDetail extends Component {
 
 
     componentDidUpdate(prevProps) {
-        if (prevProps.language !== this.props.language) {
-            const updatedListProvince = this.state.listProvince.map(item => ({
-                ...item,
-                value: this.props.language === LANGUAGES.VI ? item.valueVn : item.valueEn
-            }));
-            this.setState({ listProvince: updatedListProvince });
-        }
+
     }
 
 
 
     handleOnChangeSelect = async (event) => {
-        const selectedProvince = event.target.value;
-        if (selectedProvince === this.state.selectedProvince) {
-            return;
-        }
 
-        this.setState({ selectedProvince });
 
         if (this.props.match && this.props.match.params && this.props.match.params.id) {
             let id = this.props.match.params.id;
-            let res = await getDetailSpecialtyById({ id, location: selectedProvince });
+            let res = await getDetailClinicById({ id });
 
             if (res && res.data.errCode === 0) {
-                let arr = res.data.data.specialtyTypeData;
+                let arr = res.data.data.clinicTypeData;
                 let arrDoctorId = arr ? arr.map(item => item.doctorId) : [];
                 this.setState({
                     detailDoctor: res.data.data,
@@ -108,14 +76,13 @@ class SpecialtyDetail extends Component {
 
 
     render() {
-        const { detailDoctor, arrDoctorId, listProvince, selectedProvince } = this.state;
-        console.log(this.state);
+        const { detailDoctor, arrDoctorId } = this.state;
 
         return (
             <Fragment>
                 <HomeHeader />
-                <div className='detail-specialty-container'>
-                    <div className="description-detail-specialty">
+                <div className='detail-clinic-container'>
+                    <div className="description-detail-clinic">
                         {detailDoctor && detailDoctor.descriptionHTML ? (
                             <>
                                 <div
@@ -135,22 +102,6 @@ class SpecialtyDetail extends Component {
                     </div>
                 </div>
                 <div className='line'></div>
-                <div className='search-sp-doctor'>
-                    <select
-                        id="province-select"
-                        className='select-province-specialty'
-                        value={selectedProvince} // Đặt giá trị mặc định là 'ALL'
-                        onChange={this.handleOnChangeSelect}
-                    >
-                        {listProvince && listProvince.length > 0 &&
-                            listProvince.map((item) => (
-                                <option key={item.keyMap} value={item.keyMap}>
-                                    {item.value}
-                                </option>
-                            ))
-                        }
-                    </select>
-                </div>
                 <div className='title-schedule-doctor'>
                     <h2>Các Bác Sĩ Phụ Trách</h2>
                 </div>
@@ -193,4 +144,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(SpecialtyDetail);
+export default connect(mapStateToProps)(ClinicDetail);

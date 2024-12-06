@@ -29,6 +29,7 @@ class ManageDoctor extends Component {
             listPrice: [],
             listPayment: [],
             listProvince: [],
+            listClinic: [],
             selectedPayment: '',
             selectedProvince: '',
             selectedPrice: '',
@@ -49,6 +50,7 @@ class ManageDoctor extends Component {
         await this.props.fetchAllDoctor()
         await this.props.getRequireDoctorInfo()
         await this.props.fetchAllSpecialty()
+        await this.props.fetchAllClinic()
 
     }
 
@@ -93,6 +95,12 @@ class ManageDoctor extends Component {
                 list_specialty: dataSpecialty
             })
         }
+        if (prevProps.dataClinic !== this.props.dataClinic) {
+            let dataClinic = this.builDataSelect(this.props.dataClinic, "CLINIC");
+            this.setState({
+                list_clinic: dataClinic
+            })
+        }
     }
 
     builDataSelect = (inputData, type) => {
@@ -124,6 +132,10 @@ class ManageDoctor extends Component {
                         object.value = item.keyMap;
                         break;
                     case 'SPECIALTY':
+                        object.label = item.name ? item.name : "Không Có Dữ Liệu";
+                        object.value = item.id;
+                        break;
+                    case 'CLINIC':
                         object.label = item.name ? item.name : "Không Có Dữ Liệu";
                         object.value = item.id;
                         break;
@@ -190,7 +202,8 @@ class ManageDoctor extends Component {
                     nameClinic: Doctor_Infor.nameClinic || '',
                     note: Doctor_Infor.note || '',
                     hasOldData: true,
-                    selectedSpecialty: this.state.list_specialty.find(option => option.value === Doctor_Infor.specialtyId) || null // Add this
+                    selectedSpecialty: this.state.list_specialty.find(option => option.value === Doctor_Infor.specialtyId) || null,
+                    selectedClinic: this.state.list_clinic.find(option => option.value === Doctor_Infor.clinicId) || null
                 });
             } else {
                 this.setState({
@@ -201,7 +214,8 @@ class ManageDoctor extends Component {
                     nameClinic: '',
                     note: '',
                     hasOldData: false,
-                    selectedSpecialty: null // Reset if no data
+                    selectedSpecialty: null,
+                    selectedClinic: null
                 });
             }
         } else {
@@ -216,7 +230,8 @@ class ManageDoctor extends Component {
                 nameClinic: '',
                 note: '',
                 hasOldData: false,
-                selectedSpecialty: null // Reset if no data
+                selectedSpecialty: null,
+                selectedClinic: null
             });
         }
     };
@@ -244,6 +259,7 @@ class ManageDoctor extends Component {
             addressClinic: this.state.addressClinic,
             note: this.state.note,
             selectedSpecialty: this.state.selectedSpecialty ? this.state.selectedSpecialty.value : null,
+            selectedClinic: this.state.selectedClinic ? this.state.selectedClinic.value : null,
             action: hasOldData === true ? CRUD_ACTION.EDIT : CRUD_ACTION.CREATE
         });
         await this.props.fetchAllDoctor();
@@ -258,6 +274,7 @@ class ManageDoctor extends Component {
     render() {
         const { hasOldData } = this.state
         console.log(this.state)
+        console.log(this.props.dataClinic)
         return (
 
             <div className='manage-doctor-container'>
@@ -285,7 +302,7 @@ class ManageDoctor extends Component {
                 </div>
                 <div className='doctor_info_extra'>
                     <div className='select-price'>
-                        <label>Chọn Chuyên Khoa</label>
+                        <label>Chọn Cơ Sở Y Tế</label>
                         <Select
                             value={this.state.selectedSpecialty}
                             onChange={this.handleChangeDoctorInfoRequired}
@@ -293,6 +310,18 @@ class ManageDoctor extends Component {
                             className="select-doctor"
                             placeholder="Chọn Chuyên Khoa..."
                             name="selectedSpecialty"
+                        />
+
+                    </div>
+                    <div className='select-price'>
+                        <label>Chọn Cơ Sở Y Tế</label>
+                        <Select
+                            value={this.state.selectedClinic}
+                            onChange={this.handleChangeDoctorInfoRequired}
+                            options={this.state.list_clinic}
+                            className="select-doctor"
+                            placeholder="Chọn Chuyên Khoa..."
+                            name="selectedClinic"
                         />
 
                     </div>
@@ -382,7 +411,8 @@ const mapStateToProps = state => ({
     users: state.admin.users,
     allDoctors: state.admin.allDoctors,
     requireInforDoctor: state.admin.allRequiredDoctorInfo,
-    dataSpecialties: state.admin.dataSpecialties
+    dataSpecialties: state.admin.dataSpecialties,
+    dataClinic: state.admin.dataClinic
 });
 
 const mapDispatchToProps = dispatch => {
@@ -391,6 +421,7 @@ const mapDispatchToProps = dispatch => {
         getRequireDoctorInfo: () => dispatch(action.getRequireDoctorInfo()),
         saveInfoDoctor: (data) => dispatch(action.saveInfoDoctor(data)),
         fetchAllSpecialty: () => dispatch(action.fetchAllSpecialty()),
+        fetchAllClinic: () => dispatch(action.fetchAllClinic()),
     };
 };
 

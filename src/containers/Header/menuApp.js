@@ -50,10 +50,13 @@ export const adminMenu = [
 
 export const doctorMenu = [
     { //quản lý người dùng
-        name: 'menu.admin.manage-user',
+        name: 'menu.doctor.manage-work',
         menus: [
             {
-                name: 'menu.doctor.manage-schedule', link: '/doctor/schedule-manage'
+                name: 'menu.doctor.manage-schedule', link: '/doctor/schedule-doctor-manage'
+            },
+            {
+                name: 'menu.doctor.manage-patient', link: '/doctor/patient-manage'
             },
         ]
 
