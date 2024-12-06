@@ -1,11 +1,14 @@
 .table_list_specialty {
-    margin    : 20px 0;
-    overflow-x: auto;
+    margin         : 20px 0;
+    overflow-x     : auto;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
 
     .specialty-table {
         width          : 100%;
         border-collapse: collapse;
-        text-align     : left;
+        text-align     : center;
 
         thead {
             tr {
@@ -15,6 +18,8 @@
                     padding    : 10px;
                     border     : 1px solid #ddd;
                     font-weight: bold;
+                    text-align : center;
+                    /* Căn giữa text trong tiêu đề */
                 }
             }
         }
@@ -29,20 +34,17 @@
                     background-color: #f1f1f1;
                 }
 
-                td {
-                    padding       : 10px;
-                    border        : 1px solid #ddd;
-                    vertical-align: middle;
+                .list-button {
+                    display        : flex;
+                    justify-content: center;
+                    /* Căn giữa các nút trong ô */
+                    align-items    : center;
+                    gap            : 10px;
 
-                    img {
-                        display      : block;
-                        margin       : 0 auto;
-                        border-radius: 5px;
-                    }
-
-                    .btn-delete-specialty {
+                    .btn-delete-specialty,
+                    .btn-add-specialty {
                         padding         : 5px 10px;
-                        background-color: #ff4d4f;
+                        background-color: rgb(60, 165, 60);
                         color           : white;
                         border          : none;
                         border-radius   : 4px;
@@ -50,8 +52,30 @@
                         transition      : background-color 0.3s ease;
 
                         &:hover {
+                            background-color: #3e9c3e;
+                        }
+                    }
+
+                    .btn-delete-specialty {
+                        background-color: #ff4d4f;
+
+                        &:hover {
                             background-color: #d9363e;
                         }
+                    }
+                }
+
+                td {
+                    padding       : 10px;
+                    border        : 1px solid #ddd;
+                    vertical-align: middle;
+                    text-align    : center;
+                    /* Căn giữa text trong các ô */
+
+                    img {
+                        display      : block;
+                        margin       : 0 auto;
+                        border-radius: 5px;
                     }
                 }
             }

@@ -26,7 +26,8 @@ class UserRedux extends Component {
             avatar: '',
             imagePreviewUrl: '',
             action: '',
-            userId: ''
+            userId: '',
+            userToEdit: []
         };
     }
 
@@ -34,6 +35,9 @@ class UserRedux extends Component {
         this.props.getGenderStart();
         this.props.getPositionStart();
         this.props.getRoleStart();
+        if (this.props.userToEdit) {
+            this.handleEditUserRedux();
+        }
     }
 
     componentDidUpdate(prevProps) {
@@ -60,6 +64,12 @@ class UserRedux extends Component {
 
         if (prevProps.users !== this.props.users) {
             this.resetUserForm();
+        }
+
+        if (prevProps.userToEdit !== this.props.userToEdit) {
+            this.setState({
+                userToEdit: this.props.userToEdit
+            })
         }
     }
 
@@ -169,10 +179,17 @@ class UserRedux extends Component {
         }
     };
 
-    hanldeEditUserRedux = (user) => {
+    handleEditUserRedux = () => {
+        let user = this.props.userToEdit;
+        if (!user) {
+            console.log('No user data available');
+            return;
+        }
+        console.log(user); // Xem dữ liệu trong console để kiểm tra
+
         let imageBase64 = '';
         if (user.image) {
-            imageBase64 = new Buffer(user.image, 'base64').toString('binary')
+            imageBase64 = new Buffer(user.image, 'base64').toString('binary');
         }
         this.setState({
             userId: user.id,
@@ -188,14 +205,15 @@ class UserRedux extends Component {
             avatar: user.avatar,
             imagePreviewUrl: imageBase64,
             action: CRUD_ACTION.EDIT
-        })
-    }
+        });
+    };
+
 
     render() {
         const { genderArr, positionArr, roleArr } = this.state;
         let language = this.props.lang;
         let isLoadingGender = this.props.isLoadingGender;
-        console.log(this.state)
+        console.log(this.props.userToEdit)
         return (
             <Fragment>
                 <div className="user-redux-container">
@@ -372,13 +390,6 @@ class UserRedux extends Component {
                             </button>
                         </form>
                     </div>
-                    <div className='table-manager'>
-                        <TableManageUser
-                            hanldeEditUserRedux={this.hanldeEditUserRedux}
-                            action={this.state.action}
-
-                        />
-                    </div>
                 </div>
 
             </Fragment>
@@ -392,7 +403,8 @@ const mapStateToProps = state => ({
     positionRedux: state.admin.position,
     roleRedux: state.admin.roles,
     isLoadingGender: state.admin.isLoadingGender,
-    users: state.admin.users
+    users: state.admin.users,
+    userToEdit: state.user.userToEdit
 });
 
 const mapDispatchToProps = dispatch => ({

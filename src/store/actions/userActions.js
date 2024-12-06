@@ -16,3 +16,8 @@ export const userLoginFail = () => ({
 export const processLogout = () => ({
     type: actionTypes.PROCESS_LOGOUT
 })
+
+export const setUserToEdit = (user) => ({
+    type: 'SET_USER_TO_EDIT',
+    payload: user
+});

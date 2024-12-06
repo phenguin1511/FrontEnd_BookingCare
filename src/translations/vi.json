@@ -41,10 +41,12 @@
             "manage-doctor": "Quản Lý Bác Sĩ",
             "manage-admin": "Quản Lý Admin",
             "crud-redux": "CRUD Redux",
+            "list-user-redux": "Danh Sách User",
             "manage-clinic": "Quản Lý Phòng Khám",
             "manage-specialty": "Quản Lý Chuyên Khoa",
             "manage-handbook": "Quản Lý Cẩm Nang",
-            "list-specialty": "Danh Sách Chuyên Khoa"
+            "list-specialty": "Danh Sách Chuyên Khoa",
+            "list-clinic": "Danh Sách Cơ Sở Y Tế"
         },
         "doctor": {
             "manage-schedule": "Quản Lý Kế Hoạch",

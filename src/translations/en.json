@@ -41,9 +41,11 @@
             "manage-doctor": "Manage Doctor",
             "manage-admin": "Manage Admin",
             "crud-redux": "CRUD Redux",
+            "list-user-redux": "List User Redux",
             "manage-clinic": "Manage Clinic",
             "manage-specialty": "Manage Specialty",
             "list-specialty": "List Specialty",
+            "list-clinic": "List Clinic",
             "manage-handbook": "Manage Hand Book"
         },
         "doctor": {

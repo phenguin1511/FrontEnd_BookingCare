@@ -2,7 +2,8 @@ import actionTypes from '../actions/actionTypes';
 
 const initialState = {
     isLoggedIn: false,
-    userInfo: null
+    userInfo: null,
+    userToEdit: null,
 }
 
 const appReducer = (state = initialState, action) => {
@@ -25,6 +26,11 @@ const appReducer = (state = initialState, action) => {
                 isLoggedIn: false,
                 userInfo: null
             }
+        case 'SET_USER_TO_EDIT':
+            return {
+                ...state,
+                userToEdit: action.payload
+            };
         default:
             return state;
     }

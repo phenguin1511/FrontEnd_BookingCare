@@ -104,7 +104,9 @@ const deleteSpecialty = (data) => {
     return axios.post(`/api/delete-specialty?id=${data.id}}`)
 }
 
-
+const deleteClinic = (data) => {
+    return axios.post(`/api/delete-clinic?id=${data.id}}`)
+}
 export {
     handleLoginApi,
     getAllUsers,
@@ -131,5 +133,6 @@ export {
     getAllPatientForDoctor,
     postSendRemedy,
     handleChangePasswordApi,
-    deleteSpecialty
+    deleteSpecialty,
+    deleteClinic
 }

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import "./TableManageUser.scss";
 import * as action from "../../../store/actions";
 
@@ -7,9 +8,17 @@ class TableManageUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            users: []
+            users: [],
+            currentPage: 1,
+            usersPerPage: 5, // Số lượng người dùng hiển thị trên mỗi trang
         };
     }
+    getPaginatedUsers = () => {
+        const { currentPage, usersPerPage } = this.state;
+        const indexOfLastUser = currentPage * usersPerPage;
+        const indexOfFirstUser = indexOfLastUser - usersPerPage;
+        return this.state.users.slice(indexOfFirstUser, indexOfLastUser);
+    };
 
     async componentDidMount() {
         try {
@@ -22,33 +31,51 @@ class TableManageUser extends Component {
     componentDidUpdate(prevProps) {
         if (prevProps.users !== this.props.users) {
             this.setState({
-                users: this.props.users
-            })
+                users: this.props.users,
+                currentPage: 1 // Reset lại trang hiện tại khi dữ liệu thay đổi
+            });
             this.props.getGenderStart();
             this.props.getPositionStart();
             this.props.getRoleStart();
         }
+    }
 
-    }
-    handleDeleteUser = (user) => {
-        const confirmEdit = window.confirm(`Are you sure you want to edit user ${user.firstName} ${user.lastName}?`);
-        if (confirmEdit) {
-            this.props.deleteUser(user.id);
-        } else {
-            alert("Delete Failed!!");
-        }
-    }
 
     editUser = (user) => {
-        this.props.hanldeEditUserRedux(user);
-        console.log(user)
-    }
+        this.props.setUserToEdit(user);
+        this.props.history.push('/system/user-redux');
+    };
+
+    renderPagination = () => {
+        const { users, usersPerPage, currentPage } = this.state;
+        const totalPages = Math.ceil(users.length / usersPerPage);
+        let pages = [];
+
+        for (let i = 1; i <= totalPages; i++) {
+            pages.push(i);
+        }
+
+        return (
+            <div className="pagination">
+                {pages.map((page) => (
+                    <button
+                        key={page}
+                        onClick={() => this.setState({ currentPage: page })}
+                        className={currentPage === page ? 'active' : ''}
+                    >
+                        {page}
+                    </button>
+                ))}
+            </div>
+        );
+    };
 
     render() {
-        let users = this.props.users; // Access users from props
+        let paginatedUsers = this.getPaginatedUsers();
 
         return (
             <React.Fragment>
+                <div className='title'>List User</div>
                 <table>
                     <thead>
                         <tr>
@@ -64,8 +91,8 @@ class TableManageUser extends Component {
                         </tr>
                     </thead>
                     <tbody>
-                        {users && users.length > 0 ? (
-                            users.map((user, index) => (
+                        {paginatedUsers && paginatedUsers.length > 0 ? (
+                            paginatedUsers.map((user, index) => (
                                 <tr key={index}>
                                     <td>{user.email}</td>
                                     <td>{user.firstName}</td>
@@ -83,19 +110,21 @@ class TableManageUser extends Component {
                             ))
                         ) : (
                             <tr>
-                                <td colSpan="5">No users found</td>
+                                <td colSpan="8">No users found</td>
                             </tr>
                         )}
                     </tbody>
                 </table>
+                {this.renderPagination()}
             </React.Fragment>
         );
     }
+
 }
 
 const mapStateToProps = state => ({
     lang: state.app.language,
-    users: state.admin.users // Map users from Redux state
+    users: state.admin.users // Lấy dữ liệu users từ Redux state
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -104,6 +133,7 @@ const mapDispatchToProps = dispatch => ({
     getGenderStart: () => dispatch(action.fetchGenderStart()),
     getPositionStart: () => dispatch(action.fetchPositionStart()),
     getRoleStart: () => dispatch(action.fetchRoleStart()),
+    setUserToEdit: (user) => dispatch(action.setUserToEdit(user)), // Gọi action để lưu user vào Redux
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TableManageUser);
