@@ -43,7 +43,8 @@
             "crud-redux": "CRUD Redux",
             "manage-clinic": "Quản Lý Phòng Khám",
             "manage-specialty": "Quản Lý Chuyên Khoa",
-            "manage-handbook": "Quản Lý Cẩm Nang"
+            "manage-handbook": "Quản Lý Cẩm Nang",
+            "list-specialty": "Danh Sách Chuyên Khoa"
         },
         "doctor": {
             "manage-schedule": "Quản Lý Kế Hoạch",

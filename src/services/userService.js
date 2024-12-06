@@ -99,6 +99,12 @@ const postSendRemedy = (data) => {
 const handleChangePasswordApi = (data) => {
     return axios.post('/api/change-password', data)
 }
+
+const deleteSpecialty = (data) => {
+    return axios.post(`/api/delete-specialty?id=${data.id}}`)
+}
+
+
 export {
     handleLoginApi,
     getAllUsers,
@@ -124,5 +130,6 @@ export {
     handleForgotPasswordApi,
     getAllPatientForDoctor,
     postSendRemedy,
-    handleChangePasswordApi
+    handleChangePasswordApi,
+    deleteSpecialty
 }

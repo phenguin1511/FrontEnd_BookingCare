@@ -218,7 +218,6 @@ export const fetchTopDoctor = (limit) => {
         try {
             let res = await getTopDoctorHomeService(limit);
             if (res && res.data.errCode === 0) {
-                toast.success("Get Top Doctor Success!!");
                 dispatch(fetchTopDoctorSuccess(res.data.data));
             } else {
                 toast.error("Get Top Doctor Error!!");
@@ -246,7 +245,6 @@ export const fetchAllDoctor = () => {
         try {
             let res = await getAllDoctors();
             if (res && res.data.errCode === 0) {
-                toast.success("Get Top Doctor Success!!");
                 dispatch(fetchAllDoctorSuccess(res.data.data));
             } else {
                 toast.error("Get Top Doctor Error!!");
@@ -429,7 +427,6 @@ export const fetchAllSpecialty = () => {
         try {
             let res = await getAllSpecialty();
             if (res && res.data.errCode === 0) {
-                toast.success("Get Top Doctor Success!!");
                 dispatch(fetchAllSpecialtySuccess(res.data.data));
             } else {
                 toast.error("Get Top Doctor Error!!");
