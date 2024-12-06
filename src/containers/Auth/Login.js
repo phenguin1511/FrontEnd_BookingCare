@@ -104,8 +104,11 @@ class Login extends Component {
                         <div onClick={this.handleLogin} className='col-12 button-login'>
                             LOGIN
                         </div>
-                        <div className='col-12 text-forgot-password'>
+                        <div className='col-12 text-forgot-password' onClick={() => window.location.href = '/forgot-password'}>
                             <span>Forgot Your Password?</span>
+                        </div>
+                        <div className='col-12 text-change-password' onClick={() => window.location.href = '/change-password'}>
+                            <span>Change Password</span>
                         </div>
                         <div className='col-12 text-center'>
                             <div className='social-login'>

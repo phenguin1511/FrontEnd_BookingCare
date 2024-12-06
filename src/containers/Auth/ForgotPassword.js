@@ -43,6 +43,9 @@ class ForgotPassword extends Component {
             this.setState({ isLoading: false });
         }
     };
+    handleBackToLogin = () => {
+        this.props.navigate('/login');
+    };
 
     render() {
         const { email, errMessage, isLoading, successMessage } = this.state;
@@ -71,22 +74,29 @@ class ForgotPassword extends Component {
                             <div style={{ color: 'green' }} className="success-message">{successMessage}</div>
                         )}
 
-                        <div
-                            onClick={this.handleForgotPassword}
-                            className={`col-12 button-login ${isLoading ? 'loading' : ''}`}
-                        >
-                            {isLoading ? 'Sending...' : 'Confirm'}
-                        </div>
-                        <div className='col-12 text-forgot-password'>
-                            <button onClick={() => this.props.navigate('/login')}>Cancel</button>
-                        </div>
+                        {successMessage ? (
+                            <div
+                                onClick={this.handleBackToLogin}
+                                className='col-12 button-login'
+                            >
+                                Back To Login
+                            </div>
+                        ) : (
+                            <div
+                                onClick={this.handleForgotPassword}
+                                className={`col-12 button-login ${isLoading ? 'loading' : ''}`}
+                            >
+                                {isLoading ? 'Sending...' : 'Confirm'}
+                            </div>
+                        )}
+
+                        <span className='col-12  forgot-password' onClick={() => this.props.navigate('/login')}>Cancel</span>
                     </div>
                 </div>
             </div>
         );
     }
 }
-
 const mapStateToProps = state => ({
     language: state.app.language
 });

@@ -199,9 +199,7 @@ class UserRedux extends Component {
         return (
             <Fragment>
                 <div className="user-redux-container">
-                    <div className='title'>
-                        <FormattedMessage id="manage-user.add-user" />
-                    </div>
+
 
                     <div className='user-redux-body'>
                         <div className='loading'>
@@ -213,7 +211,9 @@ class UserRedux extends Component {
                             ) : ''}
                         </div>
                         <form onSubmit={this.handleSaveUser}>
-
+                            <div className='title'>
+                                <FormattedMessage id="manage-user.add-user" />
+                            </div>
                             <div className="form-row">
                                 <div className="form-group" style={{ position: 'relative' }}>
                                     <label><FormattedMessage id="manage-user.email" /></label>
@@ -372,11 +372,15 @@ class UserRedux extends Component {
                             </button>
                         </form>
                     </div>
+                    <div className='table-manager'>
+                        <TableManageUser
+                            hanldeEditUserRedux={this.hanldeEditUserRedux}
+                            action={this.state.action}
+
+                        />
+                    </div>
                 </div>
-                <TableManageUser
-                    hanldeEditUserRedux={this.hanldeEditUserRedux}
-                    action={this.state.action}
-                />
+
             </Fragment>
         );
     }

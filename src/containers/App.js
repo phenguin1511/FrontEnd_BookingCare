@@ -22,6 +22,7 @@ import SpecialtyDetail from './Patient/Specialty/SpecialtyDetail.js';
 import ClinicDetail from './Patient/Clinic/ClinicDetail.js';
 import Register from './Auth/Register.js';
 import ForgotPassword from './Auth/ForgotPassword.js';
+import ChangePassword from './Auth/ChangePassword.js';
 class App extends Component {
 
     handlePersistorState = () => {
@@ -54,6 +55,7 @@ class App extends Component {
                                     <Route path={path.HOME} exact component={(Home)} />
                                     <Route path={path.LOGIN} component={userIsNotAuthenticated(Login)} />
                                     <Route path={path.REGISTER} component={userIsNotAuthenticated(Register)} />
+                                    <Route path={path.CHANGEPASSWORD} component={userIsNotAuthenticated(ChangePassword)} />
                                     <Route path={path.FORGOTPASSWORD} component={(ForgotPassword)} />
                                     <Route path={path.SYSTEM} component={userIsAuthenticated(System)} />
                                     <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
