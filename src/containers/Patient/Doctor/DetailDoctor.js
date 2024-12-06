@@ -7,7 +7,8 @@ import * as actions from "../../../store/actions";
 import { LANGUAGES } from '../../../utils';
 import DoctorSchedule from './DoctorSchedule';
 import DoctorExtraInfo from './DoctorExtraInfo';
-
+import LikeAndShare from '../SocialPlugin/LikeAndShare';
+import Comment from '../SocialPlugin/Comment';
 class DetailDoctor extends Component {
     constructor(props) {
         super(props);
@@ -53,6 +54,13 @@ class DetailDoctor extends Component {
             let valueVn = `${info_doctor.positionData.valueVn}`;
             specialty = language === LANGUAGES.VI ? valueVn : valueEn
         }
+
+        const currentURL = 'https://developers.facebook.com/docs/plugins/'
+
+
+
+
+
         return (
             <React.Fragment>
                 <HomeHeader isShowBanner={false} />
@@ -76,7 +84,11 @@ class DetailDoctor extends Component {
                                     : 'Chưa có mô tả'
                                 }
                             </p>
+                            <div className="like-share-plugin">
+                                <LikeAndShare dataHref={currentURL} />
+                            </div>
                         </div>
+
                     </div>
                     <div className="schedule-doctor">
                         <div className="schedule-content">
@@ -104,14 +116,10 @@ class DetailDoctor extends Component {
 
                     <div className="comment-doctor">
                         <h2>Patient Reviews</h2>
-                        <div className="comment">
-                            <p>"Dr. Doe is an excellent physician who truly cares about his patients. Highly recommend!"</p>
-                            <span>- Jane Smith</span>
-                        </div>
-                        <div className="comment">
-                            <p>"The best cardiologist in town. Helped me recover completely after my surgery."</p>
-                            <span>- Michael Brown</span>
-                        </div>
+                        <Comment
+                            width={"100%"}
+                            dataHref={currentURL}
+                        />
                     </div>
                 </div>
                 <HomeFooter />
