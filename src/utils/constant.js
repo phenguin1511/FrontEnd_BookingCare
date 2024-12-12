@@ -11,7 +11,9 @@ export const path = {
     VERIFY_EMAIL_BOOKING: '/verify-booking',
     DETAIL_SPECIALTY: '/detail-specialty/:id',
     DETAIL_CLINIC: '/detail-clinic/:id',
-    CHANGEPASSWORD: '/change-password'
+    CHANGEPASSWORD: '/change-password',
+    DETAIL_HANDBOOK: '/detail-handbook/:id',
+    VIEW_HISTORY_BOOKING: '/history-booking'
 };
 
 export const LANGUAGES = {

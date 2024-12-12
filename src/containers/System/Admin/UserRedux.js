@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import "./UserRedux.scss";
 import { LANGUAGES, CRUD_ACTION, CommonUtils } from "../../../utils"
 import * as action from "../../../store/actions"
-import TableManageUser from './TableManageUser';
 
 
 class UserRedux extends Component {
@@ -25,7 +24,7 @@ class UserRedux extends Component {
             role: '',
             avatar: '',
             imagePreviewUrl: '',
-            action: '',
+            action: CRUD_ACTION.CREATE,
             userId: '',
             userToEdit: []
         };
@@ -41,6 +40,20 @@ class UserRedux extends Component {
     }
 
     componentDidUpdate(prevProps) {
+        if (prevProps.userToEdit !== this.props.userToEdit) {
+            if (this.props.userToEdit) {
+                this.setState({
+                    userToEdit: this.props.userToEdit,
+                    gender: this.props.userToEdit?.gender,
+                    position: this.props.userToEdit?.positionId,
+                    role: this.props.userToEdit?.roleId,
+                    action: CRUD_ACTION.EDIT,
+                });
+            } else {
+                this.resetUserForm();
+            }
+        }
+
         if (prevProps.genderRedux !== this.props.genderRedux) {
             this.setState({
                 genderArr: this.props.genderRedux,
@@ -66,11 +79,7 @@ class UserRedux extends Component {
             this.resetUserForm();
         }
 
-        if (prevProps.userToEdit !== this.props.userToEdit) {
-            this.setState({
-                userToEdit: this.props.userToEdit
-            })
-        }
+
     }
 
     resetUserForm = () => {
@@ -135,7 +144,7 @@ class UserRedux extends Component {
     };
 
     handleSaveUser = (event) => {
-        event.preventDefault();  // Prevent form submission
+        event.preventDefault(); // Ngăn chặn submit form mặc định
         let { action } = this.state;
 
         if (action === CRUD_ACTION.CREATE) {
@@ -152,6 +161,8 @@ class UserRedux extends Component {
                     role: this.state.role,
                     avatar: this.state.avatar,
                 });
+                // Reset form sau khi thêm thành công
+                this.resetUserForm();
             } else {
                 console.log("Form validation failed");
             }
@@ -159,7 +170,6 @@ class UserRedux extends Component {
 
         if (action === CRUD_ACTION.EDIT) {
             if (this.checkValidateInput()) {
-                // Make sure role and position are passed correctly
                 this.props.editUserAction({
                     id: this.state.userId,
                     email: this.state.email,
@@ -168,11 +178,16 @@ class UserRedux extends Component {
                     lastName: this.state.lastName,
                     address: this.state.address,
                     gender: this.state.gender,
-                    position: this.state.position,  // Ensure position is passed here
+                    position: this.state.position,
                     phonenumber: this.state.phonenumber,
-                    role: this.state.role,  // Ensure role is passed here
+                    role: this.state.role,
                     avatar: this.state.avatar,
                 });
+                // Reset trạng thái về chế độ thêm mới
+                this.setState({
+                    action: CRUD_ACTION.CREATE,
+                });
+                this.resetUserForm();
             } else {
                 console.log("Form validation failed");
             }
@@ -214,6 +229,7 @@ class UserRedux extends Component {
         let language = this.props.lang;
         let isLoadingGender = this.props.isLoadingGender;
         console.log(this.props.userToEdit)
+        console.log(this.state)
         return (
             <Fragment>
                 <div className="user-redux-container">

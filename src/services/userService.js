@@ -107,6 +107,49 @@ const deleteSpecialty = (data) => {
 const deleteClinic = (data) => {
     return axios.post(`/api/delete-clinic?id=${data.id}}`)
 }
+
+const deleteBookingPatient = (data) => {
+    return axios.post(`/api/delete-booking-patient?id=${data.id}`)
+}
+
+const getInfoSpecialtyById = (data) => {
+    return axios.get(`/api/get-info-specialty-by-id?id=${data}`)
+}
+
+const updateSpecialty = (data) => {
+    return axios.post(`/api/save-info-specialty`, data)
+}
+
+const getInfoClinicById = (data) => {
+    return axios.get(`/api/get-info-clinic-by-id?id=${data}`)
+}
+
+const updateClinic = (data) => {
+    return axios.post(`/api/save-info-clinic`, data)
+}
+
+const createNewHandBook = (data) => {
+    return axios.post('/api/create-new-handbook', data)
+}
+
+const getAllHandBook = () => {
+    return axios.get(`/api/get-all-handbook`)
+}
+const getInfoHandBookById = (data) => {
+    return axios.get(`/api/get-info-handbook-by-id?id=${data}`)
+}
+const updateHandBook = (data) => {
+    return axios.post(`/api/save-info-handbook`, data)
+}
+
+const getDetailHandBookById = (data) => {
+    return axios.get(`/api/get-detail-handbook-by-id?id=${data}`)
+}
+
+
+const getBookingHistoryByEmail = (data) => {
+    return axios.get(`/api/get-list-booking-for-patient?email=${data.email}`)
+}
 export {
     handleLoginApi,
     getAllUsers,
@@ -134,5 +177,16 @@ export {
     postSendRemedy,
     handleChangePasswordApi,
     deleteSpecialty,
-    deleteClinic
+    deleteClinic,
+    deleteBookingPatient,
+    getInfoSpecialtyById,
+    updateSpecialty,
+    getInfoClinicById,
+    updateClinic,
+    createNewHandBook,
+    getAllHandBook,
+    getInfoHandBookById,
+    updateHandBook,
+    getDetailHandBookById,
+    getBookingHistoryByEmail
 }

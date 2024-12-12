@@ -4,7 +4,8 @@ import Slider from 'react-slick';
 import "./HandBook.scss";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
+import * as action from "../../../store/actions";
+import { withRouter } from 'react-router';
 
 const NextArrow = (props) => {
     const { onClick } = props;
@@ -25,6 +26,28 @@ const PrevArrow = (props) => {
 };
 
 class HandBook extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            dataHandBook: []
+        };
+    }
+
+    async componentDidMount() {
+        await this.props.fetchAllHandBook();
+    }
+
+    async componentDidUpdate(prevProps) {
+        if (this.props.dataHandBook !== prevProps.dataHandBook) {
+            this.setState({
+                dataHandBook: this.props.dataHandBook
+            });
+        }
+    }
+
+    handleViewDetailHandBook = (handbook) => {
+        this.props.history.push(`/detail-handbook/${handbook.id}`)
+    }
     render() {
         let settings = {
             dots: true,
@@ -35,7 +58,7 @@ class HandBook extends Component {
             nextArrow: <NextArrow />,
             prevArrow: <PrevArrow />
         };
-
+        const { dataHandBook } = this.props
         return (
             <React.Fragment>
                 <div className='section-handbook'>
@@ -45,36 +68,28 @@ class HandBook extends Component {
                     </div>
 
                     <Slider className='slider' {...settings}>
-                        <div className='handbook-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='handbook 1' className='handbook-image' />
-                            <div className='content_handbook'>
-                                <h4>handbook 1</h4>
-                                <p>Assign arrow function to a variable before exporting as module default</p>
-                            </div>
-                        </div>
+                        {dataHandBook && dataHandBook.length > 0 ? (
+                            dataHandBook.map((handbook, index) => {
 
-                        <div className='handbook-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='handbook 1' className='handbook-image' />
-                            <div className='content_handbook'>
-                                <h4>handbook 1</h4>
-                                <p>Assign arrow function to a variable before exporting as module default</p>
-                            </div>
-                        </div>
+                                return (
+                                    <div className='handbook-item' key={index} onClick={() => this.handleViewDetailHandBook(handbook)}>
+                                        <div
+                                            className='handbook-image'
+                                            style={{
+                                                backgroundImage: `url(${handbook.image})`
+                                            }}
+                                        ></div>
+                                        <div className='content_handbook'>
+                                            <h4>{handbook.title || 'handbook Name'}</h4>
+                                            <p>{handbook.child_title || 'handbook Name'}</p>
+                                        </div>
+                                    </div>
+                                );
+                            })
+                        ) : (
+                            <p>No specialties available.</p>
+                        )}
 
-                        <div className='handbook-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='handbook 1' className='handbook-image' />
-                            <div className='content_handbook'>
-                                <h4 >handbook 1</h4>
-                                <p>Assign arrow function to a variable before exporting as module default</p>
-                            </div>
-                        </div>
-                        <div className='handbook-item'>
-                            <img src='https://cdn.tuoitre.vn/zoom/700_390/471584752817336320/2024/11/6/inter-milan-arsenal-champions-league-17308607930561569631197-44-0-672-1200-crop-17308608464511473001591.jpg' alt='handbook 1' className='handbook-image' />
-                            <div className='content_handbook'>
-                                <h4>handbook 1 </h4>
-                                <p>Assign arrow function to a variable before exporting as module default</p>
-                            </div>
-                        </div>
                     </Slider>
                 </div>
             </React.Fragment>
@@ -85,12 +100,15 @@ class HandBook extends Component {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
-        language: state.app.language
+        language: state.app.language,
+        dataHandBook: state.admin.dataHandBook
     };
 };
 
 const mapDispatchToProps = dispatch => {
-    return {};
+    return {
+        fetchAllHandBook: () => dispatch(action.fetchAllHandBook()),
+    };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(HandBook);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(HandBook));

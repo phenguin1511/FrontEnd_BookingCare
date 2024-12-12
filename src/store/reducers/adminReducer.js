@@ -13,7 +13,9 @@ const initialState = {
     allRequiredDoctorInfo: [],
     extraInfoDoctor: [],
     dataSpecialties: [],
-    dataClinic: []
+    dataClinic: [],
+    dataHandBook: [],
+    dataHistory: []
 };
 
 const adminReducer = (state = initialState, action) => {
@@ -185,6 +187,28 @@ const adminReducer = (state = initialState, action) => {
 
         case actionTypes.FETCH_ALL_CLINIC_FAILED:
             state.dataClinic = [];
+            return {
+                ...state
+            };
+        case actionTypes.FETCH_ALL_HANDBOOK_SUCCESS:
+            state.dataHandBook = action.dataHandBook
+            return {
+                ...state
+            };
+
+        case actionTypes.FETCH_ALL_HANDBOOK_FAILED:
+            state.dataHandBook = [];
+            return {
+                ...state
+            };
+        case actionTypes.FETCH_HISTORY_BOOKING_SUCCESS:
+            state.dataHistory = action.dataHandBook
+            return {
+                ...state
+            };
+
+        case actionTypes.FETCH_HISTORY_BOOKING_FAILED:
+            state.dataHistory = [];
             return {
                 ...state
             };

@@ -1,23 +1,40 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
-import './ManageSpecialty.scss';
+import * as action from "../../../store/actions";
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import { CommonUtils } from "../../../utils"
-import { createNewSpecialty } from '../../../services/userService';
-const mdParser = new MarkdownIt(/* Markdown-it options */);
+import { getInfoClinicById, updateClinic } from '../../../services/userService';
+import Select from 'react-select'
 
-class ManageSpecialty extends Component {
+const mdParser = new MarkdownIt();
+
+class EditClinic extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            specialtyName: '',
+            selectedClinic: '',
             imageBase64: '',
             previewImage: '',
             contentHTML: '',
-            contentMarkdown: ''
+            contentMarkdown: '',
+            list_clinic: [],
+
         };
+    }
+
+    async componentDidMount() {
+        await this.props.fetchAllClinic();
+    }
+
+    async componentDidUpdate(prevProps) {
+        if (this.props.dataClinic !== prevProps.dataClinic) {
+            let dataSpecialty = this.builDataSelect(this.props.dataClinic);
+            this.setState({
+                list_clinic: dataSpecialty
+            });
+        }
     }
 
     handleInputChange = (e) => {
@@ -34,31 +51,33 @@ class ManageSpecialty extends Component {
     };
 
     handleSave = async () => {
-        const { specialtyName, imageBase64, contentHTML, contentMarkdown } = this.state;
+        const { selectedClinic, imageBase64, contentHTML, contentMarkdown } = this.state;
 
-        if (!specialtyName || !imageBase64 || !contentHTML || !contentMarkdown) {
-            alert("Please fill in all fields before saving.");
+        if (!selectedClinic || !imageBase64 || !contentHTML || !contentMarkdown) {
+            alert("Vui lòng điền đầy đủ thông tin trước khi lưu.");
             return;
         }
 
-        let res = await createNewSpecialty({
-            specialtyName,
-            imageBase64,
-            contentHTML,
-            contentMarkdown,
+        let specialtyId = selectedClinic.value;
+        let res = await updateClinic({
+            id: specialtyId,
+            image: imageBase64,
+            contentHTML: contentHTML,
+            contentMarkdown: contentMarkdown,
         });
-
-        if (res.data.errCode === 0) {
-            alert("Specialty saved successfully!");
+        console.log(res)
+        if (res && res.data.errCode === 0) {
+            console.log(res)
+            alert("Cập nhật thông tin chuyên khoa thành công!");
             this.setState({
-                specialtyName: '',
+                selectedClinic: '',
                 imageBase64: '',
                 previewImage: '',
                 contentHTML: '',
                 contentMarkdown: '',
             });
         } else {
-            alert(res.data.errMessage || "Error saving specialty.");
+            alert(res.errMessage || "Đã xảy ra lỗi khi lưu thông tin.");
         }
     };
 
@@ -78,28 +97,61 @@ class ManageSpecialty extends Component {
         }
     };
 
+    builDataSelect = (inputData) => {
+        let result = [];
+        if (inputData && inputData.length > 0) {
+            inputData.map((item) => {
+                let object = {};
+                let label = `${item.name} `;
+
+                object.label = label ? label : 'Không có thông tin'
+                object.value = item.id;
+                result.push(object);
+            });
+        }
+        return result;
+    };
+    handleChangeClinic = async (selectedClinic) => {
+        this.setState({
+            selectedClinic
+        });
+        let res = await getInfoClinicById(selectedClinic.value);
+        if (res && res.data.errCode === 0) {
+            let data = res.data.data
+            this.setState({
+                imageBase64: data.image,
+                contentHTML: data.descriptionHTML,
+                contentMarkdown: data.descriptionMarkdown
+            })
+        } else {
+            this.setState({
+                imageBase64: '',
+                contentHTML: 'Không có dữ liệu',
+                contentMarkdown: 'Không có dữ liệu'
+            })
+        }
+    }
     render() {
         const { specialtyName, contentMarkdown, previewImage } = this.state;
-
+        console.log(this.state)
         return (
             <Fragment>
                 <div className='specialty-manage-container'>
-                    <h3 className='specialty-manage-title'>Thêm Chi Tiết Chuyên Khoa</h3>
+                    <h3 className='specialty-manage-title'>Sửa Thông Tin Cơ Sở Y Tế</h3>
                     <div className='specialty-manage-content'>
                         <div className='specialty-input'>
                             <div className='specialty-input-name'>
-                                <label htmlFor='specialty-name'>Tên Chuyên Khoa</label>
-                                <input
-                                    id='specialty-name'
-                                    name='specialtyName'
-                                    value={specialtyName}
-                                    onChange={this.handleInputChange}
-                                    type='text'
-                                    placeholder='Nhập tên chuyên khoa'
+                                <label htmlFor='specialty-name'>Tên Cơ Sở Y Tế</label>
+                                <Select
+                                    value={this.state.selectedClinic}
+                                    onChange={this.handleChangeClinic}
+                                    options={this.state.list_clinic}
+                                    placeholder="Chọn Cơ Sở Y Tế..."
+                                    name="selectedClinic"
                                 />
                             </div>
                             <div className='specialty-input-image'>
-                                <label htmlFor='specialty-image'>Ảnh Chuyên Khoa</label>
+                                <label htmlFor='specialty-image'>Ảnh Cơ Sở Y Tế</label>
                                 <input
                                     type='file'
                                     onChange={(event) => this.handleOnchangeImage(event)}
@@ -136,7 +188,12 @@ class ManageSpecialty extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
+        dataClinic: state.admin.dataClinic
     };
 };
-
-export default connect(mapStateToProps)(ManageSpecialty);
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchAllClinic: () => dispatch(action.fetchAllClinic()),
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(EditClinic);

@@ -1,18 +1,20 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
-import './ManageSpecialty.scss';
+import { CommonUtils } from "../../../utils"
+import { createNewHandBook } from '../../../services/userService';
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
-import { CommonUtils } from "../../../utils"
-import { createNewSpecialty } from '../../../services/userService';
-const mdParser = new MarkdownIt(/* Markdown-it options */);
+import './ManageHandBook.scss'
 
-class ManageSpecialty extends Component {
+const mdParser = new MarkdownIt();
+
+class ManageHandBook extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            specialtyName: '',
+            title: '',
+            child_title: '',
             imageBase64: '',
             previewImage: '',
             contentHTML: '',
@@ -34,31 +36,33 @@ class ManageSpecialty extends Component {
     };
 
     handleSave = async () => {
-        const { specialtyName, imageBase64, contentHTML, contentMarkdown } = this.state;
+        const { title, child_title, imageBase64, contentHTML, contentMarkdown } = this.state;
 
-        if (!specialtyName || !imageBase64 || !contentHTML || !contentMarkdown) {
+        if (!title || !child_title || !imageBase64 || !contentHTML || !contentMarkdown) {
             alert("Please fill in all fields before saving.");
             return;
         }
 
-        let res = await createNewSpecialty({
-            specialtyName,
+        let res = await createNewHandBook({
+            titleHandBook: title,
+            child_title,
             imageBase64,
             contentHTML,
             contentMarkdown,
         });
 
         if (res.data.errCode === 0) {
-            alert("Specialty saved successfully!");
+            alert("Handbook saved successfully!");
             this.setState({
-                specialtyName: '',
+                title: '',
+                child_title: '',
                 imageBase64: '',
                 previewImage: '',
                 contentHTML: '',
                 contentMarkdown: '',
             });
         } else {
-            alert(res.data.errMessage || "Error saving specialty.");
+            alert(res.data.errMessage || "Error saving handbook.");
         }
     };
 
@@ -79,27 +83,38 @@ class ManageSpecialty extends Component {
     };
 
     render() {
-        const { specialtyName, contentMarkdown, previewImage } = this.state;
-
+        const { title, child_title, contentMarkdown, address } = this.state;
+        // console.log(this.state)
         return (
             <Fragment>
-                <div className='specialty-manage-container'>
-                    <h3 className='specialty-manage-title'>Thêm Chi Tiết Chuyên Khoa</h3>
-                    <div className='specialty-manage-content'>
-                        <div className='specialty-input'>
-                            <div className='specialty-input-name'>
-                                <label htmlFor='specialty-name'>Tên Chuyên Khoa</label>
+                <div className='clinic-manage-container'>
+                    <h3 className='clinic-manage-title'>Thêm Chi Tiết Sổ Tay</h3>
+                    <div className='clinic-manage-content'>
+                        <div className='clinic-input'>
+                            <div className='clinic-input-name'>
+                                <label htmlFor='clinic-name'>Tên Tiêu Đề</label>
                                 <input
-                                    id='specialty-name'
-                                    name='specialtyName'
-                                    value={specialtyName}
+                                    id='clinic-name'
+                                    name='title'
+                                    value={title} // Bind state
                                     onChange={this.handleInputChange}
                                     type='text'
-                                    placeholder='Nhập tên chuyên khoa'
+                                    placeholder='Nhập tên tiêu đề'
                                 />
                             </div>
-                            <div className='specialty-input-image'>
-                                <label htmlFor='specialty-image'>Ảnh Chuyên Khoa</label>
+                            <div className='clinic-input-name'>
+                                <label htmlFor='clinic-name'>Tên Tiêu Đề Con</label>
+                                <input
+                                    id='clinic-name'
+                                    name='child_title'
+                                    value={child_title}
+                                    onChange={this.handleInputChange}
+                                    type='text'
+                                    placeholder='Nhập tên tiêu đề con'
+                                />
+                            </div>
+                            <div className='clinic-input-image'>
+                                <label htmlFor='clinic-image'>Ảnh Sổ Tay</label>
                                 <input
                                     type='file'
                                     onChange={(event) => this.handleOnchangeImage(event)}
@@ -114,16 +129,19 @@ class ManageSpecialty extends Component {
                                     </div>
                                 )}
                             </div>
+                            <div className='clinic-markdown'>
+                                <MdEditor
+                                    style={{ height: '300px' }}
+                                    renderHTML={(text) => mdParser.render(text)}
+                                    onChange={this.handleEditorChange}
+                                    value={contentMarkdown}
+                                />
+                            </div>
                         </div>
-                        <div className='specialty-markdown'>
-                            <MdEditor
-                                style={{ height: '300px' }}
-                                renderHTML={(text) => mdParser.render(text)}
-                                onChange={this.handleEditorChange}
-                                value={contentMarkdown}
-                            />
+
+                        <div className='clinic-markdown'>
                         </div>
-                        <div className='btn-save-specialty'>
+                        <div className='btn-save-clinic'>
                             <button className='btn btn-save' onClick={this.handleSave}>SAVE</button>
                         </div>
                     </div>
@@ -139,4 +157,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(ManageSpecialty);
+export default connect(mapStateToProps)(ManageHandBook);

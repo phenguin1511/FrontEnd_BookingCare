@@ -10,6 +10,11 @@ import ManageClinic from '../containers/System/Clinic/ManageClinic';
 import ListSpecialty from '../containers/System/Specialty/ListSpecialty';
 import ListClinic from '../containers/System/Clinic/ListClinic';
 import TableManageUser from '../containers/System/Admin/TableManageUser';
+import EditSpecialty from '../containers/System/Specialty/EditSpecialty';
+import EditClinic from '../containers/System/Clinic/EditClinic';
+import ManageHandBook from '../containers/System/HandBook/ManageHandBook';
+import ListHandBook from '../containers/System/HandBook/ListHandBook';
+import EditHandBook from '../containers/System/HandBook/EditHandBook';
 class System extends Component {
     render() {
         const { systemMenuPath, isLoggedIn } = this.props;
@@ -25,8 +30,13 @@ class System extends Component {
                             <Route path="/system/manage-doctor" component={ManageDoctor} />
                             <Route path="/system/manage-specialty" component={ManageSpecialty} />
                             <Route path="/system/list-specialty" component={ListSpecialty} />
+                            <Route path="/system/edit-specialty" component={EditSpecialty} />
                             <Route path="/system/manage-clinic" component={ManageClinic} />
                             <Route path="/system/list-clinic" component={ListClinic} />
+                            <Route path="/system/edit-clinic" component={EditClinic} />
+                            <Route path="/system/manage-handbook" component={ManageHandBook} />
+                            <Route path="/system/list-handbook" component={ListHandBook} />
+                            <Route path="/system/edit-handbook" component={EditHandBook} />
 
                             <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
                         </Switch>

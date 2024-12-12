@@ -2,27 +2,27 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as action from "../../../store/actions";
 import { withRouter } from 'react-router';
-import './ListClinic.scss'
+import './ListHandBook.scss'
 import { deleteClinic } from '../../../services/userService'
 import { toast } from 'react-toastify';
 
 
-class ListClinic extends Component {
+class ListHandBook extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            dataClinic: []
+            dataHandBook: []
         };
     }
 
     async componentDidMount() {
-        await this.props.fetchAllClinic();
+        await this.props.fetchAllHandBook();
     }
 
     async componentDidUpdate(prevProps) {
-        if (this.props.dataClinic !== prevProps.dataClinic) {
+        if (this.props.dataHandBook !== prevProps.dataHandBook) {
             this.setState({
-                dataClinic: this.props.dataClinic
+                dataHandBook: this.props.dataHandBook
             });
         }
     }
@@ -44,20 +44,20 @@ class ListClinic extends Component {
     };
 
     handleAddClinic = () => {
-        this.props.history.push('/system/manage-clinic');
+        this.props.history.push('/system/manage-handbook');
     };
 
     handleEditClinic = () => {
-        this.props.history.push('/system/edit-clinic');
+        this.props.history.push('/system/edit-handbook');
     }
     render() {
-        const { dataClinic } = this.state;
-
+        const { dataHandBook } = this.state;
+        console.log(this.props.dataHandBook)
         return (
             <React.Fragment>
                 <div className='section-specialty'>
                     <div className='specialty-title'>
-                        <h2>Danh Sách Cơ Sở Y Tế</h2>
+                        <h2>Danh Sách Cẩm Nang</h2>
                     </div>
                     <button
                         className='btn-add-specialty'
@@ -70,18 +70,19 @@ class ListClinic extends Component {
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Tên</th>
+                                    <th>Tiêu đề</th>
+                                    <th>Tiêu đề phụ</th>
                                     <th>Hình ảnh</th>
-                                    <th>Ngày tạo</th>
                                     <th>Hành động</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {dataClinic && dataClinic.length > 0 ? (
-                                    dataClinic.map((item, index) => (
+                                {dataHandBook && dataHandBook.length > 0 ? (
+                                    dataHandBook.map((item, index) => (
                                         <tr key={index}>
                                             <td>{index + 1}</td>
-                                            <td>{item.name}</td>
+                                            <td>{item.title}</td>
+                                            <td>{item.child_title}</td>
                                             <td>
                                                 <img
                                                     src={item.image}
@@ -89,7 +90,6 @@ class ListClinic extends Component {
                                                     style={{ width: '100px', height: '100px', objectFit: 'cover' }}
                                                 />
                                             </td>
-                                            <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                                             <td className='list-button'>
                                                 <button
                                                     className='btn-edit-specialty'
@@ -123,14 +123,14 @@ const mapStateToProps = state => {
     return {
         isLoggedIn: state.user.isLoggedIn,
         language: state.app.language,
-        dataClinic: state.admin.dataClinic
+        dataHandBook: state.admin.dataHandBook
     };
 };
 
 const mapDispatchToProps = dispatch => {
     return {
-        fetchAllClinic: () => dispatch(action.fetchAllClinic()),
+        fetchAllHandBook: () => dispatch(action.fetchAllHandBook()),
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListClinic));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListHandBook));

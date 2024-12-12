@@ -91,11 +91,14 @@
         }
 
         .handbook-image {
-            width        : 40%;
-            height       : 220px;
-            object-fit   : cover;
-            border-radius: 8px;
-            transition   : transform 0.3s;
+            width              : 40%;
+            height             : 220px;
+            object-fit         : cover;
+            border-radius      : 8px;
+            transition         : transform 0.3s;
+            background-size    : contain;
+            background-repeat  : no-repeat;
+            background-position: center;
 
             &:hover {
                 transform: scale(1.1);

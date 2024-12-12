@@ -46,7 +46,8 @@
             "manage-specialty": "Quản Lý Chuyên Khoa",
             "manage-handbook": "Quản Lý Cẩm Nang",
             "list-specialty": "Danh Sách Chuyên Khoa",
-            "list-clinic": "Danh Sách Cơ Sở Y Tế"
+            "list-clinic": "Danh Sách Cơ Sở Y Tế",
+            "list-handbook": "Danh Sách Cẩm Nang"
         },
         "doctor": {
             "manage-schedule": "Quản Lý Kế Hoạch",

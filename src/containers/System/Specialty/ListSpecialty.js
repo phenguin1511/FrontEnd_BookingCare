@@ -4,7 +4,6 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import * as action from "../../../store/actions";
-import { withRouter } from 'react-router';
 import './ListSpecialty.scss'
 import { deleteSpecialty } from '../../../services/userService'
 import { toast } from 'react-toastify';
@@ -48,15 +47,24 @@ class ListSpecialty extends Component {
     handleAddSpecialty = () => {
         this.props.history.push('/system/manage-specialty');
     };
+
+    handleEditSpecialty = () => {
+        this.props.history.push('/system/edit-specialty');
+    }
     render() {
         const { dataSpecialties } = this.state;
-
         return (
             <React.Fragment>
                 <div className='section-specialty'>
                     <div className='specialty-title'>
                         <h2>Chuyên Khoa Phổ Biến</h2>
                     </div>
+                    <button
+                        className='btn-add-specialty'
+                        onClick={this.handleAddSpecialty}
+                    >
+                        Thêm
+                    </button>
                     <div className='table_list_specialty'>
                         <table border="1" className="specialty-table">
                             <thead>
@@ -84,10 +92,10 @@ class ListSpecialty extends Component {
                                             <td>{new Date(item.createdAt).toLocaleDateString()}</td>
                                             <td>
                                                 <button
-                                                    className='btn-add-specialty'
-                                                    onClick={this.handleAddSpecialty}
+                                                    className='btn-edit-specialty'
+                                                    onClick={this.handleEditSpecialty}
                                                 >
-                                                    Thêm
+                                                    Edit
                                                 </button>
                                                 <button className='btn-delete-specialty' onClick={() => this.handleDeleteSpecialty(item)}>Xóa</button>
                                             </td>
@@ -124,4 +132,4 @@ const mapDispatchToProps = dispatch => {
     };
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListSpecialty));
+export default connect(mapStateToProps, mapDispatchToProps)(ListSpecialty);

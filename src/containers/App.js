@@ -23,6 +23,8 @@ import ClinicDetail from './Patient/Clinic/ClinicDetail.js';
 import Register from './Auth/Register.js';
 import ForgotPassword from './Auth/ForgotPassword.js';
 import ChangePassword from './Auth/ChangePassword.js';
+import DetailHandBook from './Patient/HandBook/DetailHandBook.js'
+import HistoryBooking from './Patient/History/HistoryBooking.js';
 class App extends Component {
 
     handlePersistorState = () => {
@@ -63,8 +65,9 @@ class App extends Component {
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
                                     <Route path={path.DETAIL_SPECIALTY} component={SpecialtyDetail} />
                                     <Route path={path.DETAIL_CLINIC} component={ClinicDetail} />
+                                    <Route path={path.DETAIL_HANDBOOK} component={DetailHandBook} />
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
-
+                                    <Route path={path.VIEW_HISTORY_BOOKING} component={HistoryBooking} />
                                 </Switch>
                             </CustomScrollbars>
                         </div>

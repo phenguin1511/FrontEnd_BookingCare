@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
 import './ManagePatient.scss';
-import { getAllPatientForDoctor, postSendRemedy } from '../../../services/userService';
+import { getAllPatientForDoctor, postSendRemedy, deleteBookingPatient } from '../../../services/userService';
 import { LANGUAGES } from '../../../utils';
 import RemedyModal from './RemedyModal';
 import { TbAwardOff } from 'react-icons/tb';
@@ -116,6 +116,20 @@ class ManagePatient extends Component {
         }
     };
 
+    handleDelete = async (item) => {
+
+        let res = await deleteBookingPatient(item);
+        console.log(res)
+        if (res && res.data.errCode === 0) {
+            this.setState({ isProcessing: false });
+            toast.success('Xóa Thành Công!');
+            this.handleCloseModal();
+            await this.handleGetPatientBooking();
+        } else {
+            toast.error(res.data.errMessage || 'Có lỗi xảy ra!');
+            this.setState({ isProcessing: false });
+        }
+    }
     render() {
         const { currentDate, list_patient, isProcessing } = this.state;
         const { language } = this.props;
@@ -149,6 +163,7 @@ class ManagePatient extends Component {
                                         <th>Giới Tính</th>
                                         <th>Giờ Khám</th>
                                         <th>Địa Chỉ</th>
+                                        <th>Lí Do</th>
                                         <th>Hành Động</th>
                                     </tr>
                                 </thead>
@@ -179,12 +194,19 @@ class ManagePatient extends Component {
                                                             : item.timeTypeDataPatient?.valueEn}
                                                     </td>
                                                     <td>{item.patientData?.address || 'Không có địa chỉ'}</td>
+                                                    <td>{item.reason}</td>
                                                     <td>
                                                         <button
                                                             className="btn-send-from-doctor"
                                                             onClick={() => this.handleConfirm(item)}
                                                         >
                                                             Gửi Đơn Thuốc
+                                                        </button>
+                                                        <button
+                                                            className="btn-delete-from-doctor"
+                                                            onClick={() => this.handleDelete(item)}
+                                                        >
+                                                            Hủy
                                                         </button>
                                                     </td>
                                                 </tr>

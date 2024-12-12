@@ -11,7 +11,8 @@ import {
     getInfoDetailDoctor,
     getExtraInfoDoctorById,
     getAllSpecialty,
-    getAllClinic
+    getAllClinic,
+    getAllHandBook
 } from '../../services/userService';
 import { toast } from 'react-toastify';
 // export const fetchGenderStart = () => ({
@@ -107,7 +108,7 @@ export const createNewUser = (data) => {
                 dispatch(saveUserSuccess());
                 dispatch(fetchAllUsersStart());
             } else {
-                toast.error("Delete Error!!");
+                toast.error("Create Error!!");
                 dispatch(saveUserFailed());
             }
         } catch (error) {
@@ -472,4 +473,54 @@ export const fetchAllClinicSuccess = (allClinic) => ({
 
 export const fetchAllClinicFailed = () => ({
     type: actionTypes.FETCH_ALL_CLINIC_FAILED,
+})
+
+export const fetchAllHandBook = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllHandBook();
+            if (res && res.data.errCode === 0) {
+                dispatch(fetchAllHandBookSuccess(res.data.data));
+            } else {
+                dispatch(fetchAllHandBookFailed());
+            }
+        } catch (error) {
+            dispatch(fetchAllHandBookFailed());
+            console.log(error)
+        }
+    }
+}
+
+export const fetchAllHandBookSuccess = (allHandBook) => ({
+    type: actionTypes.FETCH_ALL_HANDBOOK_SUCCESS,
+    dataHandBook: allHandBook,
+})
+
+export const fetchAllHandBookFailed = () => ({
+    type: actionTypes.FETCH_ALL_HANDBOOK_FAILED,
+})
+
+export const fetchHistoryBooking = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllHandBook();
+            if (res && res.data.errCode === 0) {
+                dispatch(fetchHistoryBookingSuccess(res.data.data));
+            } else {
+                dispatch(fetchHistoryBookingFailed());
+            }
+        } catch (error) {
+            dispatch(fetchHistoryBookingFailed());
+            console.log(error)
+        }
+    }
+}
+
+export const fetchHistoryBookingSuccess = (allHistory) => ({
+    type: actionTypes.FETCH_HISTORY_BOOKING_SUCCESS,
+    dataHistory: allHistory,
+})
+
+export const fetchHistoryBookingFailed = () => ({
+    type: actionTypes.FETCH_HISTORY_BOOKING_FAILED,
 })

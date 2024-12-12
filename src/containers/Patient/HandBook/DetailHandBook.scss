@@ -1,34 +1,30 @@
-.detail-clinic-container {
-    width      : 100%;
+.detail-handbook-container {
+    max-width  : 1200px;
     margin     : 0 auto;
     padding    : 20px;
     font-family: 'Roboto', sans-serif;
 
-    .back-button {
-        margin-bottom: 20px;
+    .back-button-handbook {
+        background-color: #f5f5f5;
+        color           : #333;
+        border          : 1px solid #ccc;
+        border-radius   : 5px;
+        padding         : 8px 15px;
+        cursor          : pointer;
+        font-size       : 14px;
+        transition      : all 0.3s ease;
 
-        button {
-            background-color: #f5f5f5;
-            color           : #333;
-            border          : 1px solid #ccc;
-            border-radius   : 5px;
-            padding         : 8px 15px;
-            cursor          : pointer;
-            font-size       : 14px;
-            transition      : all 0.3s ease;
-
-            &:hover {
-                background-color: #e6e6e6;
-            }
+        &:hover {
+            background-color: #e6e6e6;
         }
     }
 
-    .description-detail-clinic {
+    .detail-handbook-content {
         display       : flex;
         flex-direction: column;
         align-items   : center;
 
-        .image-title-clinic-detail {
+        .image-title-handbook-detail {
             width              : 100%;
             height             : 400px;
             background-position: center;
@@ -39,16 +35,13 @@
             box-shadow         : 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .description-clinic-content {
+        .detail-handbook-content {
             width        : 100%;
             max-width    : 800px;
             text-align   : justify;
             line-height  : 1.6;
             margin-bottom: 20px;
-
-            img {
-                width: 100%;
-            }
+            transition   : max-height 0.4s ease;
 
             &.collapsed {
                 max-height: 150px;

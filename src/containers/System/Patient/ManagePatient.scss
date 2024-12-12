@@ -120,6 +120,7 @@
                         .btn-send-from-doctor {
                             background-color: #ffc107;
                             color           : #333;
+                            margin-right    : 10px;
                             padding         : 8px 15px;
                             border          : none;
                             border-radius   : 5px;
@@ -128,6 +129,20 @@
 
                             &:hover {
                                 background-color: #e0a800;
+                            }
+                        }
+
+                        .btn-delete-from-doctor {
+                            background-color: red;
+                            color           : #333;
+                            padding         : 8px 15px;
+                            border          : none;
+                            border-radius   : 5px;
+                            cursor          : pointer;
+                            transition      : background-color 0.3s ease;
+
+                            &:hover {
+                                background-color: rgb(235, 151, 151);
                             }
                         }
                     }

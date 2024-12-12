@@ -1,23 +1,40 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
-import './ManageSpecialty.scss';
+import './EditSpecialty.scss';
+import * as action from "../../../store/actions";
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
 import { CommonUtils } from "../../../utils"
-import { createNewSpecialty } from '../../../services/userService';
+import { getInfoSpecialtyById, updateSpecialty } from '../../../services/userService';
+import Select from 'react-select'
+
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 
-class ManageSpecialty extends Component {
+class EditSpeciaty extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            specialtyName: '',
+            selectedDoctor: '',
             imageBase64: '',
             previewImage: '',
             contentHTML: '',
-            contentMarkdown: ''
+            contentMarkdown: '',
+            list_specialty: [],
+
         };
+    }
+    async componentDidMount() {
+        await this.props.fetchAllSpecialty();
+    }
+
+    async componentDidUpdate(prevProps) {
+        if (this.props.dataSpecialties !== prevProps.dataSpecialties) {
+            let dataSpecialty = this.builDataSelect(this.props.dataSpecialties);
+            this.setState({
+                list_specialty: dataSpecialty
+            });
+        }
     }
 
     handleInputChange = (e) => {
@@ -34,33 +51,36 @@ class ManageSpecialty extends Component {
     };
 
     handleSave = async () => {
-        const { specialtyName, imageBase64, contentHTML, contentMarkdown } = this.state;
+        const { selectedDoctor, imageBase64, contentHTML, contentMarkdown } = this.state;
 
-        if (!specialtyName || !imageBase64 || !contentHTML || !contentMarkdown) {
-            alert("Please fill in all fields before saving.");
+        if (!selectedDoctor || !imageBase64 || !contentHTML || !contentMarkdown) {
+            alert("Vui lòng điền đầy đủ thông tin trước khi lưu.");
             return;
         }
 
-        let res = await createNewSpecialty({
-            specialtyName,
-            imageBase64,
-            contentHTML,
-            contentMarkdown,
+        let specialtyId = selectedDoctor.value;
+        let res = await updateSpecialty({
+            id: specialtyId,
+            image: imageBase64,
+            contentHTML: contentHTML,
+            contentMarkdown: contentMarkdown,
         });
-
-        if (res.data.errCode === 0) {
-            alert("Specialty saved successfully!");
+        console.log(res)
+        if (res && res.data.errCode === 0) {
+            console.log(res)
+            alert("Cập nhật thông tin chuyên khoa thành công!");
             this.setState({
-                specialtyName: '',
+                selectedDoctor: '',
                 imageBase64: '',
                 previewImage: '',
                 contentHTML: '',
                 contentMarkdown: '',
             });
         } else {
-            alert(res.data.errMessage || "Error saving specialty.");
+            alert(res.errMessage || "Đã xảy ra lỗi khi lưu thông tin.");
         }
     };
+
 
     handleOnchangeImage = async (event) => {
         let data = event.target.files;
@@ -78,24 +98,57 @@ class ManageSpecialty extends Component {
         }
     };
 
+    builDataSelect = (inputData) => {
+        let result = [];
+        if (inputData && inputData.length > 0) {
+            inputData.map((item) => {
+                let object = {};
+                let label = `${item.name} `;
+
+                object.label = label ? label : 'Không có thông tin'
+                object.value = item.id;
+                result.push(object);
+            });
+        }
+        return result;
+    };
+    handleChangeDoctor = async (selectedDoctor) => {
+        this.setState({
+            selectedDoctor
+        });
+        let res = await getInfoSpecialtyById(selectedDoctor.value);
+        if (res && res.data.errCode === 0) {
+            let data = res.data.data
+            this.setState({
+                imageBase64: data.image,
+                contentHTML: data.descriptionHTML,
+                contentMarkdown: data.descriptionMarkdown
+            })
+        } else {
+            this.setState({
+                imageBase64: '',
+                contentHTML: 'Không có dữ liệu',
+                contentMarkdown: 'Không có dữ liệu'
+            })
+        }
+    }
     render() {
         const { specialtyName, contentMarkdown, previewImage } = this.state;
-
+        console.log(this.state)
         return (
             <Fragment>
                 <div className='specialty-manage-container'>
-                    <h3 className='specialty-manage-title'>Thêm Chi Tiết Chuyên Khoa</h3>
+                    <h3 className='specialty-manage-title'>Sửa Thông Tin Chuyên Khoa</h3>
                     <div className='specialty-manage-content'>
                         <div className='specialty-input'>
                             <div className='specialty-input-name'>
                                 <label htmlFor='specialty-name'>Tên Chuyên Khoa</label>
-                                <input
-                                    id='specialty-name'
-                                    name='specialtyName'
-                                    value={specialtyName}
-                                    onChange={this.handleInputChange}
-                                    type='text'
-                                    placeholder='Nhập tên chuyên khoa'
+                                <Select
+                                    value={this.state.selectedDoctor}
+                                    onChange={this.handleChangeDoctor}
+                                    options={this.state.list_specialty}
+                                    placeholder="Chọn Chuyên Khoa..."
+                                    name="selectedDoctor"
                                 />
                             </div>
                             <div className='specialty-input-image'>
@@ -136,7 +189,12 @@ class ManageSpecialty extends Component {
 const mapStateToProps = state => {
     return {
         language: state.app.language,
+        dataSpecialties: state.admin.dataSpecialties
     };
 };
-
-export default connect(mapStateToProps)(ManageSpecialty);
+const mapDispatchToProps = dispatch => {
+    return {
+        fetchAllSpecialty: () => dispatch(action.fetchAllSpecialty()),
+    };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(EditSpeciaty);

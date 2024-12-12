@@ -1,23 +1,23 @@
 .home-footer {
     background-color: #333;
-    color: #fff;
-    padding: 30px 20px;
-    text-align: left;
+    color           : #fff;
+    padding         : 30px 20px;
+    text-align      : left;
 
     .footer-content {
-        display: flex;
+        display        : flex;
         justify-content: space-around;
-        flex-wrap: wrap;
+        flex-wrap      : wrap;
 
         .footer-section {
-            flex: 1;
-            margin: 10px;
+            flex     : 1;
+            margin   : 10px;
             min-width: 200px;
 
             h3 {
-                font-size: 18px;
-                color: #6ed4a4;
-                margin-bottom: 15px;
+                font-size     : 18px;
+                color         : #6ed4a4;
+                margin-bottom : 15px;
                 text-transform: uppercase;
             }
 
@@ -25,21 +25,21 @@
             ul,
             li,
             a {
-                color: #ccc;
+                color    : #ccc;
                 font-size: 14px;
             }
 
             ul {
                 list-style: none;
-                padding: 0;
+                padding   : 0;
 
                 li {
                     margin-bottom: 8px;
 
                     a {
-                        color: #ccc;
+                        color          : #ccc;
                         text-decoration: none;
-                        transition: color 0.3s;
+                        transition     : color 0.3s;
 
                         &:hover {
                             color: #6ed4a4;
@@ -50,10 +50,10 @@
 
             .social-icons {
                 i {
-                    font-size: 20px;
-                    margin: 0 8px;
-                    cursor: pointer;
-                    color: #ccc;
+                    font-size : 20px;
+                    margin    : 0 8px;
+                    cursor    : pointer;
+                    color     : #ccc;
                     transition: color 0.3s;
 
                     &:hover {
@@ -67,7 +67,7 @@
     .footer-bottom {
         margin-top: 20px;
         text-align: center;
-        font-size: 14px;
-        color: #aaa;
+        font-size : 14px;
+        color     : #aaa;
     }
 }

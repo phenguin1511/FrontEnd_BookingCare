@@ -82,11 +82,21 @@ class ClinicDetail extends Component {
             <Fragment>
                 <HomeHeader />
                 <div className='detail-clinic-container'>
+                    <div className="back-button">
+                        <button onClick={() => this.props.history.goBack()}>⬅ Quay lại</button>
+                    </div>
+
                     <div className="description-detail-clinic">
                         {detailDoctor && detailDoctor.descriptionHTML ? (
                             <>
                                 <div
-                                    className={`description-content ${this.state.isExpanded ? "expanded" : "collapsed"}`}
+                                    className='image-title-clinic-detail'
+                                    style={{
+                                        backgroundImage: `url(${detailDoctor.image})`
+                                    }}
+                                ></div>
+                                <div
+                                    className={`description-clinic-content ${this.state.isExpanded ? "expanded" : "collapsed"}`}
                                     dangerouslySetInnerHTML={{ __html: detailDoctor.descriptionHTML }}
                                 />
                                 <button
@@ -97,7 +107,10 @@ class ClinicDetail extends Component {
                                 </button>
                             </>
                         ) : (
-                            <p className="no-description">Chưa có mô tả</p>
+                            <p className="no-description">
+                                <i className="fas fa-info-circle" style={{ marginRight: '5px', color: '#888' }}></i>
+                                Chưa có mô tả
+                            </p>
                         )}
                     </div>
                 </div>

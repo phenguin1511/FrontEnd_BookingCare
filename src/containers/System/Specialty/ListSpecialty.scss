@@ -1,3 +1,26 @@
+.btn-add-specialty {
+    padding         : 5px 10px;
+    margin          : 10px;
+    background-color: rgb(60, 165, 60);
+    color           : white;
+    border          : none;
+    border-radius   : 4px;
+    cursor          : pointer;
+    transition      : background-color 0.3s ease;
+
+    &:hover {
+        background-color: #3e9c3e;
+    }
+}
+
+.btn-delete-specialty {
+    background-color: #ff4d4f;
+
+    &:hover {
+        background-color: #d9363e;
+    }
+}
+
 .table_list_specialty {
     margin         : 20px 0;
     overflow-x     : auto;
@@ -34,36 +57,45 @@
                     background-color: #f1f1f1;
                 }
 
-                .list-button {
-                    display        : flex;
-                    justify-content: center;
-                    /* Căn giữa các nút trong ô */
-                    align-items    : center;
-                    gap            : 10px;
+                .btn-delete-specialty,
+                .btn-add-specialty {
+                    padding         : 5px 10px;
+                    margin          : 10px;
+                    background-color: rgb(60, 165, 60);
+                    color           : white;
+                    border          : none;
+                    border-radius   : 4px;
+                    cursor          : pointer;
+                    transition      : background-color 0.3s ease;
 
-                    .btn-delete-specialty,
-                    .btn-add-specialty {
-                        padding         : 5px 10px;
-                        background-color: rgb(60, 165, 60);
-                        color           : white;
-                        border          : none;
-                        border-radius   : 4px;
-                        cursor          : pointer;
-                        transition      : background-color 0.3s ease;
-
-                        &:hover {
-                            background-color: #3e9c3e;
-                        }
-                    }
-
-                    .btn-delete-specialty {
-                        background-color: #ff4d4f;
-
-                        &:hover {
-                            background-color: #d9363e;
-                        }
+                    &:hover {
+                        background-color: #3e9c3e;
                     }
                 }
+
+                .btn-edit-specialty {
+                    padding         : 5px 10px;
+                    margin          : 10px;
+                    background-color: rgb(255, 225, 0);
+                    color           : white;
+                    border          : none;
+                    border-radius   : 4px;
+                    cursor          : pointer;
+                    transition      : background-color 0.3s ease;
+
+                    &:hover {
+                        background-color: #918502;
+                    }
+                }
+
+                .btn-delete-specialty {
+                    background-color: #ff4d4f;
+
+                    &:hover {
+                        background-color: #d9363e;
+                    }
+                }
+
 
                 td {
                     padding       : 10px;

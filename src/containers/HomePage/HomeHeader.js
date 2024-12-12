@@ -30,6 +30,10 @@ class HomeHeader extends Component {
             this.props.history.push(`/home`)
         }
     }
+    handleViewHistory = () => {
+        this.props.history.push('/history-booking');
+    };
+
     render() {
         return (
 
@@ -77,7 +81,10 @@ class HomeHeader extends Component {
                                     </div>
                                 </div>
                             </div>
-
+                            <div className='history-section' onClick={this.handleViewHistory}>
+                                <i class="fa-solid fa-rotate"></i>
+                                <span>Lịch Sử</span>
+                            </div>
                             <div className='help-section'>
                                 <i className="fas fa-question-circle"></i>
                                 <span><FormattedMessage id="home-header.help" /></span>

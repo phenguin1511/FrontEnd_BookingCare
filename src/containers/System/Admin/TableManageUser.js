@@ -3,14 +3,15 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import "./TableManageUser.scss";
 import * as action from "../../../store/actions";
-
+import { toast } from 'react-toastify';
 class TableManageUser extends Component {
     constructor(props) {
         super(props);
         this.state = {
             users: [],
             currentPage: 1,
-            usersPerPage: 5, // Số lượng người dùng hiển thị trên mỗi trang
+            usersPerPage: 5,
+            addUser: true
         };
     }
     getPaginatedUsers = () => {
@@ -45,7 +46,11 @@ class TableManageUser extends Component {
         this.props.setUserToEdit(user);
         this.props.history.push('/system/user-redux');
     };
-
+    addUser = () => {
+        let data = this.props.addUser
+        this.props.setUserToEdit(data);
+        this.props.history.push('/system/user-redux');
+    }
     renderPagination = () => {
         const { users, usersPerPage, currentPage } = this.state;
         const totalPages = Math.ceil(users.length / usersPerPage);
@@ -70,12 +75,26 @@ class TableManageUser extends Component {
         );
     };
 
+    handleDeleteUser = async (user) => {
+        let id = user.id;
+        try {
+            let res = await this.props.deleteUser(id)
+            if (res && res.data.errCode === 0) {
+                toast.success('Xóa người dùng thành công')
+                await this.props.fetchAllUserRedux();
+            }
+        } catch (error) {
+            toast.error("Lỗi xóa người dùng!")
+        }
+
+    }
     render() {
         let paginatedUsers = this.getPaginatedUsers();
 
         return (
             <React.Fragment>
                 <div className='title'>List User</div>
+                <button onClick={() => this.addUser()} className='btn btn-success'>Add</button>
                 <table>
                     <thead>
                         <tr>
