@@ -13,7 +13,10 @@ export const path = {
     DETAIL_CLINIC: '/detail-clinic/:id',
     CHANGEPASSWORD: '/change-password',
     DETAIL_HANDBOOK: '/detail-handbook/:id',
-    VIEW_HISTORY_BOOKING: '/history-booking'
+    VIEW_HISTORY_BOOKING: '/history-booking',
+    LIST_CLINIC: '/list-clinic',
+    LIST_DOCTOR: '/list-doctor',
+    LIST_SPECIALTY: '/list-specialty'
 };
 
 export const LANGUAGES = {

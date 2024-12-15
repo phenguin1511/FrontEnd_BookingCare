@@ -53,6 +53,10 @@ class OutstanDoctor extends Component {
         this.props.history.push(`/detail-doctor/${doctor.id}`)
     }
 
+    handleViewListDoctor = () => {
+        this.props.history.push(`/list-doctor`)
+    }
+
     render() {
         let settings = {
             dots: true,
@@ -71,7 +75,7 @@ class OutstanDoctor extends Component {
                 <div className='section-outstanDoctor'>
                     <div className='outstanDoctor-title'>
                         <h2>Bác Sĩ Nổi Bật Trong Tuần</h2>
-                        <div className='btn-viewmore'>Xem Thêm</div>
+                        <div className='btn-viewmore' onClick={this.handleViewListDoctor}>Xem Thêm</div>
                     </div>
 
                     <Slider className='slider' {...settings}>

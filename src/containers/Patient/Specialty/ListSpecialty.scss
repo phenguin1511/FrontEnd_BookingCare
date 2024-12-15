@@ -1,0 +1,129 @@
+/* Section Specialty */
+.list-specialty-container {
+    padding         : 20px;
+    background-color: #ffffff;
+    border-radius   : 8px;
+    box-shadow      : 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin          : 20px auto;
+    width           : 95%;
+    max-width       : 1200px;
+}
+
+.specialty-title h2 {
+    text-align   : center;
+    font-size    : 26px;
+    color        : #333;
+    margin-bottom: 20px;
+}
+
+/* Search Bar */
+.search-bar {
+    margin         : 20px 0;
+    display        : flex;
+    justify-content: center;
+}
+
+.search-bar input {
+    width        : 80%;
+    padding      : 10px;
+    font-size    : 16px;
+    border       : 1px solid #ccc;
+    border-radius: 8px;
+    outline      : none;
+    transition   : 0.3s;
+}
+
+.search-bar input:focus {
+    border-color: #007bff;
+}
+
+.search-bar input::placeholder {
+    color: #888;
+}
+
+/* Specialty List */
+.specialty-list {
+    margin-top: 20px;
+}
+
+.specialty-group {
+    margin-bottom: 30px;
+}
+
+.specialty-group h3 {
+    font-size     : 24px;
+    color         : #007bff;
+    font-weight   : bold;
+    margin-bottom : 15px;
+    text-transform: uppercase;
+}
+
+.specialty-items {
+    display        : flex;
+    flex-wrap      : wrap;
+    justify-content: space-between;
+}
+
+.specialty-item {
+    width           : 48%;
+    display         : flex;
+    align-items     : center;
+    padding         : 12px;
+    margin          : 8px 0;
+    border          : 1px solid #f0f0f0;
+    border-radius   : 8px;
+    cursor          : pointer;
+    background-color: white;
+    transition      : 0.3s ease;
+}
+
+.specialty-item:hover {
+    background-color: #f9f9f9;
+    box-shadow      : 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.specialty-image {
+    width              : 50px;
+    height             : 50px;
+    border-radius      : 50%;
+    background-size    : cover;
+    background-position: center;
+    margin-right       : 15px;
+}
+
+.specialty-item p {
+    font-size  : 16px;
+    color      : #333;
+    margin     : 0;
+    font-weight: 500;
+}
+
+/* No specialties found message */
+.no-specialty-found {
+    text-align      : center;
+    font-size       : 18px;
+    color           : #555;
+    padding         : 20px;
+    border          : 1px dashed #ddd;
+    border-radius   : 8px;
+    background-color: #f9f9f9;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .specialty-group h3 {
+        font-size: 20px;
+    }
+
+    .specialty-item {
+        width: 100%;
+    }
+
+    .specialty-items {
+        flex-direction: column;
+    }
+
+    .search-bar input {
+        width: 90%;
+    }
+}

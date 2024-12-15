@@ -49,6 +49,10 @@ class MedicalFacility extends Component {
     handleViewDetailClinic = (clinic) => {
         this.props.history.push(`/detail-clinic/${clinic.id}`)
     }
+
+    handleViewListClinic = () => {
+        this.props.history.push(`/list-clinic`)
+    }
     render() {
         let settings = {
             dots: true,
@@ -65,7 +69,7 @@ class MedicalFacility extends Component {
                 <div className='section-medicalfacility'>
                     <div className='medicalfacility-title'>
                         <h2>Cơ Sở Y Tế Nổi Bật</h2>
-                        <div className='btn-viewmore'>Xem Thêm</div>
+                        <div className='btn-viewmore' onClick={this.handleViewListClinic}>Xem Thêm</div>
                     </div>
 
                     <Slider className='slider' {...settings}>

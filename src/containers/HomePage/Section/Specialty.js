@@ -49,6 +49,10 @@ class Specialty extends Component {
         console.log(specialty)
         this.props.history.push(`/detail-specialty/${specialty.id}`)
     }
+
+    handleViewListSpecialty = () => {
+        this.props.history.push(`/list-specialty`)
+    }
     render() {
         let settings = {
             dots: true,
@@ -66,7 +70,7 @@ class Specialty extends Component {
                 <div className='section-specialty'>
                     <div className='specialty-title'>
                         <h2>Chuyên Khoa Phổ Biến</h2>
-                        <div className='btn-viewmore'>Xem Thêm</div>
+                        <div className='btn-viewmore' onClick={this.handleViewListSpecialty}>Xem Thêm</div>
                     </div>
                     <Slider className='slider' {...settings}>
                         {dataSpecialties && dataSpecialties.length > 0 ? (

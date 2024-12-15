@@ -25,6 +25,9 @@ import ForgotPassword from './Auth/ForgotPassword.js';
 import ChangePassword from './Auth/ChangePassword.js';
 import DetailHandBook from './Patient/HandBook/DetailHandBook.js'
 import HistoryBooking from './Patient/History/HistoryBooking.js';
+import ListClinic from './Patient/Clinic/ListClinic.js';
+import ListDoctor from './Patient/Doctor/ListDoctor.js';
+import ListSpecialty from './Patient/Specialty/ListSpecialty.js';
 class App extends Component {
 
     handlePersistorState = () => {
@@ -63,8 +66,11 @@ class App extends Component {
                                     <Route path={'/doctor/'} component={userIsAuthenticated(Doctor)} />
                                     <Route path={path.HOMEPAGE} component={(HomePage)} />
                                     <Route path={path.DETAIL_DOCTOR} component={DetailDoctor} />
+                                    <Route path={path.LIST_DOCTOR} component={ListDoctor} />
                                     <Route path={path.DETAIL_SPECIALTY} component={SpecialtyDetail} />
+                                    <Route path={path.LIST_SPECIALTY} component={ListSpecialty} />
                                     <Route path={path.DETAIL_CLINIC} component={ClinicDetail} />
+                                    <Route path={path.LIST_CLINIC} component={ListClinic} />
                                     <Route path={path.DETAIL_HANDBOOK} component={DetailHandBook} />
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
                                     <Route path={path.VIEW_HISTORY_BOOKING} component={HistoryBooking} />
