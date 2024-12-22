@@ -40,6 +40,10 @@ class HistoryBooking extends Component {
             if (response && response.data.errCode === 0) {
 
                 let patientData = response.data.data[0]?.patientData || []; // Đảm bảo luôn có một mảng
+
+                // Sắp xếp từ mới nhất tới cũ nhất dựa trên ngày
+                patientData.sort((a, b) => b.date - a.date);
+
                 console.log("Patient Data:", patientData); // Log dữ liệu để kiểm tra
                 this.setState({
                     bookingHistory: { patientData }, // Cập nhật state
@@ -61,6 +65,7 @@ class HistoryBooking extends Component {
             });
         }
     };
+
 
     handleBack = () => {
         this.props.history.goBack();

@@ -1,25 +1,27 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import Unauthorized from './Unauthorized';
-const PrivateRoute = ({ component: Component, allowedRoles, ...props }) => {
-    const { userInfo, isLoggedIn } = props;
 
-    if (!isLoggedIn) {
-        return <Redirect to="/login" />;
-    }
-
-    if (allowedRoles && !allowedRoles.includes(userInfo.roleId)) {
-        return <Unauthorized />;
-    }
-
-    return <Route {...props} component={Component} />;
+const PrivateRoute = ({ component: Component, roles, userRole, isLoggedIn, ...rest }) => {
+    return (
+        <Route
+            {...rest}
+            render={(props) =>
+                !isLoggedIn ? (
+                    <Redirect to="/login" />
+                ) : roles.includes(userRole) ? (
+                    <Component {...props} />
+                ) : (
+                    <Redirect to="/unauthorized" />
+                )
+            }
+        />
+    );
 };
 
-
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
     isLoggedIn: state.user.isLoggedIn,
-    userInfo: state.user.userInfo,
+    userRole: state.user.userInfo?.roleId,
 });
 
 export default connect(mapStateToProps)(PrivateRoute);

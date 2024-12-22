@@ -244,7 +244,43 @@ class ManageDoctor extends Component {
             ...stateCopy
         })
     }
+    validateInput = () => {
+        const {
+            selectedDoctor,
+            contentMarkdown,
+            contentHTML,
+            description,
+            selectedPayment,
+            selectedProvince,
+            selectedPrice,
+            nameClinic,
+            addressClinic,
+        } = this.state;
+
+        let errors = {};
+
+        if (!selectedDoctor) errors.selectedDoctor = "Vui lòng chọn bác sĩ.";
+        if (!contentMarkdown) errors.contentMarkdown = "Nội dung markdown không được để trống.";
+        if (!contentHTML) errors.contentHTML = "Nội dung HTML không được để trống.";
+        if (!description) errors.description = "Vui lòng nhập mô tả chi tiết.";
+        if (!selectedPayment) errors.selectedPayment = "Vui lòng chọn hình thức thanh toán.";
+        if (!selectedProvince) errors.selectedProvince = "Vui lòng chọn tỉnh/thành phố.";
+        if (!selectedPrice) errors.selectedPrice = "Vui lòng chọn giá khám.";
+        if (!nameClinic) errors.nameClinic = "Vui lòng nhập tên cơ sở y tế.";
+        if (!addressClinic) errors.addressClinic = "Vui lòng nhập địa chỉ cơ sở y tế.";
+
+        this.setState({ errors });
+
+        // Return true if no errors, otherwise false
+        return Object.keys(errors).length === 0;
+    };
+
     handleSaveContent = async () => {
+        if (!this.validateInput()) {
+            alert("Vui lòng kiểm tra lại thông tin.");
+            return;
+        }
+
         let { hasOldData } = this.state;
 
         await this.props.saveInfoDoctor({
@@ -262,6 +298,9 @@ class ManageDoctor extends Component {
             selectedClinic: this.state.selectedClinic ? this.state.selectedClinic.value : null,
             action: hasOldData === true ? CRUD_ACTION.EDIT : CRUD_ACTION.CREATE
         });
+
+        alert("Lưu thông tin thành công!");
+
         await this.props.fetchAllDoctor();
         let updatedDoctor = this.state.list_doctors.find(
             doctor => doctor.value === this.state.selectedDoctor.value
@@ -302,7 +341,7 @@ class ManageDoctor extends Component {
                 </div>
                 <div className='doctor_info_extra'>
                     <div className='select-price'>
-                        <label>Chọn Cơ Sở Y Tế</label>
+                        <label>Chọn Chuyên Khoa</label>
                         <Select
                             value={this.state.selectedSpecialty}
                             onChange={this.handleChangeDoctorInfoRequired}
@@ -320,13 +359,13 @@ class ManageDoctor extends Component {
                             onChange={this.handleChangeDoctorInfoRequired}
                             options={this.state.list_clinic}
                             className="select-doctor"
-                            placeholder="Chọn Chuyên Khoa..."
+                            placeholder="Chọn Cơ Sở Y Tế..."
                             name="selectedClinic"
                         />
 
                     </div>
                     <div className='select-price'>
-                        <label>Chọn Cơ Sở Y Tế</label>
+                        <label>Tên Cơ Sở Y Tế Tư Nhân</label>
                         <input></input>
                     </div>
                     <div className='select-price'>

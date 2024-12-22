@@ -1,25 +1,29 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from "react-redux";
 import { Redirect, Route, Switch } from 'react-router-dom';
-import UserManage from '../containers/System/UserManage';
-import UserRedux from '../containers/System/Admin/UserRedux';
+import PrivateRoute from './PrivateRoute';
 import Header from '../containers/Header/Header';
 import ManageSchedule from '../containers/System/Doctor/ManageSchedule';
 import ManagePatient from '../containers/System/Patient/ManagePatient';
 import ManageScheduleDoctor from '../containers/System/Doctor/ManageScheduleDoctor';
 class Doctor extends Component {
     render() {
-        const { isLoggedIn } = this.props;
+        const { doctorMenuPath, isLoggedIn, userRole } = this.props;
+
+        if (isLoggedIn && userRole !== 'R2' && userRole !== 'R1') {
+            return <Redirect to="/unauthorized" />;
+        }
+
         return (
             <Fragment>
                 {isLoggedIn && <Header />}
                 <div className="system-container">
                     <div className="system-list">
                         <Switch>
-
-                            <Route path="/doctor/schedule-manage" component={ManageSchedule} />
-                            <Route path="/doctor/patient-manage" component={ManagePatient} />
-                            <Route path="/doctor/schedule-doctor-manage" component={ManageScheduleDoctor} />
+                            <PrivateRoute path="/doctor/schedule-manage" component={ManageSchedule} roles={['R2', 'R1']} />
+                            <PrivateRoute path="/doctor/patient-manage" component={ManagePatient} roles={['R2', 'R1']} />
+                            <PrivateRoute path="/doctor/schedule-doctor-manage" component={ManageScheduleDoctor} roles={['R2', 'R1']} />
+                            <PrivateRoute component={() => { return (<Redirect to={doctorMenuPath} />) }} />
                         </Switch>
                     </div>
                 </div>
@@ -30,13 +34,16 @@ class Doctor extends Component {
 
 const mapStateToProps = state => {
     return {
-        systemMenuPath: state.app.systemMenuPath,
-        isLoggedIn: state.user.isLoggedIn
+        doctorMenuPath: state.app.doctorMenuPath,
+        isLoggedIn: state.user.isLoggedIn,
+        userRole: state.user.userInfo?.roleId,
     };
 };
 
+
 const mapDispatchToProps = dispatch => {
     return {
+
     };
 };
 

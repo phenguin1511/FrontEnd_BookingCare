@@ -15,6 +15,12 @@ class Login extends Component {
             errMessage: ''
         };
     }
+    componentDidMount() {
+        const token = localStorage.getItem('token');
+        if (!token || !this.props.isLoggedIn) {
+            this.props.history.push('/login');
+        }
+    }
 
     handleOnChangeUserName = (event) => {
         this.setState({
@@ -35,36 +41,57 @@ class Login extends Component {
     };
 
     handleLogin = async () => {
-        this.setState({ errMessage: '' });
+        this.setState({ errMessage: '' }); // Reset thông báo lỗi
         const { username, password } = this.state;
 
+        // Kiểm tra input
         if (!username || !password) {
             this.setState({ errMessage: 'Vui lòng nhập tên đăng nhập và mật khẩu!' });
             return;
         }
 
         try {
+            // Gọi API để xác thực thông tin
             const response = await handleLoginApi(username, password);
 
-            // Kiểm tra errCode trong phản hồi
-            if (response.data.errCode !== 0) {
-                this.setState({ errMessage: response.data.errMessage });
+            if (response && response.data) {
+                if (response.data.errCode !== 0) {
+                    // Lỗi từ server (ví dụ sai mật khẩu)
+                    this.setState({ errMessage: response.data.message });
+                } else {
+                    // Đăng nhập thành công
+                    const { token, user } = response.data;
+
+                    // Lưu token vào localStorage để dùng cho các request tiếp theo
+                    if (token) {
+                        localStorage.setItem('token', token);
+                    }
+
+                    // Lưu thông tin user vào Redux store
+                    this.props.userLoginSuccess(user);
+                }
             } else {
-                // Nếu đăng nhập thành công
-                this.props.userLoginSuccess(response.data.user); // Đảm bảo rằng response.data.user chứa thông tin người dùng hợp lệ
+                this.setState({ errMessage: 'Phản hồi không hợp lệ từ server!' });
             }
         } catch (error) {
-            console.log(error);
-            this.setState({ errMessage: 'Đã có lỗi xảy ra. Vui lòng thử lại!' });
-        }
+            console.error('Login error:', error);
 
-    }
+            // Kiểm tra lỗi network hoặc phản hồi từ server
+            if (error.response) {
+                this.setState({ errMessage: error.response.data.message || 'Lỗi từ server!' });
+            } else if (error.request) {
+                this.setState({ errMessage: 'Không thể kết nối tới server. Vui lòng thử lại!' });
+            } else {
+                this.setState({ errMessage: 'Đã có lỗi xảy ra. Vui lòng thử lại!' });
+            }
+        }
+    };
+
     handleKeyDown = (event) => {
         if (event.key === 'Enter') {
             this.handleLogin(); // Gọi hàm đăng nhập
         }
     };
-
     render() {
         return (
             <div className='login-background'>

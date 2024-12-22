@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import * as action from "../../../store/actions";
 import { withRouter } from 'react-router';
 import './ListHandBook.scss'
-import { deleteClinic } from '../../../services/userService'
+import { deleteHandbook } from '../../../services/userService'
 import { toast } from 'react-toastify';
 
 
@@ -28,12 +28,13 @@ class ListHandBook extends Component {
     }
 
     handleDeleteClinic = async (data) => {
+        console.log(data)
         const isConfirmed = window.confirm("Bạn có chắc chắn muốn xóa bản ghi này không?");
         if (isConfirmed) {
-            let res = await deleteClinic(data);
+            let res = await deleteHandbook(data);
             if (res && res.data.errCode === 0) {
                 toast.success("Xóa thành công!");
-                await this.props.fetchAllClinic();
+                await this.props.fetchAllHandBook();
             } else {
                 toast.error(res.data.errMessage);
             }

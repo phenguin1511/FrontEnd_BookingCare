@@ -7,9 +7,9 @@ import { ToastContainer, Bounce } from 'react-toastify';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CustomScrollbars from '../components/CustomScrollbars.js';
 import { userIsAuthenticated, userIsNotAuthenticated } from '../hoc/authentication';
-
+import Unauthorized from '../routes/Unauthorized.js'
 import { path } from '../utils'
-
+import * as actions from "../store/actions";
 import Home from '../routes/Home';
 import Login from './Auth/Login';
 import System from '../routes/System';
@@ -28,7 +28,9 @@ import HistoryBooking from './Patient/History/HistoryBooking.js';
 import ListClinic from './Patient/Clinic/ListClinic.js';
 import ListDoctor from './Patient/Doctor/ListDoctor.js';
 import ListSpecialty from './Patient/Specialty/ListSpecialty.js';
+import { toast } from 'react-toastify';
 class App extends Component {
+
 
     handlePersistorState = () => {
         const { persistor } = this.props;
@@ -45,9 +47,30 @@ class App extends Component {
     };
 
     componentDidMount() {
-        this.handlePersistorState();
-    }
+        const token = localStorage.getItem('token');
+        const persistedData = localStorage.getItem('persist:user');
 
+        if (persistedData) {
+            const userInfo = JSON.parse(JSON.parse(persistedData).userInfo);
+            const userRole = userInfo?.roleId;
+
+            if (userRole === 'R1' || userRole === 'R2') {
+                if (!token) {
+                    toast.error("Phiên làm việc đã hết hạn hoặc token bị xóa. Vui lòng đăng nhập lại.");
+                    this.props.processLogout();
+                    history.push('/login');
+                } else {
+                    this.handlePersistorState();
+                }
+            } else {
+                this.handlePersistorState();
+            }
+        } else {
+            toast.error("Không thể xác thực người dùng. Vui lòng đăng nhập lại.");
+            this.props.processLogout();
+            history.push('/login');
+        }
+    }
     render() {
         return (
             <Fragment>
@@ -74,6 +97,8 @@ class App extends Component {
                                     <Route path={path.DETAIL_HANDBOOK} component={DetailHandBook} />
                                     <Route path={path.VERIFY_EMAIL_BOOKING} component={VerifyEmail} />
                                     <Route path={path.VIEW_HISTORY_BOOKING} component={HistoryBooking} />
+                                    <Route path="/unauthorized" component={Unauthorized} />
+
                                 </Switch>
                             </CustomScrollbars>
                         </div>
@@ -106,6 +131,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        processLogout: () => dispatch(actions.processLogout()),
     };
 };
 

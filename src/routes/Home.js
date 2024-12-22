@@ -1,29 +1,40 @@
-import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useHistory, useLocation, Redirect } from 'react-router-dom';
 
-class Home extends Component {
+const Home = () => {
+    const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+    const userRole = useSelector((state) => state.user.userInfo?.roleId);
+    const history = useHistory();
+    const location = useLocation();
+    const [redirected, setRedirected] = useState(false);
 
-    render() {
-        const { isLoggedIn } = this.props;
-        let linkToRedirect = isLoggedIn ? '/system/user-manage' : '/home';
+    useEffect(() => {
+        if (isLoggedIn === undefined || userRole === undefined) {
+            return;
+        }
 
-        return (
-            <Redirect to={linkToRedirect} />
-        );
+        if (isLoggedIn && !redirected) {
+            if (userRole === 'R2' && !location.pathname.startsWith('/doctor')) {
+                history.push('/doctor/schedule-doctor-manage');
+                setRedirected(true);
+            } else if (userRole === 'R1' && !location.pathname.startsWith('/system')) {
+                history.push('/system/list-user-redux');
+                setRedirected(true);
+            }
+        } else if (!isLoggedIn && !redirected) {
+            history.push('/login');
+            setRedirected(true);
+        }
+    }, [isLoggedIn, userRole, location.pathname, history, redirected]);
+
+    if (isLoggedIn === undefined || userRole === undefined) {
+        history.push('/home');
     }
 
-}
-
-const mapStateToProps = state => {
-    return {
-        isLoggedIn: state.user.isLoggedIn
-    };
+    return (
+        <Redirect to="/unauthorized" />
+    );
 };
 
-const mapDispatchToProps = dispatch => {
-    return {
-    };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;

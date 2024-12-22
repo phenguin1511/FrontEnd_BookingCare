@@ -108,6 +108,9 @@ const deleteClinic = (data) => {
     return axios.post(`/api/delete-clinic?id=${data.id}}`)
 }
 
+const deleteHandbook = (data) => {
+    return axios.post(`/api/delete-handbook?id=${data.id}}`)
+}
 const deleteBookingPatient = (data) => {
     return axios.post(`/api/delete-booking-patient?id=${data.id}`)
 }
@@ -188,5 +191,6 @@ export {
     getInfoHandBookById,
     updateHandBook,
     getDetailHandBookById,
-    getBookingHistoryByEmail
+    getBookingHistoryByEmail,
+    deleteHandbook
 }

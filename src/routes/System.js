@@ -15,30 +15,35 @@ import EditClinic from '../containers/System/Clinic/EditClinic';
 import ManageHandBook from '../containers/System/HandBook/ManageHandBook';
 import ListHandBook from '../containers/System/HandBook/ListHandBook';
 import EditHandBook from '../containers/System/HandBook/EditHandBook';
+import PrivateRoute from './PrivateRoute';
 class System extends Component {
     render() {
-        const { systemMenuPath, isLoggedIn } = this.props;
+        const { systemMenuPath, isLoggedIn, userRole } = this.props;
+
+        if (isLoggedIn && userRole !== 'R1') {
+            return <Redirect to="/unauthorized" />;
+        }
         return (
             <Fragment>
                 {isLoggedIn && <Header />}
                 <div className="system-container">
                     <div className="system-list">
                         <Switch>
-                            <Route path="/system/user-manage" component={UserManage} />
-                            <Route path="/system/user-redux" component={UserRedux} />
-                            <Route path="/system/list-user-redux" component={TableManageUser} />
-                            <Route path="/system/manage-doctor" component={ManageDoctor} />
-                            <Route path="/system/manage-specialty" component={ManageSpecialty} />
-                            <Route path="/system/list-specialty" component={ListSpecialty} />
-                            <Route path="/system/edit-specialty" component={EditSpecialty} />
-                            <Route path="/system/manage-clinic" component={ManageClinic} />
-                            <Route path="/system/list-clinic" component={ListClinic} />
-                            <Route path="/system/edit-clinic" component={EditClinic} />
-                            <Route path="/system/manage-handbook" component={ManageHandBook} />
-                            <Route path="/system/list-handbook" component={ListHandBook} />
-                            <Route path="/system/edit-handbook" component={EditHandBook} />
+                            <PrivateRoute path="/system/user-manage" component={UserManage} roles={['R1']} />
+                            <PrivateRoute path="/system/user-redux" component={UserRedux} roles={['R1']} />
+                            <PrivateRoute path="/system/list-user-redux" component={TableManageUser} roles={['R1']} />
+                            <PrivateRoute path="/system/manage-doctor" component={ManageDoctor} roles={['R1']} />
+                            <PrivateRoute path="/system/manage-specialty" component={ManageSpecialty} roles={['R1']} />
+                            <PrivateRoute path="/system/list-specialty" component={ListSpecialty} roles={['R1']} />
+                            <PrivateRoute path="/system/edit-specialty" component={EditSpecialty} roles={['R1']} />
+                            <PrivateRoute path="/system/manage-clinic" component={ManageClinic} roles={['R1']} />
+                            <PrivateRoute path="/system/list-clinic" component={ListClinic} roles={['R1']} />
+                            <PrivateRoute path="/system/edit-clinic" component={EditClinic} roles={['R1']} />
+                            <PrivateRoute path="/system/manage-handbook" component={ManageHandBook} roles={['R1']} />
+                            <PrivateRoute path="/system/list-handbook" component={ListHandBook} roles={['R1']} />
+                            <PrivateRoute path="/system/edit-handbook" component={EditHandBook} roles={['R1']} />
 
-                            <Route component={() => { return (<Redirect to={systemMenuPath} />) }} />
+                            <Route component={() => { return (<Redirect to={TableManageUser} />) }} />
                         </Switch>
                     </div>
                 </div>
@@ -50,7 +55,8 @@ class System extends Component {
 const mapStateToProps = state => {
     return {
         systemMenuPath: state.app.systemMenuPath,
-        isLoggedIn: state.user.isLoggedIn
+        isLoggedIn: state.user.isLoggedIn,
+        userRole: state.user.userInfo?.roleId,
     };
 };
 

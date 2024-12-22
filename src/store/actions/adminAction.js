@@ -15,9 +15,7 @@ import {
     getAllHandBook
 } from '../../services/userService';
 import { toast } from 'react-toastify';
-// export const fetchGenderStart = () => ({
-//     type: actionTypes.FETCH_GENDER_START
-// })
+
 export const fetchGenderStart = () => {
     return async (dispatch, getState) => {
         try {
@@ -133,7 +131,6 @@ export const fetchAllUsersStart = () => {
             let res = await getAllUsers("ALL");
 
             if (res && res.data.errCode === 0) {
-                toast.success("Get All User Success!!");
                 dispatch(fetchAllUserSuccess(res.data.users.reverse()));
             } else {
                 toast.error("Get All User Error!!");
@@ -298,7 +295,6 @@ export const fetchDetailInfoDoctor = (inputId) => {
         try {
             let res = await getInfoDetailDoctor(inputId);
             if (res && res.data.errCode === 0) {
-                toast.success("Load Detail Infomation Doctor Success!!");
                 dispatch(fetchDetailInfoDoctorSuccess(res.data.data));
             } else {
                 toast.error("Load Detail Infomation Doctor Error!!");
@@ -325,7 +321,6 @@ export const fetchTimeScheduleDocter = () => {
         try {
             let res = await getAllCodeService('TIME');
             if (res && res.data.errCode === 0) {
-                toast.success("Load Time Doctor Success!!");
                 dispatch(fetchTimeScheduleDocterSuccess(res.data.data));
             } else {
                 toast.error("Load Time Doctor Error!!");
@@ -400,7 +395,6 @@ export const fetchExtraInfoDoctor = (inputId) => {
         try {
             let res = await getExtraInfoDoctorById(inputId);
             if (res && res.data.errCode === 0) {
-                toast.success("Load Detail Infomation Doctor Success!!");
                 dispatch(fetchExtraInfoDoctorSuccess(res.data.data));
             } else {
                 toast.error("Load Detail Infomation Doctor Error!!");
