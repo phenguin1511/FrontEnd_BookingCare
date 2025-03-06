@@ -29,48 +29,48 @@ import ListClinic from './Patient/Clinic/ListClinic.js';
 import ListDoctor from './Patient/Doctor/ListDoctor.js';
 import ListSpecialty from './Patient/Specialty/ListSpecialty.js';
 import { toast } from 'react-toastify';
-class App extends Component {
+import ProtectedRoute from '../routes/ProtectedRoute.js';
 
+// Hàm kiểm tra token hết hạn
+const isTokenExpired = (token) => {
+    if (!token) return true;
+    try {
+        const decodedToken = JSON.parse(atob(token.split('.')[1])); // Giải mã payload của JWT
+        const currentTime = Math.floor(Date.now() / 1000); // Lấy thời gian hiện tại tính bằng giây
+        return decodedToken.exp < currentTime; // Trả về true nếu token hết hạn
+    } catch (error) {
+        return true; // Token lỗi -> coi như hết hạn
+    }
+};
+class App extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { bootstrapped: false };
+    }
 
     handlePersistorState = () => {
         const { persistor } = this.props;
         let { bootstrapped } = persistor.getState();
-        if (bootstrapped) {
-            if (this.props.onBeforeLift) {
-                Promise.resolve(this.props.onBeforeLift())
-                    .then(() => this.setState({ bootstrapped: true }))
-                    .catch(() => this.setState({ bootstrapped: true }));
-            } else {
-                this.setState({ bootstrapped: true });
-            }
+
+        // Chỉ cập nhật state nếu chưa bootstrapped
+        if (bootstrapped && !this.state.bootstrapped) {
+            this.setState({ bootstrapped: true });
         }
     };
 
     componentDidMount() {
         const token = localStorage.getItem('token');
-        const persistedData = localStorage.getItem('persist:user');
 
-        if (persistedData) {
-            const userInfo = JSON.parse(JSON.parse(persistedData).userInfo);
-            const userRole = userInfo?.roleId;
-
-            if (userRole === 'R1' || userRole === 'R2') {
-                if (!token) {
-                    toast.error("Phiên làm việc đã hết hạn hoặc token bị xóa. Vui lòng đăng nhập lại.");
-                    this.props.processLogout();
-                    history.push('/login');
-                } else {
-                    this.handlePersistorState();
-                }
-            } else {
-                this.handlePersistorState();
-            }
-        } else {
-            toast.error("Không thể xác thực người dùng. Vui lòng đăng nhập lại.");
+        if (!token || isTokenExpired(token)) {
+            toast.error("Phiên làm việc đã hết hạn. Vui lòng đăng nhập lại.");
             this.props.processLogout();
             history.push('/login');
+        } else {
+            this.handlePersistorState(); // Tiếp tục nếu token hợp lệ
         }
     }
+
+
     render() {
         return (
             <Fragment>

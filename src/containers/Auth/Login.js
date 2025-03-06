@@ -59,6 +59,7 @@ class Login extends Component {
                     // Lỗi từ server (ví dụ sai mật khẩu)
                     this.setState({ errMessage: response.data.message });
                 } else {
+                    console.log('Login success:', response.data);
                     // Đăng nhập thành công
                     const { token, user } = response.data;
 
